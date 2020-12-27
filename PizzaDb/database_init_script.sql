@@ -17,7 +17,7 @@ CREATE TABLE Dough
 (
     id SMALLINT NOT NULL PRIMARY KEY,
     name VARCHAR(20) NOT NULL,
-    price SMALLINT NOT NULL,
+    price NUMERIC(3,2) NOT NULL,
     size  SMALLINT NOT NULL
 );
 
@@ -31,8 +31,8 @@ CREATE TABLE Ingredient
 (
     id SMALLINT NOT NULL PRIMARY KEY,
     name VARCHAR(20) NOT NULL,
-    price SMALLINT NOT NULL,
-    type    SMALLINT NOT NULL REFERENCES Type (id),
+    price NUMERIC(3,2) NOT NULL,
+    type_id    SMALLINT NOT NULL REFERENCES Type (id),
     is_vegan    BOOLEAN NOT NULL
 );
 
@@ -42,7 +42,7 @@ CREATE TABLE Pizza
     name VARCHAR(20) NOT NULL,
     category_id SMALLINT NOT NULL REFERENCES Category (id),
     dough_id SMALLINT REFERENCES Dough (id),
-    price SMALLINT,
+    price NUMERIC(5,2),
     describe VARCHAR(128),
     is_vegan BOOLEAN
 );
@@ -64,7 +64,7 @@ CREATE TABLE Orders
     id BIGINT NOT NULL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES User (id),
     phone_number VARCHAR(18) NOT NULL,
-    price SMALLINT,
+    price NUMERIC(7,2),
 --     type_of_payment VARCHAR(15) NOT NULL,
     time_of_order TIMESTAMP NOT NULL,
     comment VARCHAR(128),
