@@ -1,7 +1,7 @@
 CREATE TABLE User
 (
     id BIGINT NOT NULL PRIMARY KEY,
-    session_id  VARCHAR(128) NOT NULL,
+--     session_id  VARCHAR(128),
     user_name   VARCHAR(20) NOT NULL,
     user_password VARCHAR(20) NOT NULL,
     is_admin    BOOLEAN NOT NULL
@@ -18,21 +18,21 @@ CREATE TABLE Dough
     id SMALLINT NOT NULL PRIMARY KEY,
     name VARCHAR(20) NOT NULL,
     price NUMERIC(3,2) NOT NULL,
-    size  SMALLINT NOT NULL
+    size  VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE Type
-(
-    id SMALLINT NOT NULL PRIMARY KEY,
-    name VARCHAR(20) NOT NULL
-);
+-- CREATE TABLE Type
+-- (
+--     id SMALLINT NOT NULL PRIMARY KEY,
+--     name VARCHAR(20) NOT NULL
+-- );
 
 CREATE TABLE Ingredient
 (
     id SMALLINT NOT NULL PRIMARY KEY,
     name VARCHAR(20) NOT NULL,
     price NUMERIC(3,2) NOT NULL,
-    type_id    SMALLINT NOT NULL REFERENCES Type (id),
+    type    VARCHAR (20) NOT NULL,
     is_vegan    BOOLEAN NOT NULL
 );
 
@@ -65,7 +65,7 @@ CREATE TABLE Orders
     user_id BIGINT NOT NULL REFERENCES User (id),
     phone_number VARCHAR(18) NOT NULL,
     price NUMERIC(7,2),
---     type_of_payment VARCHAR(15) NOT NULL,
+type_of_payment VARCHAR(15) NOT NULL,
     time_of_order TIMESTAMP NOT NULL,
     comment VARCHAR(128),
     status VARCHAR(10) NOT NULL
@@ -77,3 +77,5 @@ CREATE TABLE Order_item
     pizza_id    BIGINT NOT NULL REFERENCES Pizza (id),
     price BIGINT NOT NULL
 );
+
+
