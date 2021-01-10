@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "order_item")
-public class OrderItem {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +21,10 @@ public class OrderItem {
     @Column(name = "price")//FORMULA
     private double price;
 
-    public OrderItem() {
+    public Item() {
     }
 
-    public OrderItem(Order order, Pizza pizza) {
+    public Item(Order order, Pizza pizza) {
         this.order = order;
         this.pizza = pizza;
         this.price = pizza.getPrice();

@@ -44,7 +44,7 @@ public class Pizza {
 
     @OneToMany(mappedBy = "pizza", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private List<OrderItem> orders_items;
+    private List<Item> orders_items;
 
 
 
@@ -174,11 +174,11 @@ public class Pizza {
         this.users = users;
     }
 
-    public List<OrderItem> getOrders_items() {
+    public List<Item> getOrders_items() {
         return orders_items;
     }
 
-    public void setOrders_items(List<OrderItem> orders_items) {
+    public void setOrders_items(List<Item> orders_items) {
         this.orders_items = orders_items;
     }
 

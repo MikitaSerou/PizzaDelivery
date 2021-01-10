@@ -43,7 +43,7 @@ public class Order {
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
-    private List<OrderItem> orders_items;
+    private List<Item> orders_items;
 
     public Order() {
         this.time = LocalDateTime.now();
@@ -60,10 +60,10 @@ public class Order {
     }
 
     public Order(User user, String phoneNumber, TypeOfPayment typeOfPayment,
-                 String comment, List<OrderItem> orders_items) {
+                 String comment, List<Item> orders_items) {
         this.user = user;
         this.phoneNumber = phoneNumber;
-        this.totalPrice = orders_items.stream().mapToDouble(OrderItem::getPrice).sum(); //???? is it work???
+        this.totalPrice = orders_items.stream().mapToDouble(Item::getPrice).sum(); //???? is it work???
         this.typeOfPayment = typeOfPayment;
         this.time = LocalDateTime.now();
         this.comment = comment;
@@ -191,14 +191,14 @@ public class Order {
         this.status = status;
     }
 
-    public List<OrderItem> getOrders_items() {
+    public List<Item> getOrders_items() {
         return orders_items;
     }
 
-    public void setOrders_items(List<OrderItem> orders_items) {
+    public void setOrders_items(List<Item> orders_items) {
         this.orders_items = orders_items;
         this.totalPrice = orders_items.stream()
-                .mapToDouble(OrderItem::getPrice).sum(); // проверить на правильность расчета!!!
+                .mapToDouble(Item::getPrice).sum(); // проверить на правильность расчета!!!
     }
 
     @Override

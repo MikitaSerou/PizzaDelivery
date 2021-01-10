@@ -23,9 +23,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true) //maven dependency org.aspectj
 @EnableJpaRepositories(basePackages = "org.study.PizzaDelivery.data.repository")
-public class PersistenceContext {
-
-
+public class DataServiceConfig {
 
     @Autowired
     private Environment env;

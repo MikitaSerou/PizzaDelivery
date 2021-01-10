@@ -1,2 +1,2 @@
 # PizzaDelivery
-Cource project
+Course project
