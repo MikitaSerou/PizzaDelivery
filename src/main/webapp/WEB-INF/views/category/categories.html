@@ -1,5 +1,43 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{main.title}">Title</title>
+</head>
 <body>
-<h2>Categories!</h2>
+<h1 th:text="#{greeting}"></h1>
+<fieldset>
+    <legend><h2 th:text="#{pizza.categories}">Categories</h2></legend>
+    <tr th:each="category : ${categories}">
+        <a th:href="@{'/category/' + ${category.id}}">
+            <td th:text="${category.name}">Category name</td>
+        </a><br/><!--?id=-->
+    </tr>
+</fieldset>
+    </tr>
+</fieldset>
+
+<span th:text="#{lang.change}"></span>:
+<select id="locales">
+    <option value=""></option>
+    <option value="en" th:text="#{lang.en}"></option>
+    <option value="ru" th:text="#{lang.ru}"></option>
+</select>
+
 </body>
 </html>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#locales").change(function () {
+            var selectedOption = $('#locales').val();
+            if (selectedOption != ''){
+                window.location.replace('category?lang=' + selectedOption);
+            }
+        });
+    });
+</script>

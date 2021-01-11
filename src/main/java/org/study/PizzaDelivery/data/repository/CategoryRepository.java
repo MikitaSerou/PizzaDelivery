@@ -8,5 +8,7 @@ import java.util.Optional;
 
 public interface CategoryRepository extends CrudRepository<Category, Short> {
 
+    Category findById(short id);
+
 List<Category> findAll();
 }

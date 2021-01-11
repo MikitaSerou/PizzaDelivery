@@ -15,7 +15,7 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
 
-    public Optional<Category> findOne(short id){
+    public Category findOne(short id){
        return categoryRepository.findById(id);
     }
 
