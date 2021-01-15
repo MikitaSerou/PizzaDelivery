@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.study.PizzaDelivery.data.model.Category;
 import org.study.PizzaDelivery.data.model.Pizza;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -15,6 +16,8 @@ import java.util.Optional;
 public interface PizzaRepository extends PagingAndSortingRepository<Pizza, Long> {
 
     Pizza findPizzaByCategory(Category category);
+
+    List<Pizza> findAllByCategoryName(String categoryName);
 
     @Override
     <S extends Pizza> S save(S s);
@@ -31,8 +34,10 @@ public interface PizzaRepository extends PagingAndSortingRepository<Pizza, Long>
     @Override
     Iterable<Pizza> findAll();
 
-    @Override
-    Iterable<Pizza> findAllById(Iterable<Long> iterable);
+
+    List<Pizza> findAllById(long id);
+
+    List<Pizza> findAllByCategoryId(short id);
 
     @Override
     long count();

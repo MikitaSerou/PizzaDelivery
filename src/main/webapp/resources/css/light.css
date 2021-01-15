@@ -1,0 +1,47 @@
+﻿body{
+    background-color: whitesmoke;
+}
+H1{
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-style: italic;
+    font-size: 60px;
+    color: dodgerblue;
+    text-align: center;
+    border: inset crimson;
+}
+H2{
+    color: royalblue;
+}
+span{
+    color: black;
+}
+.pizzaName{
+    font-style: italic;
+    font-size: 24px;
+    color: dodgerblue;
+    text-align: center;
+}
+.returnToMain{
+    text-align: right;
+}
+a{
+    color: royalblue;
+    font-weight: bold;
+}
+.pizzaItem{
+
+    color: whitesmoke;
+    background-color: dimgray;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+    padding-top: 50px;
+    padding-left: 300px;
+    padding-bottom: 100px;
+    /*margin: 30px;*/
+    /*margin-right: 250px;*/
+    background-image: url(../images/pizzaP.png);
+    background-repeat: no-repeat;
+    background-position: top left;
+}

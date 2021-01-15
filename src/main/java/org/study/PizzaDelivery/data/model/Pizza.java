@@ -17,7 +17,7 @@ public class Pizza {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dough_id")
     private Dough dough;
 
@@ -45,7 +45,6 @@ public class Pizza {
     @OneToMany(mappedBy = "pizza", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Item> orders_items;
-
 
 
     public Pizza() {
@@ -184,11 +183,23 @@ public class Pizza {
 
     @Override
     public String toString() {
-        return "\nPizza[Id: " + id +
-                ", name: " + name +
-                ", category:("+ category.getId()+"|" + category.getName() + ")" +
-                ", dough:(" + dough.getId()+"|" + dough.getName() + "|" + dough.getSize() +
-                "), vegan: " + isVegan +
-                ", price: " + price+ "]";
+        String str;
+        if (dough != null) {
+            str = "\nPizza[Id: " + id +
+                    ", name: " + name +
+                    ", category:(" + category.getId() + "|" + category.getName() + ")" +
+                    ", dough:(" + dough.getId() + "|" + dough.getName() + "|" + dough.getSize() + ")" +
+                    ", vegan: " + isVegan +
+                    ", price: " + price + "]";
+        } else {
+            str = "\nPizza[Id: " + id +
+                    ", name: " + name +
+                    ", category:(" + category.getId() + "|" + category.getName() + ")" +
+                    ", vegan: " + isVegan +
+                    ", price: " + price + "]";
+        }
+        return str;
     }
+
 }
+
