@@ -1,10 +1,11 @@
 package org.study.PizzaDelivery.data.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import org.study.PizzaDelivery.data.model.Ingredient;
 
 import java.util.Optional;
-
+@Repository
 public interface IngredientRepository extends CrudRepository<Ingredient, Short> {
     @Override
     <S extends Ingredient> S save(S s);

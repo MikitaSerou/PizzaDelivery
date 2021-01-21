@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "org.study.PizzaDelivery.data")
+@ComponentScan(basePackages = {"org.study.PizzaDelivery.data"})
 @PropertySource({"classpath:db.properties"})
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true) //maven dependency org.aspectj
@@ -61,7 +61,7 @@ public class DataServiceConfig {
     }
 
     @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
@@ -72,7 +72,7 @@ public class DataServiceConfig {
         hibernateProperties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         hibernateProperties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
         hibernateProperties.put("hibernate.connection.characterEncoding", env.getProperty("hibernate.connection.characterEncoding"));
-        hibernateProperties.put("hibernate.connection.CharSet",  env.getProperty("hibernate.connection.CharSet"));
+        hibernateProperties.put("hibernate.connection.CharSet", env.getProperty("hibernate.connection.CharSet"));
         hibernateProperties.put("hibernate.connection.useUnicode", env.getProperty("hibernate.connection.useUnicode"));
 
         return hibernateProperties;

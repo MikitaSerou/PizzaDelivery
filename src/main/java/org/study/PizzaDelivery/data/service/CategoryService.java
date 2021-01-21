@@ -15,9 +15,11 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
 
-    public Optional<Category> findOne(short id){
+    public Category findOne(short id){
        return categoryRepository.findById(id);
     }
+
+    public Category findByName(String name){return categoryRepository.findByName(name);}
 
 public List<Category> getAllCategoies(){
        return categoryRepository.findAll();

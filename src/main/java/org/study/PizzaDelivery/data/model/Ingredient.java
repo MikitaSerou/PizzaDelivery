@@ -23,23 +23,23 @@ public class Ingredient {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @Column(name = "is_vegan", nullable = false)
-    private boolean is_vegan;
+    @Column(name = "count")
+    private int count;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "pizza_ingredient",
             joinColumns = @JoinColumn(name = "ingredient_id"),
             inverseJoinColumns = @JoinColumn(name = "pizza_id"))
-    private List<Pizza> pizzas;
+    private List<Product> products;
 
     public Ingredient() {
     }
 
-    public Ingredient(String name, double price, Type type, boolean is_vegan) {
+    public Ingredient(String name, double price, Type type, int count) {
         this.name = name;
         this.price = price;
         this.type = type;
-        this.is_vegan = is_vegan;
+        this.count = count;
     }
 
     public short getId() {
@@ -74,28 +74,29 @@ public class Ingredient {
         this.type = type;
     }
 
-    public boolean isIs_vegan() {
-        return is_vegan;
+    public int getCount() {
+        return count;
     }
 
-    public void setIs_vegan(boolean is_vegan) {
-        this.is_vegan = is_vegan;
+    public void setCount(int count) {
+        this.count = count;
     }
 
-    public List<Pizza> getPizzas() {
-        return pizzas;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setPizzas(List<Pizza> pizzas) {
-        this.pizzas = pizzas;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
+
 
     @Override
     public String toString() {
         return "\nIngredient[Id:" + id +
                 ", name: " + name +
                 ", type: " + type +
-                ", vegan: " + is_vegan +
+                ", count: " + count +
                 ", price: " + price + "]";
     }
 }

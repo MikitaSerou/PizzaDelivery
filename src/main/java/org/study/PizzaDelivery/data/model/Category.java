@@ -14,9 +14,28 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<Pizza> pizzas;
+    private List<Product> products;
+
+    @Column(name="category_price")
+    private double price;
 
     public Category() {
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public Category(String name) {
@@ -39,17 +58,15 @@ public class Category {
         this.name = name;
     }
 
-    public List<Pizza> getPizzas() {
-        return pizzas;
-    }
 
-    public void setPizzas(List<Pizza> pizzas) {
-        this.pizzas = pizzas;
-    }
 
     @Override
     public String toString() {
-        return "\nCategory[Id: " + id +
-                ", name: " + name + "]";
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", products=" + products +
+                ", price=" + price +
+                '}';
     }
 }
