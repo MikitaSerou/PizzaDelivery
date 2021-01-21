@@ -6,38 +6,38 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import org.study.PizzaDelivery.data.model.Category;
-import org.study.PizzaDelivery.data.model.Pizza;
+import org.study.PizzaDelivery.data.model.Product;
 
 import java.util.List;
 import java.util.Optional;
 
 
 @Repository
-public interface PizzaRepository extends PagingAndSortingRepository<Pizza, Long> {
+public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
 
-    Pizza findPizzaByCategory(Category category);
+    Product findPizzaByCategory(Category category);
 
-    List<Pizza> findAllByCategoryName(String categoryName);
-
-    @Override
-    <S extends Pizza> S save(S s);
+    List<Product> findAllByCategoryName(String categoryName);
 
     @Override
-    <S extends Pizza> Iterable<S> saveAll(Iterable<S> iterable);
+    <S extends Product> S save(S s);
 
     @Override
-    Optional<Pizza> findById(Long aLong);
+    <S extends Product> Iterable<S> saveAll(Iterable<S> iterable);
+
+    @Override
+    Optional<Product> findById(Long aLong);
 
     @Override
     boolean existsById(Long aLong);
 
     @Override
-    Iterable<Pizza> findAll();
+    Iterable<Product> findAll();
 
 
-    List<Pizza> findAllById(long id);
+    List<Product> findAllById(long id);
 
-    List<Pizza> findAllByCategoryId(short id);
+    List<Product> findAllByCategoryId(short id);
 
     @Override
     long count();
@@ -46,17 +46,17 @@ public interface PizzaRepository extends PagingAndSortingRepository<Pizza, Long>
     void deleteById(Long aLong);
 
     @Override
-    void delete(Pizza pizza);
+    void delete(Product product);
 
     @Override
-    void deleteAll(Iterable<? extends Pizza> iterable);
+    void deleteAll(Iterable<? extends Product> iterable);
 
     @Override
     void deleteAll();
 
     @Override
-    Iterable<Pizza> findAll(Sort sort);
+    Iterable<Product> findAll(Sort sort);
 
     @Override
-    Page<Pizza> findAll(Pageable pageable);
+    Page<Product> findAll(Pageable pageable);
 }

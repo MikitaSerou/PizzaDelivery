@@ -43,6 +43,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public StringHttpMessageConverter stringHttpMessageConverter() {
+
         return new StringHttpMessageConverter(StandardCharsets.UTF_8);
     }
 
@@ -75,10 +76,15 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/") // "/resources/"
+                .addResourceLocations("/resources/")
                 .setCachePeriod(31556926);
     }
 
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/news").setViewName("news");
+    }
 
     @Bean
     public MessageSource messageSource() {
@@ -87,9 +93,6 @@ public class WebConfig implements WebMvcConfigurer {
         messageSource.setBasename("classpath:/i18n/message");
         messageSource.setUseCodeAsDefaultMessage(true);
         messageSource.setDefaultEncoding("UTF-8");
-//        messageSource.setFallbackToSystemLocale(false);
-//        messageSource.setCacheSeconds(0);
-
 
         return messageSource;
     }
@@ -98,10 +101,9 @@ public class WebConfig implements WebMvcConfigurer {
     public ThemeSource themeSource() {
         ResourceBundleThemeSource themeSource = new ResourceBundleThemeSource();
         themeSource.setBasenamePrefix("theme/");
+
         return themeSource;
     }
-
-
 
     @Bean
     public LocaleResolver localeResolver() {
@@ -111,25 +113,13 @@ public class WebConfig implements WebMvcConfigurer {
         return resolver;
     }
 
-//    @Bean
-//    public UrlTemplateResolver urlTemplateResolver() {
-//        return new UrlTemplateResolver();
-//    }
-
-//    @Bean
-//    public LocaleChangeInterceptor localeChangeInterceptor() {
-//        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-//        localeChangeInterceptor.setParamName("lang");
-//        return localeChangeInterceptor;
-//    }
-
     @Bean
     public ThemeResolver themeResolver() {
         CookieThemeResolver resolver = new CookieThemeResolver();
         resolver.setDefaultThemeName("light");
+
         return resolver;
     }
-
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -140,17 +130,5 @@ public class WebConfig implements WebMvcConfigurer {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         registry.addInterceptor(localeChangeInterceptor);
-
-//        registry.addInterceptor(localeChangeInterceptor());
     }
 }
-
-/*    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
-        resolver.setTemplateEngine(templateEngine());
-        resolver.setCharacterEncoding("UTF-8");
-        resolver.setContentType("text/html; charset=UTF-8");
-        resolver.setCache(false);
-        registry.viewResolver(resolver);
-    }*/

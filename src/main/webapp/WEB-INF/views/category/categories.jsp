@@ -18,7 +18,7 @@
 <span>[</span>
 <a href="?theme=light"><spring:message code="theme.light"/></a><span>|</span>
 <a href="?theme=dark"><spring:message code="theme.dark"/> </a>
-<span>]</span>
+<span>]      <span class="returnToMain"><a href="/"><spring:message code="button.mainPage"/></a></span></span>
 <%--  <=== Смена языка и темы--%>
 
 <h1><spring:message code="main.greeting"/></h1></br>

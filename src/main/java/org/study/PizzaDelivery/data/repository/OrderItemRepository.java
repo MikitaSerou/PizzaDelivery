@@ -5,34 +5,34 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
-import org.study.PizzaDelivery.data.model.Order;
+import org.study.PizzaDelivery.data.model.OrderItem;
 
 import java.util.Optional;
 @Repository
-public interface OrderRepository extends PagingAndSortingRepository<Order, Long> {
+public interface OrderItemRepository extends PagingAndSortingRepository<OrderItem, Long> {
     @Override
-    Iterable<Order> findAll(Sort sort);
+    Iterable<OrderItem> findAll(Sort sort);
 
     @Override
-    Page<Order> findAll(Pageable pageable);
+    Page<OrderItem> findAll(Pageable pageable);
 
     @Override
-    <S extends Order> S save(S s);
+    <S extends OrderItem> S save(S s);
 
     @Override
-    <S extends Order> Iterable<S> saveAll(Iterable<S> iterable);
+    <S extends OrderItem> Iterable<S> saveAll(Iterable<S> iterable);
 
     @Override
-    Optional<Order> findById(Long aLong);
+    Optional<OrderItem> findById(Long aLong);
 
     @Override
     boolean existsById(Long aLong);
 
     @Override
-    Iterable<Order> findAll();
+    Iterable<OrderItem> findAll();
 
     @Override
-    Iterable<Order> findAllById(Iterable<Long> iterable);
+    Iterable<OrderItem> findAllById(Iterable<Long> iterable);
 
     @Override
     long count();
@@ -41,10 +41,10 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
     void deleteById(Long aLong);
 
     @Override
-    void delete(Order order);
+    void delete(OrderItem orderItem);
 
     @Override
-    void deleteAll(Iterable<? extends Order> iterable);
+    void deleteAll(Iterable<? extends OrderItem> iterable);
 
     @Override
     void deleteAll();

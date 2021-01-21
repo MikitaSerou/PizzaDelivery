@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Dough {
+public class Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,19 +16,17 @@ public class Dough {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(name = "size")
-    private String size;
 
-    @OneToMany(mappedBy = "dough", fetch = FetchType.LAZY)
-    private List<Pizza> pizzas;
+    @OneToMany(mappedBy = "base", fetch = FetchType.LAZY)
+    private List<Product> products;
 
-    public Dough() {
+    public Base() {
     }
 
-    public Dough(String name, double price, String size) {
+    public Base(String name, double price) {
         this.name = name;
         this.price = price;
-        this.size = size;
+
     }
 
     public short getId() {
@@ -55,27 +53,22 @@ public class Dough {
         this.price = price;
     }
 
-    public String getSize() {
-        return size;
+
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public List<Pizza> getPizzas() {
-        return pizzas;
-    }
-
-    public void setPizzas(List<Pizza> pizzas) {
-        this.pizzas = pizzas;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     @Override
     public String toString() {
-        return "\nDough[Id: " + id +
-                ", name: " + name +
-                ", size: " + size +
-                 ", price: " + price +"]";
+        return "Base{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", products=" + products +
+                '}';
     }
 }

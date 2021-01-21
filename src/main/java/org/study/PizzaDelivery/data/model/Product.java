@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Pizza {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +18,8 @@ public class Pizza {
     private Category category;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "dough_id")
-    private Dough dough;
+    @JoinColumn(name = "base_id")
+    private Base base;
 
     @Column(name = "price")
     private double price;
@@ -27,27 +27,25 @@ public class Pizza {
     @Column(name = "describe")
     private String describe;
 
-    @Column(name = "is_vegan")
-    private boolean isVegan;
-
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "pizza_ingredient",
-            joinColumns = @JoinColumn(name = "pizza_id"),
+    @JoinTable(name = "product_ingredient",
+            joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private List<Ingredient> ingredients;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "user_pizza",
-            joinColumns = @JoinColumn(name = "pizza_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
+//    @ManyToMany(mappedBy = "products")        если не использовать basket
+//    private List<User> users;
 
-    @OneToMany(mappedBy = "pizza", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private List<Item> orders_items;
+    private List<OrderItem> orderItems;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<BasketItem> basketItems;
 
 
-    public Pizza() {
+    public Product() {
     }
 
 
@@ -59,47 +57,66 @@ public class Pizza {
         }
 
         public Builder name(String name) {
-            Pizza.this.name = name;
+            Product.this.name = name;
             return this;
         }
 
         public Builder price(Double price) {
-            Pizza.this.price = price;
+            Product.this.price = price;
             return this;
         }
 
         public Builder describe(String describe) {
-            Pizza.this.describe = describe;
+            Product.this.describe = describe;
             return this;
         }
 
-        public Builder dough(Dough dough) {
-            Pizza.this.dough = dough;
+        public Builder dough(Base base) {
+            Product.this.base = base;
             return this;
         }
 
         public Builder category(Category category) {
-            Pizza.this.category = category;
+            Product.this.category = category;
             return this;
         }
 
-        public Builder isVegan(boolean isVegan) {
-            Pizza.this.isVegan = isVegan;
-            return this;
-        }
-
-        public Pizza build() {
-            return Pizza.this;
+        public Product build() {
+            return Product.this;
         }
 
     }
 
     public static Builder builder() {
-        return new Pizza().new Builder();
+        return new Product().new Builder();
     }
 
 // <-- Builder
 
+
+    public Base getBase() {
+        return base;
+    }
+
+    public void setBase(Base base) {
+        this.base = base;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public List<BasketItem> getBasketItems() {
+        return basketItems;
+    }
+
+    public void setBasketItems(List<BasketItem> basketItems) {
+        this.basketItems = basketItems;
+    }
 
     public long getId() {
         return id;
@@ -125,14 +142,6 @@ public class Pizza {
         this.category = category;
     }
 
-    public Dough getDough() {
-        return dough;
-    }
-
-    public void setDough(Dough dough) {
-        this.dough = dough;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -149,14 +158,6 @@ public class Pizza {
         this.describe = describe;
     }
 
-    public boolean isIsVegan() {
-        return isVegan;
-    }
-
-    public void setIsVegan(boolean is_vegan) {
-        this.isVegan = is_vegan;
-    }
-
     public List<Ingredient> getIngredients() {
         return ingredients;
     }
@@ -165,37 +166,37 @@ public class Pizza {
         this.ingredients = ingredients;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<OrderItem> getOrders_items() {
+        return orderItems;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setOrders_items(List<OrderItem> orders_Order_items) {
+        this.orderItems = orders_Order_items;
     }
 
-    public List<Item> getOrders_items() {
-        return orders_items;
-    }
+//    public List<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
 
-    public void setOrders_items(List<Item> orders_items) {
-        this.orders_items = orders_items;
-    }
+
 
     @Override
     public String toString() {
         String str;
-        if (dough != null) {
-            str = "\nPizza[Id: " + id +
+        if (base != null) {
+            str = "\nProduct[Id: " + id +
                     ", name: " + name +
                     ", category:(" + category.getId() + "|" + category.getName() + ")" +
-                    ", dough:(" + dough.getId() + "|" + dough.getName() + "|" + dough.getSize() + ")" +
-                    ", vegan: " + isVegan +
+                    ", dough:(" + base.getId() + "|" + base.getName() + "|" + base.getName() + ")" +
                     ", price: " + price + "]";
         } else {
-            str = "\nPizza[Id: " + id +
+            str = "\nProduct[Id: " + id +
                     ", name: " + name +
                     ", category:(" + category.getId() + "|" + category.getName() + ")" +
-                    ", vegan: " + isVegan +
                     ", price: " + price + "]";
         }
         return str;

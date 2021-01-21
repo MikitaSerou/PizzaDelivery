@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "Orders")
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -24,7 +24,7 @@ public class Order {
     private String phoneNumber;
 
     @Column(name = "price")
-    private double totalPrice;
+    private double price;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -43,7 +43,7 @@ public class Order {
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
-    private List<Item> orders_items;
+    private List<OrderItem> orderItems;
 
     public Order() {
         this.time = LocalDateTime.now();
@@ -60,15 +60,15 @@ public class Order {
     }
 
     public Order(User user, String phoneNumber, TypeOfPayment typeOfPayment,
-                 String comment, List<Item> orders_items) {
+                 String comment, List<OrderItem> orderItems) {
         this.user = user;
         this.phoneNumber = phoneNumber;
-        this.totalPrice = orders_items.stream().mapToDouble(Item::getPrice).sum(); //???? is it work???
+        this.price = orderItems.stream().mapToDouble(OrderItem::getPrice).sum(); //???? is it work???
         this.typeOfPayment = typeOfPayment;
         this.time = LocalDateTime.now();
         this.comment = comment;
         this.status = Status.NOT_PAID;
-        this.orders_items = orders_items;
+        this.orderItems = orderItems;
     }
 
 
@@ -85,7 +85,7 @@ public class Order {
         }
 
         public Order.Builder totalPrice(Double totalPrice) {
-            Order.this.totalPrice = totalPrice;
+            Order.this.price = totalPrice;
             return this;
         }
 
@@ -127,6 +127,14 @@ public class Order {
 // <-- Builder
 
 
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
     public long getId() {
         return id;
     }
@@ -151,12 +159,12 @@ public class Order {
         this.phoneNumber = phoneNumber;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
+    public double getPrice() {
+        return price;
     }
 
-    public void setTotalPrice(double price) {
-        this.totalPrice = price;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public TypeOfPayment getTypeOfPayment() {
@@ -191,14 +199,14 @@ public class Order {
         this.status = status;
     }
 
-    public List<Item> getOrders_items() {
-        return orders_items;
+    public List<OrderItem> getOrders_items() {
+        return orderItems;
     }
 
-    public void setOrders_items(List<Item> orders_items) {
-        this.orders_items = orders_items;
-        this.totalPrice = orders_items.stream()
-                .mapToDouble(Item::getPrice).sum(); // проверить на правильность расчета!!!
+    public void setOrders_items(List<OrderItem> orders_Order_items) {
+        this.orderItems = orders_Order_items;
+        this.price = orders_Order_items.stream()
+                .mapToDouble(OrderItem::getPrice).sum(); // проверить на правильность расчета!!!
     }
 
     @Override
@@ -206,7 +214,7 @@ public class Order {
         return "\nOrder[Id: " + id +
                 ", userid: " + user.getId() +
                 ", phone: " + phoneNumber +
-                ", price: " + totalPrice +
+                ", price: " + price +
                 ", type of payment: " + typeOfPayment +
                 ", order time: " + time +
                 ", status: " + status + "]";

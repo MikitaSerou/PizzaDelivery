@@ -21,15 +21,15 @@
 <span>]</span>
 <%--  <=== Смена языка и темы--%>
 
-<h1><spring:message code="category.pizza"/>: ${categoryName}</h1></br>
+<h1><spring:message code="category.product"/>: ${categoryName}</h1></br>
 <span class="returnToMain"><a href="/category"><spring:message code="button.mainPage"/></a></span>
-<%--<h2><spring:message code="category.pizza"/>:${categoryName}</h2>--%>
-<c:forEach var="pizza" items="${pizzaList}">
+<%--<h2><spring:message code="category.product"/>:${categoryName}</h2>--%>
+<c:forEach var="product" items="${pizzaList}">
     <fieldset>
-        <p class="pizzaName">${pizza.name}</p><span><img src='<spring:url value="/resources/images/pizzaP.png"/>'/><br/></span>
-        <p><spring:message code="p.describe"/>: ${pizza.describe}</p>
-        <p><spring:message code="p.dough"/>: ${pizza.dough.name}</p>
-        <p><spring:message code="p.price"/>: ${pizza.price}</p>
+        <p class="pizzaName">${product.name}</p><span><img src='<spring:url value="/resources/images/pizzaP.png"/>'/><br/></span>
+        <p><spring:message code="p.describe"/>: ${product.describe}</p>
+        <p><spring:message code="p.base"/>: ${product.base.name}</p>
+        <p><spring:message code="p.price"/>: ${product.price}</p>
         <br/></fieldset>
 </c:forEach>
 <br/>
