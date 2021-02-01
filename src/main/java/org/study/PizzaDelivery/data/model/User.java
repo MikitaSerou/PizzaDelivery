@@ -1,5 +1,6 @@
 package org.study.PizzaDelivery.data.model;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +14,8 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
-//implements UserDetails
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -26,6 +28,13 @@ public class User implements UserDetails {
     @Size(min=2, message = "Не меньше 5 знаков")
     private String password;
 
+    @Column(name="e_mail", nullable = false)
+    @Email
+    private String mail;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Basket> baskets;
 
@@ -34,14 +43,6 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
-
-
-//    @ManyToMany(cascade = {CascadeType.ALL})      если не использовать basket
-//    @JoinTable(name = "user_product",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "product_id"))
-//    private List<Product> products;
-
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Order> orders;
@@ -54,6 +55,18 @@ public class User implements UserDetails {
                 Set<Role> roles) {
         this.username = username;
         this.password = password;
+        this.roles = roles;
+    }
+
+    public User(@Size(min = 2, message = "Не меньше 5 знаков") String username,
+                @Size(min = 2, message = "Не меньше 5 знаков") String password,
+                @Email String mail,
+                String phoneNumber,
+                Set<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.mail = mail;
+        this.phoneNumber = phoneNumber;
         this.roles = roles;
     }
 
@@ -86,6 +99,7 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getPasswordConfirm() {
         return passwordConfirm;
     }
@@ -139,14 +153,21 @@ public class User implements UserDetails {
         this.orders = orders;
     }
 
-//    public List<Product> getProducts() {
-//        return products;
-//    }
-//
-//    public void setProducts(List<Product> products) {
-//        this.products = products;
-//    }
+    public String getMail() {
+        return mail;
+    }
 
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     @Override
     public String toString() {
@@ -154,7 +175,12 @@ public class User implements UserDetails {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", mail='" + mail + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", baskets=" + baskets +
+                ", passwordConfirm='" + passwordConfirm + '\'' +
                 ", roles=" + roles +
+                ", orders=" + orders +
                 '}';
     }
 }

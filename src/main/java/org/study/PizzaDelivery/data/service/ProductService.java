@@ -7,7 +7,6 @@ import org.study.PizzaDelivery.data.model.Product;
 import org.study.PizzaDelivery.data.repository.ProductRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -16,7 +15,7 @@ public class ProductService {
     private ProductRepository productRepository;
 
 
-    public Optional<Product> findOne(long id){
+    public Product findOne(long id){
        return productRepository.findById(id);
     }
 

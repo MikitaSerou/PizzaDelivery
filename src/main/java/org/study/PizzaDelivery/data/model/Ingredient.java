@@ -23,23 +23,20 @@ public class Ingredient {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @Column(name = "count")
-    private int count;
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinTable(name = "pizza_ingredient",
+    @JoinTable(name = "product_ingredient",
             joinColumns = @JoinColumn(name = "ingredient_id"),
-            inverseJoinColumns = @JoinColumn(name = "pizza_id"))
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products;
 
     public Ingredient() {
     }
 
-    public Ingredient(String name, double price, Type type, int count) {
+    public Ingredient(String name, double price, Type type) {
         this.name = name;
         this.price = price;
         this.type = type;
-        this.count = count;
+
     }
 
     public short getId() {
@@ -74,13 +71,7 @@ public class Ingredient {
         this.type = type;
     }
 
-    public int getCount() {
-        return count;
-    }
 
-    public void setCount(int count) {
-        this.count = count;
-    }
 
     public List<Product> getProducts() {
         return products;
@@ -96,7 +87,6 @@ public class Ingredient {
         return "\nIngredient[Id:" + id +
                 ", name: " + name +
                 ", type: " + type +
-                ", count: " + count +
                 ", price: " + price + "]";
     }
 }

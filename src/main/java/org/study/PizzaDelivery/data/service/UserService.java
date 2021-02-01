@@ -2,7 +2,6 @@ package org.study.PizzaDelivery.data.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,9 +16,7 @@ import org.study.PizzaDelivery.data.repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -36,13 +33,11 @@ public class UserService implements UserDetailsService {
     @Autowired(required = false)
     PasswordEncoder bCryptPasswordEncoder;
 
-//    @Autowired
-//    public UserService(UserRepository userRepository, RoleRepository roleRepository,
-//                       @Qualifier("passwordEncoder") PasswordEncoder bCryptPasswordEncoder) {
-//        this.userRepository = userRepository;
-//        this.roleRepository = roleRepository;
-//        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-//    }
+
+    public User findByName(String userName){
+     return    userRepository.findByUsername(userName);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -52,7 +47,6 @@ public class UserService implements UserDetailsService {
         }
         return user;
     }
-
 
     public User findUserById(Long userId) {
         Optional<User> userFromDb = userRepository.findById(userId);
@@ -73,6 +67,8 @@ public class UserService implements UserDetailsService {
         user.setRoles(Collections.singleton(
                 new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setMail(user.getMail());
+        user.setPhoneNumber(user.getPhoneNumber());
         userRepository.save(user);
         return true;
     }
@@ -89,6 +85,5 @@ public class UserService implements UserDetailsService {
         return em.createQuery("SELECT u FROM User u WHERE u.id > :paramId", User.class)
                 .setParameter("paramId", idMin).getResultList();
     }
-
 
 }

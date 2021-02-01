@@ -13,13 +13,18 @@ public class Category {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Product> products;
 
     @Column(name="category_price")
     private double price;
 
     public Category() {
+    }
+
+    public Category(String name, double price) {
+        this.name = name;
+        this.price = price;
     }
 
     public List<Product> getProducts() {

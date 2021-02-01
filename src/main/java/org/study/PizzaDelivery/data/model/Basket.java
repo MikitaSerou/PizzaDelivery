@@ -1,6 +1,7 @@
 package org.study.PizzaDelivery.data.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -14,21 +15,32 @@ public class Basket {
     @Column(name = "is_active")
     private boolean isActive;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @Column(name = "time", nullable = false)
+    private LocalDateTime time;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "basket", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "basket", fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
     private List<BasketItem> basketItems;
 
 
     public Basket() {
+
     }
 
     public Basket(boolean isActive, User user) {
         this.isActive = isActive;
         this.user = user;
+        this.time = LocalDateTime.now();
+    }
+
+    public Basket(User user) {
+        this.user = user;
+        this.isActive = true;
+        this.time = LocalDateTime.now();
     }
 
     public long getId() {
@@ -63,13 +75,20 @@ public class Basket {
         this.basketItems = basketItems;
     }
 
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
 
     @Override
     public String toString() {
         return "Basket{" +
                 "id=" + id +
                 ", isActive=" + isActive +
-                ", user=" + user +
+                ", user=" + user.getId() +
                 '}';
     }
 

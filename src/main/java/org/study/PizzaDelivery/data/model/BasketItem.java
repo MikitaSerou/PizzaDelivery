@@ -15,11 +15,11 @@ public class BasketItem {
     @JoinColumn(name = "basket_id", nullable = false)
     private Basket basket;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @Column(name="price")//FORMULA???
+    @Column(name="price")
     private double price;
 
     @Column(name = "description")

@@ -18,12 +18,9 @@ import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import org.springframework.web.servlet.theme.CookieThemeResolver;
+import org.springframework.web.servlet.theme.SessionThemeResolver;
 import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring5.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.UrlTemplateResolver;
+
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
@@ -47,27 +44,6 @@ public class WebConfig implements WebMvcConfigurer {
         return new StringHttpMessageConverter(StandardCharsets.UTF_8);
     }
 
-    @Bean
-    public SpringResourceTemplateResolver templateResolver() {
-        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-        templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setCharacterEncoding("UTF-8"); //
-        templateResolver.setPrefix("/WEB-INF/views/");
-        templateResolver.setSuffix(".html");
-        templateResolver.setCacheable(false);
-
-        return templateResolver;
-    }
-
-    @Bean
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver());
-        templateEngine.setEnableSpringELCompiler(true);
-
-        return templateEngine;
-    }
-
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.jsp("/WEB-INF/views/", ".jsp");
@@ -83,7 +59,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/news").setViewName("news");
+        registry.addViewController("/promotions").setViewName("promotions");
     }
 
     @Bean
@@ -115,8 +91,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public ThemeResolver themeResolver() {
-        CookieThemeResolver resolver = new CookieThemeResolver();
-        resolver.setDefaultThemeName("light");
+      //  CookieThemeResolver resolver = new CookieThemeResolver();
+        SessionThemeResolver resolver = new SessionThemeResolver();
+        resolver.setDefaultThemeName("dark");
 
         return resolver;
     }

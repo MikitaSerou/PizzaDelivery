@@ -24,8 +24,8 @@ public class Product {
     @Column(name = "price")
     private double price;
 
-    @Column(name = "describe")
-    private String describe;
+    @Column(name = "description")
+    private String description;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "product_ingredient",
@@ -33,11 +33,8 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private List<Ingredient> ingredients;
 
-//    @ManyToMany(mappedBy = "products")        если не использовать basket
-//    private List<User> users;
-
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.MERGE)
     private List<OrderItem> orderItems;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,
@@ -67,11 +64,11 @@ public class Product {
         }
 
         public Builder describe(String describe) {
-            Product.this.describe = describe;
+            Product.this.description = describe;
             return this;
         }
 
-        public Builder dough(Base base) {
+        public Builder base(Base base) {
             Product.this.base = base;
             return this;
         }
@@ -150,12 +147,12 @@ public class Product {
         this.price = price;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<Ingredient> getIngredients() {
@@ -173,15 +170,6 @@ public class Product {
     public void setOrders_items(List<OrderItem> orders_Order_items) {
         this.orderItems = orders_Order_items;
     }
-
-//    public List<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(List<User> users) {
-//        this.users = users;
-//    }
-
 
 
     @Override

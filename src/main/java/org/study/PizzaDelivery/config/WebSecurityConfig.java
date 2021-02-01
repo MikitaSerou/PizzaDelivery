@@ -45,9 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration").not().fullyAuthenticated()
                 //Only for ADMIN role:
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/news").hasRole("USER")
+                //Access for user:
+                .antMatchers("/promotions", "/user/**").hasRole("USER")
                 //Access for all:
-                .antMatchers("/", "/resources/**", "/category", "/category/{categoryName}" ).permitAll()
+                .antMatchers("/","/promotions", "/resources/**", "/category", "/login").permitAll()
                 //All other pages require authentication:
                 .anyRequest().authenticated()
                 .and()
@@ -58,10 +59,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout().deleteCookies("JSESSIONID")
+                .deleteCookies("org.springframework.web.servlet.theme.CookieThemeResolver.THEME")
+                .clearAuthentication(true)
                 .permitAll()
                 .logoutSuccessUrl("/")
                 .and()
                 .rememberMe().key("uniqueAndSecret");
+
     }
 
     @Autowired
@@ -69,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
         //Default admin/user in memory
         auth.inMemoryAuthentication().withUser(env.getProperty("admin.login"))
-                .password(passwordEncoder().encode(env.getProperty("admin.password"))).roles("ADMIN", "USER")
+                .password(passwordEncoder().encode(env.getProperty("admin.password"))).roles("ADMIN")
                 .and().withUser("Nikita").password(passwordEncoder().encode("Fesuso78")).roles("USER");
     }
 }

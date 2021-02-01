@@ -28,9 +28,10 @@ public class Order {
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "type_of_payment")
     private TypeOfPayment typeOfPayment;
 
-    @Column(name = "time_of_order", nullable = false)
+    @Column(name = "time", nullable = false)
     private LocalDateTime time;
 
     @Column(name = "comment")
@@ -42,7 +43,7 @@ public class Order {
     private Status status;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER,
-            cascade = {CascadeType.ALL})
+            cascade = {CascadeType.MERGE})
     private List<OrderItem> orderItems;
 
     public Order() {
@@ -71,6 +72,16 @@ public class Order {
         this.orderItems = orderItems;
     }
 
+    public Order(User user, String phoneNumber, double price, TypeOfPayment typeOfPayment,
+                 String comment) {
+        this.user = user;
+        this.phoneNumber = phoneNumber;
+        this.price = price;
+        this.typeOfPayment = typeOfPayment;
+        this.time = LocalDateTime.now();
+        this.comment = comment;
+        this.status = Status.NOT_PAID;
+    }
 
     // Builder -->
     public class Builder {

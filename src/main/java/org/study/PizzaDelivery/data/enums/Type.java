@@ -6,4 +6,5 @@ public enum Type {
     VEGETABLE,
     SEAFOOD,
     SAUCE
+
 }
