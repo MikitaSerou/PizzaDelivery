@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.study.PizzaDelivery.data.enums.TypeOfPayment;
 import org.study.PizzaDelivery.data.model.User;
+import org.study.PizzaDelivery.data.service.BasketItemService;
 import org.study.PizzaDelivery.data.service.BasketService;
 import org.study.PizzaDelivery.data.service.OrderService;
 import org.study.PizzaDelivery.data.service.UserService;
@@ -20,7 +22,10 @@ public class UserController {
     private OrderService orderService;
 
     @Autowired
-    BasketService basketService;
+    private BasketService basketService;
+
+    @Autowired
+    private BasketItemService basketItemService;
 
     // TODO переписать под id
     @GetMapping("/{userName}")
@@ -42,27 +47,31 @@ public class UserController {
     }
 
 
-    @PostMapping("/basket/{userName}")
-    public String basketEditOrSubmit(@RequestParam(required = true, defaultValue = "") String userName,
-                                     @RequestParam(required = true, defaultValue = "") Long basketId,
-                                     @RequestParam(required = true, defaultValue = "") Long itemId,
-                                     @RequestParam(required = true, defaultValue = "") String action,
-                                     Model model) {
+    @PostMapping("/basket/{userName}") //TODO переделать под id
+    public String basketActivity(@PathVariable String userName,
+                                 @RequestParam(required = true, defaultValue = "") Long basketId,
+                                 @RequestParam(required = true, defaultValue = "") Long itemId,
+                                 @RequestParam(required = true, defaultValue = "") String action,
+                                 @RequestParam(required = true, defaultValue = "") String comment,
+                                 @RequestParam(required = true, defaultValue = "") String phoneNumber,
+                                 @RequestParam(required = true, defaultValue = "") TypeOfPayment typeOfPayment,
+                                 Model model) {
 
-        if (action.equals("delete")) {
-
+        if (action.equals("deleteItem")) {
+            System.out.println("DELETE ITEM");
+            basketItemService.deleteItem(itemId);
         }
 
         if (action.equals("clear")) {
             System.out.println("Clear basket: " + basketId);
-        basketService.clearBasket(basketId);
+            basketService.clearBasket(basketId);
         }
 
         if (action.equals("submit")) {
 
         }
 
-        return "redirect:/user/basket/"+ userName;
+        return "redirect:/user/basket/" + userName;
     }
 
 }

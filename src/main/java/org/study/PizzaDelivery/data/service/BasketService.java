@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.data.model.Basket;
+import org.study.PizzaDelivery.data.model.BasketItem;
 import org.study.PizzaDelivery.data.model.User;
 import org.study.PizzaDelivery.data.repository.BasketRepository;
 import org.study.PizzaDelivery.data.repository.UserRepository;
+
+import java.util.*;
 
 @Service
 public class BasketService {
@@ -30,9 +33,15 @@ public class BasketService {
 
     public void clearBasket(Long basketId){
         Basket basketForClear = basketRepository.findById(basketId).get();
+        if (!basketForClear.getBasketItems().isEmpty()){
         User user = basketForClear.getUser();
         basketForClear.setActive(false);
         basketRepository.save(basketForClear);
         basketRepository.save(new Basket(true, user));
     }
+        else{
+            System.out.println("ALREADY empty EBAT");
+        }
+    }
+
 }

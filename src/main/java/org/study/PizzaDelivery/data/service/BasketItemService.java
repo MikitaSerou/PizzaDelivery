@@ -12,4 +12,9 @@ public class BasketItemService {
     private BasketItemRepository basketItemRepository;
 
 
+    public void deleteItem(Long itemId){
+        basketItemRepository.deleteByItemId(itemId);
+    //deleteById(itemId);
+    }
+
 }

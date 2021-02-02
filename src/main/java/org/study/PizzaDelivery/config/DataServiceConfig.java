@@ -19,7 +19,7 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = {"org.study.PizzaDelivery.data"})
-@PropertySource({"classpath:db.properties"})
+@PropertySource({"classpath:application.properties"})
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true) //maven dependency org.aspectj
 @EnableJpaRepositories(basePackages = "org.study.PizzaDelivery.data.repository")
@@ -49,6 +49,7 @@ public class DataServiceConfig {
         factory.setPackagesToScan("org.study.PizzaDelivery.data.model");
         factory.setDataSource(dataSource());
         factory.setJpaProperties(hibernateProperties());
+
         return factory;
     }
 

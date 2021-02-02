@@ -9,8 +9,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.study.PizzaDelivery.data.model.Basket;
 import org.study.PizzaDelivery.data.model.Role;
 import org.study.PizzaDelivery.data.model.User;
+import org.study.PizzaDelivery.data.repository.BasketRepository;
 import org.study.PizzaDelivery.data.repository.RoleRepository;
 import org.study.PizzaDelivery.data.repository.UserRepository;
 
@@ -25,13 +27,17 @@ public class UserService implements UserDetailsService {
     private EntityManager em;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired(required = false)
-    PasswordEncoder bCryptPasswordEncoder;
+    private PasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    BasketRepository basketRepository;
+
 
 
     public User findByName(String userName){
@@ -58,6 +64,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean saveUser(User user) {
+        //TODO создать первую корзину для юзера при регистрации
         User userFromDB = userRepository.findByUsername(user.getUsername());
 
         if (userFromDB != null) {
@@ -70,6 +77,8 @@ public class UserService implements UserDetailsService {
         user.setMail(user.getMail());
         user.setPhoneNumber(user.getPhoneNumber());
         userRepository.save(user);
+
+        basketRepository.save(new Basket(true, userRepository.findByUsername(user.getUsername())));
         return true;
     }
 

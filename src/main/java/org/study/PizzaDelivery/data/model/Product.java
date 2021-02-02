@@ -13,11 +13,11 @@ public class Product {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "base_id")
     private Base base;
 
@@ -34,7 +34,7 @@ public class Product {
     private List<Ingredient> ingredients;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,
-            cascade = CascadeType.MERGE)
+            cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,

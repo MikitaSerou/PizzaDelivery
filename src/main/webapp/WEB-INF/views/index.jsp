@@ -105,8 +105,12 @@
 
     <div class="row">
         <div class="col-sm-9"> <%--img-fluid--%>
+            <div class="alert alert-primary" style="width: 30%">
+            <h1 class="display-2" align="left" margin="right">
 
-            <h1 class="display-2" align="left" margin="right">О нас:</h1>
+                    О нас:
+
+            </h1></div>
             <h3 class="bg-default">
                 Много текста много текста много текста много текста много текста много текста много текста много текста
                 много

@@ -93,7 +93,6 @@
 
     <div class="row">
         <div class="col-sm-9" >
-
             <h1 class="display-2" align="left" margin="right"><spring:message code="ingredients.table"/></h1>
             <br/>
             <br/>

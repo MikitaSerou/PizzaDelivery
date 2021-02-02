@@ -4,6 +4,7 @@ package org.study.PizzaDelivery;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.study.PizzaDelivery.config.DataServiceConfig;
 import org.study.PizzaDelivery.data.model.Basket;
+import org.study.PizzaDelivery.data.model.BasketItem;
 import org.study.PizzaDelivery.data.model.User;
 import org.study.PizzaDelivery.data.repository.*;
 import org.study.PizzaDelivery.data.service.*;
@@ -38,11 +39,20 @@ public class Test {
 IngredientRepository ir = context.getBean("ingredientRepository", IngredientRepository.class);
 BasketRepository baskr = context.getBean("basketRepository", BasketRepository.class);
         BasketService baskS = context.getBean("basketService", BasketService.class);
+        BasketItemRepository bir  = context.getBean("basketItemRepository", BasketItemRepository.class);
+        BasketItemService bis = context.getBean("basketItemService", BasketItemService.class);
+       // System.out.println(bir.findById(10L).get().toString());
+        //BasketItem item = bir.findById(10L).get();
+     //   System.out.println("1");
+     //   pr.deleteById(1L);
+      //  bir.deleteByItemId(4L);
+     //   System.out.println("2");
+       // bis.deleteItem();
        // System.out.println(baskS.findActiveByUserID(1L).getBasketItems());
 
 //        System.out.println(
 //User user = ur.findById(1L).get();
-//
+////
 //baskr.save(new Basket(true, user));
 //        baskr.save(new Basket(false, user));
 

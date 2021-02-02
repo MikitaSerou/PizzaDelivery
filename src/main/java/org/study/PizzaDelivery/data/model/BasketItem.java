@@ -15,7 +15,7 @@ public class BasketItem {
     @JoinColumn(name = "basket_id", nullable = false)
     private Basket basket;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER)  //, cascade = {CascadeType.ALL}
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
@@ -73,5 +73,14 @@ public class BasketItem {
         this.description = comment;
     }
 
-
+    @Override
+    public String toString() {
+        return "BasketItem{" +
+                "id=" + id +
+                ", basket=" + basket.getId() +
+                ", product=" + product.getId() +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

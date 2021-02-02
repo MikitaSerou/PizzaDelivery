@@ -28,8 +28,9 @@ public class CategoryService {
 
 
     public void addCategory(String categoryName, Double categoryPrice) {
+        if(categoryName != null && categoryPrice != null){
         Category categoryForAdd = new Category(categoryName, categoryPrice);
-        categoryRepository.save(categoryForAdd);
+        categoryRepository.save(categoryForAdd);}
     }
 
     public void editCategory(Short categoryId, String categoryName, Double categoryPrice) {
