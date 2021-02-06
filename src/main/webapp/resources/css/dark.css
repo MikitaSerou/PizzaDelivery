@@ -10,6 +10,16 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+#mainLogo{
+    background-image: url(../images/logo/logoWhite.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 220px;
+    height: 60px;
+}
+
+
 html {
     height: 100%;
     min-height: 100%;

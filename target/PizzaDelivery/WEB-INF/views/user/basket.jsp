@@ -7,6 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico" />
     <title><spring:message code="basket.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
@@ -17,9 +18,9 @@
 
 <div class="sticky-top">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-        <a class="navbar-brand" href="/"><h1><img
-                src='<spring:url value="/resources/images/logo/logoPBright.png"/>'/> <spring:message code="site.name"/>
-        </h1></a>
+
+        <a class="navbar-brand" href="/" id="mainLogo"></a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -93,7 +94,9 @@
                 </svg>
                 <spring:message code="promotions.title"/></a></button>
         </div>
+        <h1>${user.id}</h1>
     </nav>
+
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -125,6 +128,8 @@
                     </div>
                 </div>
             </div>
+
+
             <c:if test="${basket.getBasketItems().isEmpty()}">
                 <div class="alert alert-danger">
                     <h1 class="display-4" align="center"><spring:message code="emptyBasket"/></h1>
@@ -141,14 +146,15 @@
 
                         </div>
                         <div class="col">
+                            <h2 align="right"><spring:message code="basket.sum"/>: ${basketSum}</h2>
                             <div class="btn-group btn-group-lg" role="group" aria-label="..."
                                  style="position: absolute; right: 2%; bottom: 10%">
-                                <a href="#submitOrder">
+                                <a href="#editOrder">
                                     <button class="btn btn-success btn-lg">
                                         <h2><spring:message code="makeOrder.button"/></h2>
                                     </button>
                                 </a>
-                                <form action="${pageContext.request.contextPath}/user/basket/${user.username}"
+                                <form action="${pageContext.request.contextPath}/user/basket"
                                       method="post">
                                         <%--    <input type="hidden" name="userName" value="${user.username}"/>--%>
                                     <input type="hidden" name="basketId" value="${basket.id}"/>
@@ -160,54 +166,96 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <table class="table table-hover table-dark" border="1">
-                    <thead>
-                    <th><spring:message code="item"/></th>
-                    <th><spring:message code="price"/></th>
-                    <th><spring:message code="description"/></th>
-                    </thead>
-                    <c:forEach items="${basket.basketItems}" var="item">
-                        <tr class="table-secondary">
-                            <td>id: ${item.id}, ${item.product.name}</td>
-                            <td>${item.product.price}</td>
-                            <td>${item.description}</td>
-                            <td style="margin-left: auto; margin-right: auto;">
-                                    <%--TODO id--%>
-                                <form action="${pageContext.request.contextPath}/user/basket/${user.username}"
-                                      method="post">
-                                    <input type="hidden" name="itemId" value="${item.id}"/>
-                                        <%--<input type="hidden" name="userName" value="${user.username}"/>--%>
-                                    <input type="hidden" name="action" value="deleteItem"/>
-                                    <button type="submit"
-                                            class="btn btn-warning" <%--style="position:absolute; top:0; right:0;"--%>>
-                                        <spring:message code="deleteItem.button"/>
-                                    </button>
-                                </form>
-                            </td>
 
-                        </tr>
-                    </c:forEach>
-                </table>
-                <h2 id="submitOrder"><spring:message code="orderSettings"/></h2>
+                    <table class="table table-hover table-dark" border="1">
+                        <thead>
+                        <th><spring:message code="item"/></th>
+                        <th><spring:message code="price"/></th>
+                        <th><spring:message code="description"/></th>
+                        <th></th>
+                        </thead>
+                        <c:forEach items="${basket.basketItems}" var="item">
+                            <tr class="table-secondary">
+                                <td width="10%">id: ${item.id}, ${item.product.name}</td>
+                                <td width="10%">${item.product.price}</td>
+                                <td width="73%">${item.description}</td>
+                                <td width="7%">
+                                    <form action="${pageContext.request.contextPath}/user/basket"
+                                          method="post">
+                                        <input type="hidden" name="itemId" value="${item.id}"/>
+                                        <input type="hidden" name="action" value="deleteItem"/>
+                                        <button type="submit"
+                                                class="btn btn-warning">
+                                            <spring:message code="deleteItem.button"/>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+
+                    <h2 id="editOrder" align="center"><spring:message code="orderSettings"/></h2>
+                    <form method="POST" modelAttribute="userForm">
+                        <table width="100%">
+                            <td>
+                                <input type="hidden" class="form-control" name="basketId" path="basketId"
+                                       value="${basket.id}">
+
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput"><spring:message
+                                            code="phoneNumber"/>:</label>
+                                    <input type="text" class="form-control" name="phoneNumber"
+                                           id="formGroupExampleInput"
+                                           placeholder="Phone number" path="phoneNumber">
+                                    <br/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput2"><spring:message
+                                            code="typeOfPaymentChoose"/>:</label>
+                                    <select id="formGroupExampleInput2" class="form-control" name="typeOfPayment"
+                                            path="typeOfPayment">
+                                        <c:forEach items="${typesOfPayment}" var="type">
+                                            <option name="typeOfPayment"
+                                                    value=${type} text="${type}">${type}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </td>
+                            <td><label for="formGroupExampleInput3"><spring:message code="commentToOrder"/>:</label>
+                                <div class="form-group" style="padding: 5px;">
+                                <textarea id="formGroupExampleInput3" name="comment" path="comment"
+                                          placeholder="Comment" maxlength="255" rows="6"
+                                          style=" height: 105%; width: 100%"></textarea>
+                                </div>
+                            </td>
+                            <td width="10%">
+                                <input type="hidden" name="action" value="submit"/>
+                                <button type="submit" class="btn btn-success">
+                                    <h2 class="align-items-md-center" size="70"
+                                        style="margin-right: auto; margin-left: auto; padding-top: 15px; padding-bottom: 15px;">
+                                        <spring:message
+                                                code="submit.button"/></h2>
+                                </button>
+                            </td>
+                        </table>
+                    </form>
+
+                </div>
             </c:if>
         </div>
         <div class="col-sm-3">
-            <section style="padding-top: 90px; text-align: center">
+            <section class="sticky-top" style="padding-top: 90px; text-align: center">
                 <div class="card text-white bg-dark mb-4">
-                    <sec:authorize access="isAuthenticated()">
+                    <sec:authorize access="hasRole('ROLE_USER')">
                         <h4 class="display-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                                  class="bi bi-person" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                             </svg>
-                                ${pageContext.request.userPrincipal.name}
+                                ${user.getUsername()}
                         </h4>
-                    </sec:authorize>
-                    <sec:authorize access="hasRole('ROLE_USER')">
                         <div class="list-group">
-                                <%--TODO id--%>
-                            <a href="/user/${pageContext.request.userPrincipal.name}"
+                            <a href="/user"
                                class="list-group-item list-group-item-action">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-briefcase" viewBox="0 0 16 16">
@@ -227,7 +275,6 @@
                             </a>
                         </div>
                     </sec:authorize>
-
                 </div>
             </section>
         </div>

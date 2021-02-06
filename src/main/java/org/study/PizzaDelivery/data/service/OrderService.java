@@ -3,8 +3,11 @@ package org.study.PizzaDelivery.data.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.study.PizzaDelivery.data.enums.Status;
-import org.study.PizzaDelivery.data.model.Order;
+import org.study.PizzaDelivery.data.enums.TypeOfPayment;
+import org.study.PizzaDelivery.data.model.*;
+
 import org.study.PizzaDelivery.data.repository.OrderRepository;
+
 
 import java.util.List;
 
@@ -12,25 +15,53 @@ import java.util.List;
 public class OrderService {
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
-    public List<Order> findOrdersByUserId(Long userId){
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private BasketService basketService;
+
+    @Autowired
+    private OrderItemService orderItemService;
+
+    public void saveOrder(Order order) {
+        orderRepository.save(order);
+    }
+
+    public Order findById(Long orderId) {
+        return orderRepository.findById(orderId).get();
+    }
+
+    public List<Order> findOrdersByUserId(Long userId) {
         return orderRepository.findAllByUserId(userId);
     }
 
-    public List<Order> findAllByUserUsername(String userName){
+    public List<Order> findAllByUserUsername(String userName) {
         return orderRepository.findAllByUserUsername(userName);
     }
 
-    public List<Order> findNotPaidOrders(){
+    public List<Order> findNotPaidOrders() {
         return orderRepository.findAllByStatus(Status.NOT_PAID);
     }
 
 
-    public boolean cancelOrder(Long orderId){
+    public void addOrder(Long basketId, String phoneNumber, String comment, TypeOfPayment typeOfPayment) {
+        User user = basketService.findById(basketId).getUser();
+        double orderPrice = basketService.calculatePrice(basketId);
+        Order order = new Order(user, phoneNumber, orderPrice, typeOfPayment, comment);
+        orderRepository.save(order);
+        orderItemService.addOrderItemsFromBasket(basketId, order);
+        basketService.clearBasket(basketId);
+    }
+
+
+
+    public boolean cancelOrder(Long orderId) {
         System.out.println("OS CANCEL");
         Order order = orderRepository.findById(orderId).get();
-        if(order.getStatus() == Status.CANCELED){
+        if (order.getStatus() == Status.CANCELED) {
             return false;
         }
         order.setStatus(Status.CANCELED);
@@ -39,10 +70,10 @@ public class OrderService {
     }
 
 
-    public boolean paidUpOrder(Long orderId){
+    public boolean paidUpOrder(Long orderId) {
         System.out.println("OS PAID");
         Order order = orderRepository.findById(orderId).get();
-        if(order.getStatus() == Status.PAID){
+        if (order.getStatus() == Status.PAID) {
             return false;
         }
         order.setStatus(Status.PAID);
@@ -50,10 +81,10 @@ public class OrderService {
         return true;
     }
 
-    public boolean setOrdernotPaidStatus(Long orderId){
+    public boolean setOrdernotPaidStatus(Long orderId) {
         System.out.println("OS NOT PAID");
         Order order = orderRepository.findById(orderId).get();
-        if(order.getStatus() == Status.NOT_PAID){
+        if (order.getStatus() == Status.NOT_PAID) {
             return false;
         }
         order.setStatus(Status.NOT_PAID);

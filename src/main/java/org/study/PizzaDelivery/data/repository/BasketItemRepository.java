@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.data.model.BasketItem;
 
+import java.util.List;
+
 @Repository
 public interface BasketItemRepository extends CrudRepository<BasketItem, Long> {
 
@@ -14,4 +16,7 @@ public interface BasketItemRepository extends CrudRepository<BasketItem, Long> {
     @Transactional
     @Query(value = "DELETE from BASKET_ITEM where ID = ?1", nativeQuery = true)
     void deleteByItemId(long id);
+
+
+    List<BasketItem> findAllByBasketId(Long basketId);
 }

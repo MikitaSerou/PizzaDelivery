@@ -62,7 +62,6 @@ public class AdminController {
     public String changeOrderStatus(@RequestParam(required = true, defaultValue = "") Long orderId,
                                     @RequestParam(required = true, defaultValue = "") String action,
                                     Model model) {
-
         if (action.equals("cancel")) {
             orderService.cancelOrder(orderId);
         }
@@ -96,12 +95,10 @@ public class AdminController {
         if (action.equals("delete")) {
             ingredientService.deleteIngredient(ingredientId);
         }
-
         if (action.equals("add")) {
             ingredientService.addIngredient(ingredientName, ingredientPrice, ingredientType);
 
         }
-
         if (action.equals("edit")) {
             ingredientService.updateIngredient(ingredientId, ingredientName, ingredientPrice, ingredientType);
         }

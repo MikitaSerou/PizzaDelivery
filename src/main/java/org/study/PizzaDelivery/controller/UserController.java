@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.study.PizzaDelivery.data.enums.TypeOfPayment;
+import org.study.PizzaDelivery.data.model.Basket;
 import org.study.PizzaDelivery.data.model.User;
 import org.study.PizzaDelivery.data.service.BasketItemService;
 import org.study.PizzaDelivery.data.service.BasketService;
@@ -14,6 +15,7 @@ import org.study.PizzaDelivery.data.service.UserService;
 
 @Controller
 @RequestMapping("/user")
+@SessionAttributes("user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -27,28 +29,24 @@ public class UserController {
     @Autowired
     private BasketItemService basketItemService;
 
-    // TODO переписать под id
-    @GetMapping("/{userName}")
-    public String account(@PathVariable("userName") String userName, Model model) {
-        //затычка/костыль, чтобы вывести  на представление
-        model.addAttribute("user", userService.findByName(userName));
-        model.addAttribute("userOrders", orderService.findAllByUserUsername(userName));
+    @GetMapping
+    public String account(@ModelAttribute User user, Model model) {
+        model.addAttribute("userOrders", orderService.findOrdersByUserId(user.getId()));
         return "user/cabinet";
     }
 
-    // TODO переписать под id
-    @GetMapping("/basket/{userName}")
+    @GetMapping("/basket")
     @Transactional
-    public String basket(@PathVariable("userName") String userName, Model model) {
-        User user = userService.findByName(userName);
-        model.addAttribute("user", user);
-        model.addAttribute("basket", basketService.findActiveByUserID(user.getId()));
+    public String basket(@ModelAttribute User user, Model model) {
+        Basket basket =basketService.findActiveByUserID(user.getId());
+        model.addAttribute("basket", basket);
+        model.addAttribute("basketSum", basketService.calculatePrice(basket.getId()));
+        model.addAttribute("typesOfPayment", TypeOfPayment.values());
         return "user/basket";
     }
 
-
-    @PostMapping("/basket/{userName}") //TODO переделать под id
-    public String basketActivity(@PathVariable String userName,
+    @PostMapping("/basket")
+    public String basketActivity(@ModelAttribute User user,
                                  @RequestParam(required = true, defaultValue = "") Long basketId,
                                  @RequestParam(required = true, defaultValue = "") Long itemId,
                                  @RequestParam(required = true, defaultValue = "") String action,
@@ -61,17 +59,17 @@ public class UserController {
             System.out.println("DELETE ITEM");
             basketItemService.deleteItem(itemId);
         }
-
         if (action.equals("clear")) {
             System.out.println("Clear basket: " + basketId);
             basketService.clearBasket(basketId);
         }
-
         if (action.equals("submit")) {
-
+            System.out.println(basketId +" "+ phoneNumber +" "+ comment  +" "+ typeOfPayment );
+            orderService.addOrder(basketId, phoneNumber, comment, typeOfPayment);
+        return "redirect:/user";
         }
 
-        return "redirect:/user/basket/" + userName;
+        return "redirect:/user/basket";
     }
 
 }

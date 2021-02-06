@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .logoutSuccessUrl("/")
                 .and()
-                .rememberMe().key("uniqueAndSecret");
+                .rememberMe().key("uniqueAndSecret");//TODO мб переделать под ДБ токен
 
     }
 

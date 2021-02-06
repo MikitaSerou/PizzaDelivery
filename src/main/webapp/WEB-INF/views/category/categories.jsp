@@ -11,6 +11,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico" />
     <title><spring:message code="category.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
@@ -20,9 +21,7 @@
 <div class="sticky-top">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
 
-        <a class="navbar-brand" href="/"><h1><img
-                src='<spring:url value="/resources/images/logo/logoPBright.png"/>'/> <spring:message code="site.name"/>
-        </h1></a>
+        <a class="navbar-brand" href="/" id="mainLogo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -93,6 +92,7 @@
                 </svg>
                 <spring:message code="promotions.title"/></a></button>
         </div>
+        ${user.id}
     </nav>
 </div>
 
@@ -102,10 +102,10 @@
     <div class="row">
         <div class="col-sm-9">
             <div class="alert alert-primary" style="width: 32%">
-            <h1 class="display-2" align="left" margin="right">
-                <spring:message code="category.title"/>
-            </h1>
-        </div>
+                <h1 class="display-2" align="left" margin="right">
+                    <spring:message code="category.title"/>
+                </h1>
+            </div>
             <br/>
             <br/>
             <h3><spring:message code="category.blocuote"/></h3>
@@ -200,19 +200,18 @@
             </c:forEach>
         </div>
 
+
         <div class="col-sm-3">
             <section class="sticky-top" style="padding-top: 90px; text-align: center">
                 <div class="card text-white bg-dark mb-4">
-                    <sec:authorize access="isAuthenticated()">
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                         <h4 class="display-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                                  class="bi bi-person" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                             </svg>
-                                ${pageContext.request.userPrincipal.name}
+                            ADMIN <%--УБРАТЬ--%>
                         </h4>
-                    </sec:authorize>
-                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                         <div class="list-group">
                             <a href="/admin" class="list-group-item list-group-item-action">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -234,16 +233,22 @@
                         </div>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ROLE_USER')">
+                        <h4 class="display-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                 class="bi bi-person" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                            </svg>
+                                ${user.getUsername()}
+                        </h4>
                         <div class="list-group">
-                            <a href="/user/${pageContext.request.userPrincipal.name}"
+                            <a href="/user"
                                class="list-group-item list-group-item-action">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-briefcase" viewBox="0 0 16 16">
                                     <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
                                 </svg>
                                 <spring:message code="userOffice.title"/></a>
-                            <a href="/user/basket/${pageContext.request.userPrincipal.name}"
-                               class="list-group-item list-group-item-action">
+                            <a href="/user/basket" class="list-group-item list-group-item-action">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-basket2" viewBox="0 0 16 16">
                                     <path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z"/>

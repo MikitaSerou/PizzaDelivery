@@ -21,6 +21,7 @@ import javax.persistence.PersistenceContext;
 import java.util.*;
 
 @Service
+
 public class UserService implements UserDetailsService {
 
     @PersistenceContext
@@ -36,13 +37,16 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    BasketRepository basketRepository;
+    BasketService basketService;
 
 
-
-    public User findByName(String userName){
-     return    userRepository.findByUsername(userName);
+    public User findByName(String userName) {
+        return userRepository.findByUsername(userName);
     }
+
+public Basket getActiveBasket(Long userId) {
+        return basketService.getActiveBasketByUserId(userId);
+}
 
 
     @Override
@@ -64,7 +68,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean saveUser(User user) {
-        //TODO создать первую корзину для юзера при регистрации
+
         User userFromDB = userRepository.findByUsername(user.getUsername());
 
         if (userFromDB != null) {
@@ -78,7 +82,7 @@ public class UserService implements UserDetailsService {
         user.setPhoneNumber(user.getPhoneNumber());
         userRepository.save(user);
 
-        basketRepository.save(new Basket(true, userRepository.findByUsername(user.getUsername())));
+        basketService.saveBasket(userRepository.findByUsername(user.getUsername()));
         return true;
     }
 

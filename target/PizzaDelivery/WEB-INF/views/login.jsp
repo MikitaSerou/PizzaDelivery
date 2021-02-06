@@ -7,6 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico" />
     <title><spring:message code="login.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
@@ -17,9 +18,8 @@
 <div class="sticky-top">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
 
-        <a class="navbar-brand" href="/"><h1><img
-                src='<spring:url value="/resources/images/logo/logoPBright.png"/>'/> <spring:message code="site.name"/>
-        </h1></a>
+        <a class="navbar-brand" href="/" id="mainLogo"></a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

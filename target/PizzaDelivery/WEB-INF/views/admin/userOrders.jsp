@@ -7,6 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico" />
     <title>${user.username} <spring:message code="orders.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
@@ -17,9 +18,7 @@
 <div class="sticky-top">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
 
-        <a class="navbar-brand" href="/"><h1><img
-                src='<spring:url value="/resources/images/logo/logoPBright.png"/>'/> <spring:message code="site.name"/>
-        </h1></a>
+        <a class="navbar-brand" href="/" id="mainLogo"></a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,16 +136,14 @@
         <div class="col-sm-3">
             <section style="padding-top: 90px; text-align: center">
                 <div class="card text-white bg-dark mb-4">
-                    <sec:authorize access="isAuthenticated()">
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                         <h4 class="display-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                                  class="bi bi-person" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                             </svg>
-                                ${pageContext.request.userPrincipal.name}
+                            ADMIN <%--УБРАТЬ--%>
                         </h4>
-                    </sec:authorize>
-                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                         <div class="list-group">
                             <a href="/admin" class="list-group-item list-group-item-action">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -166,49 +163,6 @@
                                 <spring:message code="logout.ref"/>
                             </a>
                         </div>
-                    </sec:authorize>
-                    <sec:authorize access="!isAuthenticated()">
-                        <form method="POST" action="/login" class="field">
-                            <h4><spring:message code="office.entrance"/></h4>
-                            <div class="form-group">
-                                <label for="formGroupExampleInput"><spring:message code="username"/></label>
-                                <input type="text" class="form-control" name="username" id="formGroupExampleInput"
-                                       placeholder="Username">
-                            </div>
-                            <div class="form-group">
-                                <label for="formGroupExampleInput2"><spring:message code="password"/></label>
-                                <input type="password" name="password" class="form-control" id="formGroupExampleInput2"
-                                       placeholder="Password">
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"
-                                       name="remember-me">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    <spring:message code="remember.me"/>
-                                </label>
-                            </div>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="submit" class="btn btn-success">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                              d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                                    </svg>
-                                    <spring:message code="login.ref"/>
-                                </button>
-                                <button type="button" class="btn btn-secondary"><a href="/registration">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-person-plus" viewBox="0 0 16 16">
-                                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-                                    </svg>
-                                    <spring:message code="registration.ref"/></a>
-                                </button>
-                            </div>
-                        </form>
                     </sec:authorize>
                 </div>
             </section>

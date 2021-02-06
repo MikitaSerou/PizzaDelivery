@@ -5,14 +5,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.study.PizzaDelivery.data.model.Category;
+import org.study.PizzaDelivery.data.model.User;
 import org.study.PizzaDelivery.data.service.BaseService;
 import org.study.PizzaDelivery.data.service.CategoryService;
 import org.study.PizzaDelivery.data.service.ProductService;
 
 import java.util.List;
 
+
 @Controller
 @RequestMapping("/category")
+@SessionAttributes("user")
 public class CategoryController {
 
     @Autowired
@@ -46,15 +49,13 @@ public class CategoryController {
                               @RequestParam(required = true, defaultValue = "") Double categoryPrice,
                               @RequestParam(required = true, defaultValue = "") String action,
                               Model model) {
-//переписать
+
         if (action.equals("delete")) {
             categoryService.deleteCategory(categoryId);
         }
-
         if (action.equals("add")) {
             categoryService.addCategory(categoryName, categoryPrice);
         }
-
         if (action.equals("edit")) {
             System.out.println("EDIT");
             categoryService.editCategory(categoryId, categoryName, categoryPrice);

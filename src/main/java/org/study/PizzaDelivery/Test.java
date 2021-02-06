@@ -41,6 +41,9 @@ BasketRepository baskr = context.getBean("basketRepository", BasketRepository.cl
         BasketService baskS = context.getBean("basketService", BasketService.class);
         BasketItemRepository bir  = context.getBean("basketItemRepository", BasketItemRepository.class);
         BasketItemService bis = context.getBean("basketItemService", BasketItemService.class);
+
+        System.out.println(bir.findAllByBasketId(5L));
+        System.out.println(baskS.calculatePrice(5L));
        // System.out.println(bir.findById(10L).get().toString());
         //BasketItem item = bir.findById(10L).get();
      //   System.out.println("1");

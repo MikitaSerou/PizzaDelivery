@@ -10,6 +10,7 @@ import org.study.PizzaDelivery.data.repository.BasketRepository;
 import org.study.PizzaDelivery.data.repository.UserRepository;
 
 import java.util.*;
+import java.util.stream.DoubleStream;
 
 @Service
 public class BasketService {
@@ -18,16 +19,37 @@ public class BasketService {
     private BasketRepository basketRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
+
+    @Autowired
+    BasketItemService basketItemService;
+
+
+    public void saveBasket(User user){
+        basketRepository.save(new Basket(true, user));
+    }
+
+    public Basket getActiveBasketByUserId(Long userId){
+        return basketRepository.findByUserIdAndActiveIsTrue(userId);
+    }
+
+    //TODO написать проверки на налл в подобных
+    public Basket findById(Long basketId){
+       return basketRepository.findById(basketId).get();
+    }
 
     public void createBasket(Long userId){
-        //TODO уточнить, должны ли возвращать что-либо методы добавления в БД
-        basketRepository.save(new Basket(userRepository.findById(userId).get()));
+        basketRepository.save(new Basket(userService.findUserById(userId)));
+    }
+
+
+    public Double calculatePrice(Long basketId){
+        List<BasketItem> items = basketItemService.getAllFromBasketByBasketId(basketId);
+        return items.stream().mapToDouble(BasketItem::getPrice).sum();
     }
 
     @Transactional
     public Basket findActiveByUserID(Long userId){
-        //TODO переписать все методы с именем пользователя под id!
         return basketRepository.findByUserIdAndActiveIsTrue(userId);
     }
 
