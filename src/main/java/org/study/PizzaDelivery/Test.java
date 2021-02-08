@@ -3,6 +3,7 @@ package org.study.PizzaDelivery;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.study.PizzaDelivery.config.DataServiceConfig;
+import org.study.PizzaDelivery.data.model.Base;
 import org.study.PizzaDelivery.data.model.Basket;
 import org.study.PizzaDelivery.data.model.BasketItem;
 import org.study.PizzaDelivery.data.model.User;
@@ -31,6 +32,7 @@ public class Test {
         CategoryService cs = context.getBean("categoryService", CategoryService.class);
         CategoryRepository cr = context.getBean("categoryRepository", CategoryRepository.class);
         BaseRepository br = context.getBean("baseRepository", BaseRepository.class);
+        BaseService bs = context.getBean("baseService", BaseService.class);
         UserService us = context.getBean("userService", UserService.class);
         UserRepository ur = context.getBean("userRepository", UserRepository.class);
         OrderRepository or = context.getBean("orderRepository", OrderRepository.class);
@@ -42,8 +44,21 @@ BasketRepository baskr = context.getBean("basketRepository", BasketRepository.cl
         BasketItemRepository bir  = context.getBean("basketItemRepository", BasketItemRepository.class);
         BasketItemService bis = context.getBean("basketItemService", BasketItemService.class);
 
-        System.out.println(bir.findAllByBasketId(5L));
-        System.out.println(baskS.calculatePrice(5L));
+        System.out.println(ps.findDistinctTopByName("Majorino"));
+
+        //System.out.println(pr.findDistinctNameByCategoryId());
+
+/*       Base b1 =  ps.findOne(41L).getBase();
+
+        Base b2 =  bs.findById((short) 1);
+        System.out.println(ps.findOne(41L).getBase());
+        System.out.println(bs.findById((short) 1));
+        System.out.println(b1.equals(b2));*/
+
+
+//        System.out.println(bir.findAllByBasketId(5L));
+//        System.out.println(baskS.calculatePrice(5L));
+
        // System.out.println(bir.findById(10L).get().toString());
         //BasketItem item = bir.findById(10L).get();
      //   System.out.println("1");

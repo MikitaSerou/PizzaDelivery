@@ -171,8 +171,22 @@ public class Product {
         this.orderItems = orders_Order_items;
     }
 
-
     @Override
+    public String toString() {
+        return "\nProduct{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category.getName() +
+                ", base=" + base.getName() +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                /*", ingredients=" + ingredients +*/
+                /*", orderItems=" + orderItems +
+                ", basketItems=" + basketItems +*/
+                '}';
+    }
+
+/*    @Override
     public String toString() {
         String str;
         if (base != null) {
@@ -188,7 +202,7 @@ public class Product {
                     ", price: " + price + "]";
         }
         return str;
-    }
+    }*/
 
 }
 

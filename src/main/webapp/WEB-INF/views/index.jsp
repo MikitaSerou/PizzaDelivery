@@ -97,7 +97,7 @@
                 </svg>
                 <spring:message code="promotions.title"/></a></button>
         </div>
-        <h1>${userId}</h1>
+        <h1>${user.id}</h1>
     </nav>
 
 </div>

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.study.PizzaDelivery.data.model.Category;
-import org.study.PizzaDelivery.data.model.User;
 import org.study.PizzaDelivery.data.service.BaseService;
 import org.study.PizzaDelivery.data.service.CategoryService;
 import org.study.PizzaDelivery.data.service.ProductService;
@@ -31,13 +30,15 @@ public class CategoryController {
     public String categoryList(Model model) {
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
+        model.addAttribute("bases", baseService.findAll());
+        model.addAttribute("firstBase", baseService.findById((short) 1));//TODO сделать метод для нахождения самой дешевой SELECT TOP 1 *FROM BASE ORDER BY price ASC;
         return "category/categories";
     }
 
 
-    @GetMapping(value = "/{productId}")
-    public String show(@PathVariable("productId") Long id, Model model) {
-        model.addAttribute("product", productService.findOne(id));
+    @GetMapping(value = "/{productName}") //TODO сделать под нейм SELECT TOP 1 * FROM PRODUCT WHERE NAME = 'Majorino';
+    public String show(@PathVariable("productName") String productName, Model model) {
+        model.addAttribute("product", productService.findDistinctTopByName(productName));
         model.addAttribute("baseList", baseService.findAll());
         return "category/product";
     }

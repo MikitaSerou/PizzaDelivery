@@ -14,9 +14,12 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-
     public Product findOne(long id){
        return productRepository.findById(id);
+    }
+
+    public Product findDistinctTopByName(String productName){
+        return productRepository.findDistinctTopByName(productName);
     }
 
     public List<Product> findByCategoryName(String name){ return productRepository.findAllByCategoryName(name);}

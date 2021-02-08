@@ -79,6 +79,13 @@ html {
     border: solid black 1px;
 }
 
+#pizzaName{
+    background-color: #ed5a56;
+    border-radius: 10px;
+    font-weight: bolder;
+
+}
+
 #myFooter {
     border-top: solid 1px gray;
     top: 100px;

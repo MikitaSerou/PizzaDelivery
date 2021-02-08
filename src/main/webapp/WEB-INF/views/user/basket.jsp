@@ -95,7 +95,6 @@
                 <spring:message code="promotions.title"/></a></button>
         </div>
         <h1>${user.id}</h1>
-        <h1>${userId}</h1>
     </nav>
 </div>
 <div class="container-fluid">
