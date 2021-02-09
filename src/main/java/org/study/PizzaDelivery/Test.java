@@ -43,11 +43,17 @@ BasketRepository baskr = context.getBean("basketRepository", BasketRepository.cl
         BasketService baskS = context.getBean("basketService", BasketService.class);
         BasketItemRepository bir  = context.getBean("basketItemRepository", BasketItemRepository.class);
         BasketItemService bis = context.getBean("basketItemService", BasketItemService.class);
+       // System.out.println(ps.findByNameAndBaseId("Majorino", (short) 1));
 
-        System.out.println(ps.findDistinctTopByName("Majorino"));
 
+       // System.out.println(pr.existsByName("Cula"));
+ps.deleteAllvariablesOfProductByName("Culo");
+        //ps.findByNameAndBaseId()
+
+        //System.out.println(ps.findDistinctTopByName("Majorino"));
+       // System.out.println(pr.findAllByBase(bs.findCheapest()));
         //System.out.println(pr.findDistinctNameByCategoryId());
-
+       // System.out.println(pr.findByNameAndBaseId("Majorino", (short)1));
 /*       Base b1 =  ps.findOne(41L).getBase();
 
         Base b2 =  bs.findById((short) 1);

@@ -169,15 +169,18 @@
                     <table class="table table-hover table-dark" border="1">
                         <thead>
                         <th><spring:message code="item"/></th>
+
                         <th><spring:message code="price"/></th>
                         <th><spring:message code="description"/></th>
+                        <th><spring:message code="comment"/></th>
                         <th></th>
                         </thead>
                         <c:forEach items="${basket.basketItems}" var="item">
                             <tr class="table-secondary">
-                                <td width="10%">id: ${item.id}, ${item.product.name}</td>
+                                <td width="10%">${item.product.name} ${item.product.base.name}</td>
                                 <td width="10%">${item.product.price}</td>
-                                <td width="73%">${item.description}</td>
+                                <td width="35%">${item.product.description}</td>
+                                <td width="38%">${item.description}</td>
                                 <td width="7%">
                                     <form action="${pageContext.request.contextPath}/user/basket"
                                           method="post">

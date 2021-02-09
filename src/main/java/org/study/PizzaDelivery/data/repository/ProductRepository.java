@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.study.PizzaDelivery.data.model.Base;
 import org.study.PizzaDelivery.data.model.Category;
 import org.study.PizzaDelivery.data.model.Product;
 
@@ -29,10 +30,20 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
 
     Product findDistinctTopByName(String name);
 
+    boolean existsByName(String name);
 
+    @Transactional
+    @Modifying
+    void deleteAllByName(String name);
 
-  //  @Modifying
+    @Transactional
+    Product findByNameAndBaseId(String name, Short baseId);
+
+    //  @Modifying
     @Transactional
     @Query(value = "SELECT DISTINCT PRODUCT.name from PUBLIC.PRODUCT", nativeQuery = true)
     List<String> findDistinctNameByCategoryId();
+
+    @Transactional
+    List<Product> findAllByBase(Base base);
 }

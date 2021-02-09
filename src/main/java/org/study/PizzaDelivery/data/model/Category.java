@@ -2,6 +2,7 @@ package org.study.PizzaDelivery.data.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Category {
@@ -13,7 +14,7 @@ public class Category {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Product> products;
 
     @Column(name="category_price")
@@ -63,7 +64,18 @@ public class Category {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return id == category.id && Double.compare(category.price, price) == 0 && name.equals(category.name);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price);
+    }
 
     @Override
     public String toString() {

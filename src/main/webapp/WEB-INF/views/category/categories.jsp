@@ -143,6 +143,7 @@
                     </form>
                 </div>
             </sec:authorize>
+
             <c:forEach var="category" items="${categories}">
                 <div class="alert alert-warning">
 
@@ -187,51 +188,40 @@
                         </form>
                     </sec:authorize>
                 </div>
-
-
-                <c:forEach var="product" items="${category.products}">
-                    <c:if test="${product.getBase().equals(firstBase)}">
-            <a href="/category/${product.name}"> <%--TODO сделать под нейм--%>
-                        <div class="card text-white bg-primary mb-3" style="max-height: 280px;">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    <img src='<spring:url value="/resources/images/pizzaItem.png" />' width="280px"
-                                         height="280px"/>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-
-                                        <h1 class="card-title" ><span id="pizzaName">${product.name}</span></h1>
-                                        <p class="card-text">${product.description}</p>
-
-                                        <h2 style="position: absolute; left:3%; bottom: 0;">от ${product.price} .руб</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div></a>
-                    </c:if>
-                </c:forEach>
-                <%--<c:forEach var="product" items="${category.products}">
                 <div class="row row-cols-1 row-cols-md-3">
-                        <div class="col mb-1">
-                            <c:if test="${product.getBase().equals(firstBase)}">
-                                <a href="/category/${product.id}">
-                                    <div class="card text-white bg-dark mb-1" style="width: 280px;">
-                                        <img src='<spring:url value="/resources/images/pizzaItem.png" />' width="100%"
+                    <c:forEach var="product" items="${cheapestProducts}">
+                        <c:if test="${product.getCategory().equals(category)}">
+                            <div class="col mb-4">
+                                <a href="/category/${product.name}">
+                                    <div class="card text-white bg-primary mb-4" style="width: 280px;">
+                                        <img src='<spring:url value="/resources/images/pizzaItem.png" />' width="280px"
                                              height="280px"/>
                                         <div class="card-body">
-                                            <h3 class="card-title">${product.name}</h3>
+                                            <h3 class="card-title"><span id="pizzaName">${product.name}</span></h3>
                                             <p class="card-text">${product.description}</p>
-                                            <p class="card-text">${product.base.getName()}</p>
                                         </div>
                                         <div class="card-footer">
                                             <h4>от ${product.price} .руб</h4>
+
+
+                                            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                                <form action="${pageContext.request.contextPath}/category"
+                                                      method="post">
+                                                        <input type="hidden" name="productName" value="${product.name}">
+                                                        <input type="hidden" name="action" value="deleteProduct"/>
+                                                        <button type="submit" class="btn btn-danger" style="width: 100%;"><spring:message
+                                                                code="delete.button"/></button>
+                                                </form>
+                                            </sec:authorize>
+
+
                                         </div>
                                     </div>
                                 </a>
-                            </c:if>
-                        </div>
-                </div></c:forEach>--%>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
                 <br/>
                 <br/>
             </c:forEach>
@@ -250,14 +240,16 @@
                         </h4>
                         <div class="list-group">
                             <a href="/admin" class="list-group-item list-group-item-action">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                     fill="currentColor"
                                      class="bi bi-tools" viewBox="0 0 16 16">
                                     <path d="M1 0L0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.356 3.356a1 1 0 0 0 1.414 0l1.586-1.586a1 1 0 0 0 0-1.414l-3.356-3.356a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0zm9.646 10.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708zM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11z"/>
                                 </svg>
                                 <spring:message code="adminOffice.title"/></a>
                             <a href="/logout"
                                class="list-group-item list-group-item-action list-group-item-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                     fill="currentColor"
                                      class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                           d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
@@ -279,13 +271,15 @@
                         <div class="list-group">
                             <a href="/user"
                                class="list-group-item list-group-item-action">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                     fill="currentColor"
                                      class="bi bi-briefcase" viewBox="0 0 16 16">
                                     <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
                                 </svg>
                                 <spring:message code="userOffice.title"/></a>
                             <a href="/user/basket" class="list-group-item list-group-item-action">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                     fill="currentColor"
                                      class="bi bi-basket2" viewBox="0 0 16 16">
                                     <path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z"/>
                                     <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z"/>
@@ -293,7 +287,8 @@
                                 <spring:message code="basket.title"/></a>
                             <a href="/logout"
                                class="list-group-item list-group-item-action list-group-item-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                     fill="currentColor"
                                      class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                           d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
@@ -310,12 +305,14 @@
                             <h4><spring:message code="office.entrance"/></h4>
                             <div class="form-group">
                                 <label for="formGroupExampleInput"><spring:message code="username"/></label>
-                                <input type="text" class="form-control" name="username" id="formGroupExampleInput"
+                                <input type="text" class="form-control" name="username"
+                                       id="formGroupExampleInput"
                                        placeholder="Username">
                             </div>
                             <div class="form-group">
                                 <label for="formGroupExampleInput2"><spring:message code="password"/></label>
-                                <input type="password" name="password" class="form-control" id="formGroupExampleInput2"
+                                <input type="password" name="password" class="form-control"
+                                       id="formGroupExampleInput2"
                                        placeholder="Password">
                             </div>
                             <div class="form-check">
@@ -327,7 +324,8 @@
                             </div>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button type="submit" class="btn btn-success">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         fill="currentColor"
                                          class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                               d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
@@ -337,7 +335,8 @@
                                     <spring:message code="login.ref"/>
                                 </button>
                                 <button type="button" class="btn btn-secondary"><a href="/registration">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         fill="currentColor"
                                          class="bi bi-person-plus" viewBox="0 0 16 16">
                                         <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                                         <path fill-rule="evenodd"
@@ -357,19 +356,22 @@
 </div>
 <div id="myFooter">
     <span><spring:message code="name.full"/></span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope"
+    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+               class="bi bi-envelope"
                viewBox="0 0 16 16">
   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
 </svg>
         <spring:message code="mail"/></span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin"
+    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+               class="bi bi-linkedin"
                viewBox="0 0 16 16"><path
             d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
         </svg>
     <a href="https://www.linkedin.com/in/%D0%BD%D0%B8%D0%BA%D0%B8%D1%82%D0%B0-%D1%81%D0%B5%D1%80%D0%BE%D0%B2-77945a1b9/">
         <spring:message code="name.br"/>
     </a></span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github"
+    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+               class="bi bi-github"
                viewBox="0 0 16 16">
   <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
 </svg>

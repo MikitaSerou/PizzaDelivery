@@ -25,7 +25,6 @@ public class OrderItemService {
         orderItemRepository.save(oderItem);
     }
 
-    //TODO переписать. Order доллжен возвращать ORDERSERVICE
     public void addOrderItemsFromBasket(Long basketId, Order order) {
         Basket basket = basketService.findById(basketId);
         for (BasketItem basketItem :

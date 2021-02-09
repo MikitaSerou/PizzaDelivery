@@ -23,4 +23,8 @@ public class BaseService {
     public List<Base> findAll() {
         return baseRepository.findAll();
     }
+
+    public Base findCheapest(){
+        return baseRepository.findTopOrderByPriceAsc();
+    }
 }

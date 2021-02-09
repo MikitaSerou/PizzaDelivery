@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Access for user:
                 .antMatchers("/promotions", "/user/**").hasRole("USER")
                 //Access for all:
-                .antMatchers("/","/promotions", "/resources/**", "/category", "/login").permitAll()
+                .antMatchers("/","/promotions", "/resources/**", "/category/**", "/login").permitAll()
                 //All other pages require authentication:
                 .anyRequest().authenticated()
                 .and()

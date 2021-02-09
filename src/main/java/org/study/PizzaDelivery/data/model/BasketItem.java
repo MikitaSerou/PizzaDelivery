@@ -25,6 +25,16 @@ public class BasketItem {
     @Column(name = "description")
     private String description;
 
+    public BasketItem() {
+    }
+
+    public BasketItem(Basket basket, Product product, double price, String description) {
+        this.basket = basket;
+        this.product = product;
+        this.price = price;
+        this.description = description;
+    }
+
     public long getId() {
         return id;
     }

@@ -12,7 +12,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
-    <title><spring:message code="category.title"/></title>
+    <title>${productName}</title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
 </head>
@@ -119,68 +119,42 @@
                 <spring:message code="back.button"/></a></button>
             <br/>
             <br/>
-            <div class="card text-white bg-primary mb-3">
-                <img width="420px" height="420px" src='<spring:url value="/resources/images/pizzaItem.png"/>'
-                     style="max-width: 420px;"/>
+
+            <div class="card text-white bg-primary mb-3" style="max-height: 420px; max-width: 75%;">
+                <div class="row no-gutters">
+                    <%--<div class="col-md-4">--%>
+                    <img src='<spring:url value="/resources/images/pizzaItem.png" />' width="420px"
+                         height="420px"/>
+                    <%--</div>--%>
+                    <%--<div class="col-md-8">--%>
+                    <div class="card-body">
+                        <blockquote style="max-width: 100%">${product.description}</blockquote>
+                        <form action="${pageContext.request.contextPath}/category/${productName}" method="post">
+                        <p><span><spring:message code="choose.base"/>: </span>
+                            <select class="form-control" name="baseId" path="baseId" style="max-width: 50%">
+                                <c:forEach items="${baseList}" var="base">
+                                    <option name="baseId" value=${base.id}>${base.name}</option>
+                                </c:forEach>
+                            </select><br/>
+                        </p>
+                            <sec:authorize access="isAuthenticated()">
+                        <textarea id="formGroupExampleInput3" name="comment" path="comment"
+                                  placeholder="Comment" maxlength="255" rows="6"
+                                  style=" /*height: 105%;*/ width: 100%"></textarea>
+                            </sec:authorize>
+                        <h2 style="position: absolute; bottom: 0;">-Temp- от ${product.price} .руб
+                            -Temp-</h2><%--TODO придумать как бы цена менялась динамически от jQuery--%>
+                            <sec:authorize access="isAuthenticated()">
+                        <button type="submit" class="btn btn-success"
+                                style="position: absolute; bottom: 3%; right: 3%;"><h2><spring:message
+                                code="button.addToCart"/></h2></button>
+                            </sec:authorize>
+                        </form>
+                    </div>
+                    <%-- </div>--%>
+                </div>
             </div>
 
-
-            <div class="accordion">
-                <h3 class="active">
-                    ${product.id}
-                    KEK
-                    <p>Kek</p>
-                </h3>
-                <h3 class="active">
-                    LOL
-                    <p>lol</p>
-                </h3>
-            </div>
-            <script> $(document).ready(function(){
-            $(".accordion h3:first").addClass("active");
-            $(".accordion p:not(:first)").hide();
-
-            $(".accordion h3").click(function(){
-
-            $(this).next("p").slideToggle("slow")
-            .siblings("p:visible").slideUp("slow");
-            $(this).toggleClass("active");
-            $(this).siblings("h3").removeClass("active");
-            });
-
-            });</script>
-
-            <%--   <table>
-                   <tr>
-                       <th align="left">
-                           <h2>${product.name}</h2>
-                           <h3>База:</h3>
-                           <form action="${pageContext.request.contextPath}/category" method="post">
-                               <select size="${baseList.size()}">
-                                   <c:forEach var="base" items="${baseList}">
-                                       <option>${base.name}</option>
-                                   </c:forEach>
-                               </select>
-                               <br/>
-                               <br/>
-                               <sec:authorize access="hasRole('ROLE_USER')">
-                                   <p>
-                                       <input type="hidden" name="productId" value="${product.id}"/>
-                                       <input type="hidden" name="action" value="addToBasket"/>
-                                       <button type="submit">Добавить в корзину</button>
-                                   </p>
-                                   </caption>
-                               </sec:authorize>
-                           </form>
-                       </th>
-                       <th><p align="center"><img src='<spring:url value="/resources/images/pizzaItem.png"/>'/></p></th>
-                   </tr>
-               </table>
-
-               <h3>Описание:</h3>
-               <blockquote>
-                   ${product.description}
-               </blockquote>--%>
         </div>
 
 

@@ -177,10 +177,8 @@ public class User implements UserDetails {
                 ", password='" + password + '\'' +
                 ", mail='" + mail + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", baskets=" + baskets +
                 ", passwordConfirm='" + passwordConfirm + '\'' +
                 ", roles=" + roles +
-                ", orders=" + orders +
                 '}';
     }
 }
