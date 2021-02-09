@@ -18,7 +18,7 @@ public class Base {
     private double price;
 
 
-    @OneToMany(mappedBy = "base", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "base", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Product> products;
 
     public Base() {

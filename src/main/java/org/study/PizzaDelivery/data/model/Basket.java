@@ -18,7 +18,7 @@ public class Basket {
     @Column(name = "time", nullable = false)
     private LocalDateTime time;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

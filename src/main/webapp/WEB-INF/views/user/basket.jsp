@@ -176,7 +176,7 @@
                         <th></th>
                         </thead>
                         <c:forEach items="${basket.basketItems}" var="item">
-                            <tr class="table-secondary">
+                            <tr class="table-secondary" id="basketTable">
                                 <td width="10%">${item.product.name} ${item.product.base.name}</td>
                                 <td width="10%">${item.product.price}</td>
                                 <td width="35%">${item.product.description}</td>

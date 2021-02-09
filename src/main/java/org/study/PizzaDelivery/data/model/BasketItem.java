@@ -11,11 +11,11 @@ public class BasketItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "basket_id", nullable = false)
     private Basket basket;
 
-    @ManyToOne(fetch = FetchType.EAGER)  //, cascade = {CascadeType.ALL}
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)  //, cascade = {CascadeType.ALL}
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 

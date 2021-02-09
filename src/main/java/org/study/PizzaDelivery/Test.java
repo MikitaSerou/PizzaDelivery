@@ -47,7 +47,7 @@ BasketRepository baskr = context.getBean("basketRepository", BasketRepository.cl
 
 
        // System.out.println(pr.existsByName("Cula"));
-ps.deleteAllvariablesOfProductByName("Culo");
+
         //ps.findByNameAndBaseId()
 
         //System.out.println(ps.findDistinctTopByName("Majorino"));

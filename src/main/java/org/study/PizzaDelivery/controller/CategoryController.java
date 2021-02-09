@@ -79,7 +79,7 @@ basketService.addProductToBasket(user, productName, comment, baseId);
             categoryService.editCategory(categoryId, categoryName, categoryPrice);
         }
         if (action.equals("deleteProduct")) {
-            productService.deleteAllvariablesOfProductByName(productName);
+            productService.deleteAllVariablesOfProductByName(productName);
         }
 
         return "redirect:/category";
