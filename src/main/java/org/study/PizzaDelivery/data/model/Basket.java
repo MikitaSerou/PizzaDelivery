@@ -10,10 +10,10 @@ public class Basket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "is_active")
-    private boolean isActive;
+    private Boolean isActive;
 
     @Column(name = "time", nullable = false)
     private LocalDateTime time;

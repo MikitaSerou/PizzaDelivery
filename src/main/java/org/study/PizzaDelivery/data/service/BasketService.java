@@ -24,10 +24,10 @@ public class BasketService {
     private UserService userService;
 
     @Autowired
-    BasketItemService basketItemService;
+    private BasketItemService basketItemService;
 
     @Autowired
-    ProductService productService;
+    private ProductService productService;
 
 
     public void saveBasket(User user) {

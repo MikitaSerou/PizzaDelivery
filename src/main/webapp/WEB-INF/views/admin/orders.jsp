@@ -140,15 +140,15 @@
         <table class="table table-hover table-dark" border="1">
             <thead>
             <th>ID</th>
-            <th>User</th>
-            <th>Items</th>
-            <th>Price</th>
-            <th>Payment type</th>
-            <th>Phone</th>
-            <th>Comment</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th><spring:message code="user"/></th>
+            <th><spring:message code="items"/></th>
+            <th><spring:message code="price"/></th>
+            <th><spring:message code="typeOfPayment"/></th>
+            <th><spring:message code="phoneNumber"/></th>
+            <th><spring:message code="comment"/></th>
+            <th><spring:message code="comment"/></th>
+            <th><spring:message code="status"/></th>
+            <th><spring:message code="action"/></th>
 
             </thead>
             <c:forEach items="${activeOrders}" var="order">

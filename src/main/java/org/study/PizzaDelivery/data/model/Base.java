@@ -9,13 +9,13 @@ public class Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private short id;
+    private Short id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "price", nullable = false)
-    private double price;
+    private Double price;
 
 
     @OneToMany(mappedBy = "base", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

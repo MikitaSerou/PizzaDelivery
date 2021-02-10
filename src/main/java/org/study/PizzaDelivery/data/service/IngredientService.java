@@ -2,7 +2,8 @@ package org.study.PizzaDelivery.data.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.study.PizzaDelivery.data.enums.Type;
+import org.springframework.transaction.annotation.Transactional;
+import org.study.PizzaDelivery.data.enums.IngredientType;
 import org.study.PizzaDelivery.data.model.Ingredient;
 import org.study.PizzaDelivery.data.repository.IngredientRepository;
 
@@ -12,19 +13,24 @@ import java.util.List;
 public class IngredientService {
 
     @Autowired
-    IngredientRepository ingredientRepository;
+    private IngredientRepository ingredientRepository;
 
     public Ingredient findById(Short ingredientId){
         return ingredientRepository.findById(ingredientId).get();
     }
 
-    public void addIngredient(String ingredientName, Double ingredientPrice, Type ingredientType){
+   public List<Ingredient> findByType(IngredientType ingredientType){
+        String type = ingredientType.toString();
+        return ingredientRepository.findAllByType(type);
+   }
+
+    public void addIngredient(String ingredientName, Double ingredientPrice, IngredientType ingredientType){
         Ingredient ingredientForAdd = new Ingredient(ingredientName, ingredientPrice, ingredientType);
         ingredientRepository.save(ingredientForAdd);
     }
 
     public void updateIngredient(Short ingredientId, String ingredientName, Double ingredientPrice,
-                                 Type ingredientType){
+                                 IngredientType ingredientType){
         Ingredient ingredientForUpdate = ingredientRepository.findById(ingredientId).get();
 
         if(ingredientName!=null){ingredientForUpdate.setName(ingredientName);}
@@ -40,6 +46,7 @@ public class IngredientService {
         ingredientRepository.deleteById(ingredientId);
     }
 
+    @Transactional
     public List<Ingredient> findAll(){
         return ingredientRepository.findAll();
     }

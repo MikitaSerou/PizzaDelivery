@@ -8,7 +8,7 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "order_id", nullable = false)
@@ -19,7 +19,7 @@ public class OrderItem {
     private Product product;
 
     @Column(name = "price")//FORMULA???
-    private double price;
+    private Double price;
 
     @Column(name = "description")
     private String description;

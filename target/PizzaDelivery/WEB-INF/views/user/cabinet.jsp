@@ -134,13 +134,13 @@
                 <table class="table table-hover table-dark" border="1" style="width: 100%;">
                     <thead>
                     <th>ID</th>
-                    <th>Items</th>
-                    <th>Price</th>
-                    <th>Payment type</th>
-                    <th>Phone</th>
-                    <th>Comment</th>
-                    <th>Time</th>
-                    <th>Status</th>
+                    <th><spring:message code="items"/></th>
+                    <th><spring:message code="price"/></th>
+                    <th><spring:message code="typeOfPayment"/></th>
+                    <th><spring:message code="phoneNumber"/></th>
+                    <th><spring:message code="comment"/></th>
+                    <th><spring:message code="time"/></th>
+                    <th><spring:message code="status"/></th>
 
                     </thead>
                     <c:forEach items="${userOrders}" var="order">

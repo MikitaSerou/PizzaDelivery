@@ -9,7 +9,7 @@ public class BasketItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "basket_id", nullable = false)
@@ -20,7 +20,7 @@ public class BasketItem {
     private Product product;
 
     @Column(name="price")
-    private double price;
+    private Double price;
 
     @Column(name = "description")
     private String description;

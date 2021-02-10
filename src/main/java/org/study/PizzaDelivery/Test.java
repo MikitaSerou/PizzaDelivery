@@ -3,6 +3,7 @@ package org.study.PizzaDelivery;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.study.PizzaDelivery.config.DataServiceConfig;
+import org.study.PizzaDelivery.data.enums.IngredientType;
 import org.study.PizzaDelivery.data.model.Base;
 import org.study.PizzaDelivery.data.model.Basket;
 import org.study.PizzaDelivery.data.model.BasketItem;
@@ -39,10 +40,12 @@ public class Test {
         OrderService os = context.getBean("orderService", OrderService.class);
         OrderItemRepository oIr = context.getBean("orderItemRepository", OrderItemRepository.class);
 IngredientRepository ir = context.getBean("ingredientRepository", IngredientRepository.class);
+        IngredientService is = context.getBean("ingredientService", IngredientService.class);
 BasketRepository baskr = context.getBean("basketRepository", BasketRepository.class);
         BasketService baskS = context.getBean("basketService", BasketService.class);
         BasketItemRepository bir  = context.getBean("basketItemRepository", BasketItemRepository.class);
         BasketItemService bis = context.getBean("basketItemService", BasketItemService.class);
+        System.out.println(is.findByType(IngredientType.SAUCE));
        // System.out.println(ps.findByNameAndBaseId("Majorino", (short) 1));
 
 

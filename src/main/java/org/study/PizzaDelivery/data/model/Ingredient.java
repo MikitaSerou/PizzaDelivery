@@ -1,7 +1,7 @@
 package org.study.PizzaDelivery.data.model;
 
 import com.sun.istack.NotNull;
-import org.study.PizzaDelivery.data.enums.Type;
+import org.study.PizzaDelivery.data.enums.IngredientType;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,11 +17,11 @@ public class Ingredient {
     private String name;
 
     @Column(name = "price", nullable = false)
-    private double price;
+    private Double price;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private IngredientType ingredientType;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name = "product_ingredient",
@@ -32,10 +32,10 @@ public class Ingredient {
     public Ingredient() {
     }
 
-    public Ingredient(String name, double price, Type type) {
+    public Ingredient(String name, double price, IngredientType ingredientType) {
         this.name = name;
         this.price = price;
-        this.type = type;
+        this.ingredientType = ingredientType;
 
     }
 
@@ -63,12 +63,12 @@ public class Ingredient {
         this.price = price;
     }
 
-    public Type getType() {
-        return type;
+    public IngredientType getType() {
+        return ingredientType;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setType(IngredientType ingredientType) {
+        this.ingredientType = ingredientType;
     }
 
 
@@ -86,7 +86,7 @@ public class Ingredient {
     public String toString() {
         return "\nIngredient[Id:" + id +
                 ", name: " + name +
-                ", type: " + type +
+                ", type: " + ingredientType +
                 ", price: " + price + "]";
     }
 }

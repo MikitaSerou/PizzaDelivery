@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    BasketService basketService;
+    private BasketService basketService;
 
 
     public User findByName(String userName) {

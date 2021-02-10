@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    protected void configure(HttpSecurity httpSecurity) throws Exception { //TODO не забыть расставить доступ повсем представлениям
         httpSecurity
                 .csrf()
                 .disable()

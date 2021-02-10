@@ -13,7 +13,7 @@ import java.util.List;
 public class BaseService {
 
     @Autowired
-    BaseRepository baseRepository;
+    private BaseRepository baseRepository;
 
     public Base findById(short id) {
         return baseRepository.findById(id);

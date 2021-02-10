@@ -18,7 +18,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "user_name", nullable = false)
     @Size(min=2, message = "Не меньше 5 знаков")

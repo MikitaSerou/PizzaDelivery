@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.study.PizzaDelivery.data.enums.IngredientType;
 import org.study.PizzaDelivery.data.model.Base;
 import org.study.PizzaDelivery.data.model.Category;
 import org.study.PizzaDelivery.data.model.User;
@@ -18,16 +19,19 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Autowired
-    ProductService productService;
+    private ProductService productService;
 
     @Autowired
-    BaseService baseService;
+    private BaseService baseService;
 
     @Autowired
-    BasketService basketService;
+    private BasketService basketService;
+
+    @Autowired
+    private IngredientService ingredientService;
 
     @GetMapping
     public String categoryList(Model model) {
@@ -37,27 +41,41 @@ public class CategoryController {
         return "category/categories";
     }
 
-
-    @GetMapping(value = "/{productName}") //TODO сделать под нейм SELECT TOP 1 * FROM PRODUCT WHERE NAME = 'Majorino';
-    public String show(@PathVariable("productName") String productName, Model model) {
+    @GetMapping(value = "/{categoryName}/{productName}")
+    public String show(@PathVariable("categoryName") String categoryName,
+                       @PathVariable("productName") String productName,
+                       Model model) {
+        model.addAttribute("category", categoryService.findByName(categoryName));
         model.addAttribute("product", productService.findDistinctTopByName(productName));
-        model.addAttribute("baseList", baseService.findAll());
+        model.addAttribute("bases", baseService.findAll());
         return "category/product";
     }
 
-    @PostMapping(value = "/{productName}")
-    public String addProductToCart(@PathVariable("productName") String productName,
-                              @ModelAttribute User user,
-                              @RequestParam(required = true, defaultValue = "") String comment,
-                              @RequestParam(required = true, defaultValue = "") Short baseId,
-                              Model model) {//TODO проверки на введенные null
-basketService.addProductToBasket(user, productName, comment, baseId);
-
-        System.out.println(user.getId() + " " + comment + " " + baseId);
+    @PostMapping(value = "/{categoryName}/{productName}")
+    public String addProductToCart(@PathVariable("categoryName") String categoryName,
+                                   @PathVariable("productName") String productName,
+                                   @ModelAttribute User user,
+                                   @RequestParam(required = true, defaultValue = "") String comment,
+                                   @RequestParam(required = true, defaultValue = "") Short baseId,
+                                   Model model) {//TODO проверки на введенные null
+        basketService.addProductToBasket(user, productName, comment, baseId);
         return "redirect:/category";
     }
 
-
+    @GetMapping(value = "/{categoryName}/addProduct")
+    public String addPizza(@PathVariable("categoryName") String categoryName,
+                       Model model) {
+        model.addAttribute("category", categoryService.findByName(categoryName));
+        model.addAttribute("bases", baseService.findAll());
+        model.addAttribute("ingredients", ingredientService.findAll());
+        model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
+        model.addAttribute("cheeses", ingredientService.findByType(IngredientType.CHEESE));
+        model.addAttribute("meat", ingredientService.findByType(IngredientType.MEAT));
+        model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
+        model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
+        model.addAttribute("ingredientTypes", IngredientType.values());
+        return "category/addProduct";
+    }
 
 
     @PostMapping

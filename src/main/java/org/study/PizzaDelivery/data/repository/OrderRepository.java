@@ -3,6 +3,7 @@ package org.study.PizzaDelivery.data.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.data.enums.Status;
 import org.study.PizzaDelivery.data.model.Order;
 
@@ -13,6 +14,7 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
 
     List<Order> findAllByStatus(Status status);
 
+    @Transactional
     @Query(value = "SELECT * FROM ORDERS WHERE STATUS='NOT_PAID'",
     nativeQuery = true)
     List<Order> findAllByStatusNotPaid();

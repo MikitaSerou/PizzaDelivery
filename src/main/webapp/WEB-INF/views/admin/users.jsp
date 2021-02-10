@@ -144,12 +144,12 @@
         <table class="table table-hover table-dark" border="1">
             <thead class="table-primary">
             <th>ID</th>
-            <th>UserName</th>
-            <th>Password</th>
-            <th>Phone</th>
-            <th>Mail</th>
-            <th>Roles</th>
-            <th>Action</th>
+            <th><spring:message code="username"/></th>
+            <th><spring:message code="password"/></th>
+            <th><spring:message code="phoneNumber"/></th>
+            <th><spring:message code="eMail"/></th>
+            <th><spring:message code="roles"/></th>
+            <th><spring:message code="action"/></th>
             </thead>
             <c:forEach items="${allUsers}" var="user">
                 <tr>

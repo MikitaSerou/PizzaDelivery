@@ -142,23 +142,21 @@
         </div>
 
 
-     <%-- TODO    <form><p><input type="search" name="q" placeholder="ingredient ID">
-            <input type="submit" value="Search"></p></form>--%>
+     <%-- TODO    <form><p><input ingredientType="search" name="q" placeholder="ingredient ID">
+            <input ingredientType="submit" value="Search"></p></form>--%>
         <table class="table table-hover table-dark" border="1">
 
             <thead>
             <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Type</th>
-            <td>Action</td>
+            <th><spring:message code="p.name"/></th>
+            <th><spring:message code="price"/></th>
+            <th><spring:message code="ingredient.type"/></th>
+            <td><spring:message code="action"/></td>
             </thead>
             <%--ADD FORM--%>
             <tr class="bg-success">
                 <form action="${pageContext.request.contextPath}/admin/ingredients" method="post">
-                    <td><h4>ADD</h4>
-                        New:
-                    </td>
+                    <td><h4><spring:message code="add.button"/></h4></td>
                     <td>
                         <input type="text" class="form-control" name="ingredientName" path="ingredientName"
                                placeholder="Name"/>
@@ -172,8 +170,8 @@
                     </td>
                     <td>
                         <select class="form-control" name="ingredientType" path="ingredientType">
-                            <c:forEach items="${types}" var="type">
-                                <option name="ingredientType" value=${type} text="${type}">${type}</option>
+                            <c:forEach items="${types}" var="ingredientType">
+                                <option name="ingredientType" value=${ingredientType} text="${ingredientType}">${ingredientType}</option>
                             </c:forEach>
                         </select></br>
 
@@ -194,7 +192,7 @@
                         <form action="${pageContext.request.contextPath}/admin/ingredients" method="post">
                             <input type="hidden" name="ingredientId" value="${ingredient.id}"/>
                             <input type="hidden" name="action" value="delete"/>
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger"><spring:message code="delete.button"/> </button>
                         </form>
                     </td>
                 </tr>
@@ -229,8 +227,8 @@
 
                             <select class="form-control" name="ingredientType" path="ingredientType">
                                 <option></option>
-                                <c:forEach items="${types}" var="type"><%--.toString()--%>
-                                    <option name="ingredientType" value=${type} text="${type}">${type}</option>
+                                <c:forEach items="${types}" var="ingredientType"><%--.toString()--%>
+                                    <option name="ingredientType" value=${ingredientType} text="${ingredientType}">${ingredientType}</option>
                                 </c:forEach>
                             </select><br/>
 

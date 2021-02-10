@@ -129,10 +129,10 @@
                     <%--<div class="col-md-8">--%>
                     <div class="card-body">
                         <blockquote style="max-width: 100%">${product.description}</blockquote>
-                        <form action="${pageContext.request.contextPath}/category/${productName}" method="post">
+                        <form action="${pageContext.request.contextPath}/category/${categoryName}/${productName}" method="post">
                         <p><span><spring:message code="choose.base"/>: </span>
                             <select class="form-control" name="baseId" path="baseId" style="max-width: 50%">
-                                <c:forEach items="${baseList}" var="base">
+                                <c:forEach items="${bases}" var="base">
                                     <option name="baseId" value=${base.id}>${base.name}</option>
                                 </c:forEach>
                             </select><br/>

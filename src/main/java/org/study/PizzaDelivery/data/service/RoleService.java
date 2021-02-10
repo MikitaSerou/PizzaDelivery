@@ -8,6 +8,6 @@ import org.study.PizzaDelivery.data.repository.RoleRepository;
 public class RoleService {
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
 }

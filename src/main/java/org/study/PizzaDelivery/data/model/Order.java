@@ -14,7 +14,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", nullable = false)
@@ -24,7 +24,7 @@ public class Order {
     private String phoneNumber;
 
     @Column(name = "price")
-    private double price;
+    private Double price;
 
     @NotNull
     @Enumerated(EnumType.STRING)

@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.study.PizzaDelivery.data.enums.IngredientType;
 import org.study.PizzaDelivery.data.service.IngredientService;
 import org.study.PizzaDelivery.data.service.OrderService;
 import org.study.PizzaDelivery.data.service.UserService;
-import org.study.PizzaDelivery.data.enums.Type;
 
 @Controller
 @RequestMapping("/admin")
@@ -80,7 +80,7 @@ public class AdminController {
     @GetMapping("/ingredients")
     public String ingredientsList(Model model) {
         model.addAttribute("ingredients", ingredientService.findAll());
-        model.addAttribute("types", Type.values());
+        model.addAttribute("types", IngredientType.values());
         return "admin/ingredients";
     }
 
@@ -88,7 +88,7 @@ public class AdminController {
     public String ingredients(@RequestParam(required = true, defaultValue = "") Short ingredientId,
                               @RequestParam(required = true, defaultValue = "") String ingredientName,
                               @RequestParam(required = true, defaultValue = "") Double ingredientPrice,
-                              @RequestParam(required = true, defaultValue = "") Type ingredientType,
+                              @RequestParam(required = true, defaultValue = "") IngredientType ingredientType,
                               @RequestParam(required = true, defaultValue = "") String action,
                               Model model) {
 

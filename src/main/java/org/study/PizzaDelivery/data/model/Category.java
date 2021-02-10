@@ -18,7 +18,7 @@ public class Category {
     private List<Product> products;
 
     @Column(name="category_price")
-    private double price;
+    private Double price;
 
     public Category() {
     }
