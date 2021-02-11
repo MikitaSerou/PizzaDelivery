@@ -35,7 +35,8 @@ public class CategoryController {
 
     @GetMapping
     public String categoryList(Model model) {
-        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("categories", categoryService.getAllStandardCategories());
+        //TODO скрыть кастомную
         //model.addAttribute("bases", baseService.findAll());
         model.addAttribute("cheapestProducts", productService.findAllByBase(baseService.findCheapest()));
         return "category/categories";

@@ -1,5 +1,7 @@
 package org.study.PizzaDelivery.data.model;
 
+import jakarta.validation.constraints.Size;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -9,13 +11,14 @@ public class Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Short id;
+    private short id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "price", nullable = false)
-    private Double price;
+    @Column(name = "price_multiplier", nullable = false)
+    @Size(min=1, max=2, message = "Only 1-2")
+    private Double priceMultiplier;
 
 
     @OneToMany(mappedBy = "base", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -26,7 +29,7 @@ public class Base {
 
     public Base(String name, double price) {
         this.name = name;
-        this.price = price;
+        this.priceMultiplier = price;
 
     }
 
@@ -46,12 +49,12 @@ public class Base {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
+    public double getPriceMultiplier() {
+        return priceMultiplier;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPriceMultiplier(double priceMultiplier) {
+        this.priceMultiplier = priceMultiplier;
     }
 
 
@@ -68,12 +71,12 @@ public class Base {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Base base = (Base) o;
-        return id == base.id && Double.compare(base.price, price) == 0 && name.equals(base.name);
+        return id == base.id && Double.compare(base.priceMultiplier, priceMultiplier) == 0 && name.equals(base.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, products);
+        return Objects.hash(id, name, priceMultiplier, products);
     }
 
     @Override
@@ -81,8 +84,7 @@ public class Base {
         return "Base{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", price=" + price +
-                ", products=" + products +
+                ", price=" + priceMultiplier +
                 '}';
     }
 }

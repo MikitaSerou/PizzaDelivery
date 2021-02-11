@@ -16,7 +16,7 @@ public interface BaseRepository extends CrudRepository<Base, Short> {
     @Transactional
     List<Base> findAll();
 
-    @Query(value = "SELECT TOP 1 *FROM BASE ORDER BY price ASC", nativeQuery = true)
+    @Query(value = "SELECT TOP 1 *FROM BASE ORDER BY PRICE_MULTIPLIER ASC", nativeQuery = true)
     Base findTopOrderByPriceAsc();
 
 

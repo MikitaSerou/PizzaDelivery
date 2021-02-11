@@ -1,7 +1,9 @@
 package org.study.PizzaDelivery.data.repository;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.data.model.Category;
 
 import java.util.List;
@@ -13,5 +15,12 @@ public interface CategoryRepository extends CrudRepository<Category, Short> {
 
     Category findByName(String name);
 
+    @Transactional
     List<Category> findAll();
+
+
+
+    @Query(value = " SELECT * FROM CATEGORY WHERE NAME !='Своя' ", nativeQuery = true)
+    @Transactional
+    List<Category> findAllStandard();
 }

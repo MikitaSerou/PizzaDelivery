@@ -17,7 +17,7 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Product> products;
 
-    @Column(name="category_price")
+    @Column(name="category_price", nullable = false)
     private Double price;
 
     public Category() {

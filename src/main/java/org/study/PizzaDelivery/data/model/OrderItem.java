@@ -8,7 +8,7 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "order_id", nullable = false)
@@ -33,7 +33,7 @@ public class OrderItem {
         this.price = product.getPrice();
     }
 
-    public OrderItem(Order order, Product product, double price, String comment) {
+    public OrderItem(Order order, Product product, Double price, String comment) {
         this.order = order;
         this.product = product;
         this.price = price;

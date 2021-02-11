@@ -14,6 +14,7 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Transactional
     public Category findOne(short id) {
         return categoryRepository.findById(id);
     }
@@ -23,6 +24,12 @@ public class CategoryService {
         return categoryRepository.findByName(name);
     }
 
+    @Transactional
+    public List<Category> getAllStandardCategories(){
+        return categoryRepository.findAllStandard();
+    }
+
+    @Transactional
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }

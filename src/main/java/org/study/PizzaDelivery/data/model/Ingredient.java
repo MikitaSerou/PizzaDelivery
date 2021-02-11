@@ -21,6 +21,7 @@ public class Ingredient {
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "ingredient_type", nullable = false)
     private IngredientType ingredientType;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})

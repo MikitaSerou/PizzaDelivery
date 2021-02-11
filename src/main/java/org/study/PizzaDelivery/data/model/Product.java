@@ -8,7 +8,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -18,7 +18,7 @@ public class Product {
     private Category category;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "base_id")
+    @JoinColumn(name = "base_id", nullable = false)
     private Base base;
 
     @Column(name = "price")
