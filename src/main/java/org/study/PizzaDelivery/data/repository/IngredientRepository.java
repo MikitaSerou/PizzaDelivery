@@ -16,7 +16,7 @@ public interface IngredientRepository extends CrudRepository<Ingredient, Short> 
     List<Ingredient> findAll();
 
     @Transactional
-    @Query(value = "SELECT * FROM INGREDIENT WHERE TYPE=?1",
+    @Query(value = "SELECT * FROM INGREDIENT WHERE INGREDIENT_TYPE=?1",
             nativeQuery = true)
     List<Ingredient> findAllByType(String type);
 }

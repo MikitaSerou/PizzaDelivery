@@ -123,34 +123,44 @@
             <div class="card text-white bg-primary mb-3" style="width: 100%;">
                 <div class="card text-white bg-primary mb-4" style="width: 280px;"></div>
                 <div class="card-body">
-                    <blockquote style="max-width: 100%">ЪУЪ</blockquote>
+
+
                     <form action="${pageContext.request.contextPath}/category/${categoryName}/${productName}"
                           method="post">
-                        <p><spring:message code="choose.base"/>:
-                            <select class="form-control" name="baseId" path="baseId" style="max-width: 50%">
+                        <div class="form-group">
+                            <label for="formInput1"><h2><spring:message code="p.name"/></h2></label>
+                            <input type="text" class="form-control" name="name" id="formInput1"
+                                   placeholder="<spring:message code="p.name"/>">
+                        </div>
+                        <div class="form-group">
+                        <label for="formInput2"><h2 style="max-width: 100%"><spring:message code="choose.base"/></h2></label>
+                            <select class="form-control" id="formInput2" name="baseId" path="baseId" style="max-width: 50%">
                                 <c:forEach items="${bases}" var="base">
                                     <option name="baseId" value=${base.id}>${base.name}</option>
                                 </c:forEach>
                             </select>
-                            <spring:message code="choose.sauce"/>
-
-                            <select class="form-control" name="sauce" path="sauce" style="max-width: 50%">
-
-                                <c:forEach items="${bases}" var="base">
-                                    <option name="baseId" value=${base.id}>${base.name}</option>
+                        </div>
+                        <div class="form-group">
+                            <label for="formInput3"><h2 style="max-width: 100%"><spring:message code="choose.sauce"/></h2></label>
+                            <select class="form-control" id="formInput3" name="sauce" path="sauce" style="max-width: 50%">
+                                <c:forEach items="${sauces}" var="sauce">
+                                    <option name="sauceId" value=${sauce.id}>${sauce.name}</option>
                                 </c:forEach>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="formInput4"><h2 style="max-width: 100%"><spring:message code="description"/></h2></label>
+                            <textarea id="formInput4" name="comment" path="comment"
+                                      placeholder="Comment" maxlength="255" rows="6"
+                                      style=" /*height: 105%;*/ width: 100%"></textarea>
+                        </div>
+
 
 
                             <br/>
-                        </p>
-                        <sec:authorize access="isAuthenticated()">
-                        <textarea id="formGroupExampleInput3" name="comment" path="comment"
-                                  placeholder="Comment" maxlength="255" rows="6"
-                                  style=" /*height: 105%;*/ width: 100%"></textarea>
-                        </sec:authorize>
-                        <h2 style="position: absolute; bottom: 0;">-Temp- от ЪУЪ .руб
-                            -Temp-</h2><%--TODO придумать как бы цена менялась динамически от jQuery--%>
+
+
+
                         <sec:authorize access="isAuthenticated()">
                             <button type="submit" class="btn btn-success"
                                     style="position: absolute; bottom: 3%; right: 3%;"><h2><spring:message

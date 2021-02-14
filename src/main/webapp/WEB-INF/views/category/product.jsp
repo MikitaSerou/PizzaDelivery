@@ -15,6 +15,10 @@
     <title>${productName}</title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
+
+    <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
 </head>
 
 <body id="bodyDefault">
@@ -120,18 +124,62 @@
             <br/>
             <br/>
 
-            <div class="card text-white bg-primary mb-3" style="max-height: 420px; max-width: 75%;">
+            <div class="card text-white bg-primary mb-3" style="max-height: 420px; max-width: 80%;">
                 <div class="row no-gutters">
-                    <%--<div class="col-md-4">--%>
+                    <div class="col-md-4">
                     <img src='<spring:url value="/resources/images/pizzaItem.png" />' width="420px"
                          height="420px"/>
-                    <%--</div>--%>
-                    <%--<div class="col-md-8">--%>
+                    </div>
+                    <div class="col-md-8">
                     <div class="card-body">
                         <blockquote style="max-width: 100%">${product.description}</blockquote>
-                        <form action="${pageContext.request.contextPath}/category/${categoryName}/${productName}" method="post">
+
+
+                            <select id="dropdown" name="dropdown">
+                                <option value="0">Choose</option>
+                                <c:forEach var="base" items="${bases}">
+                                    <option value="${base.id}">${base.name}</option>
+                                </c:forEach>
+
+                            </select>
+
+                        <c:forEach var="base" items="${bases}">
+                            <div id="div${base.id}" class="box">${base.getPriceMultiplier()*category.getPrice()}</div>
+                        </c:forEach>
+                        <input type='hidden' value='testing' id='HiddenInput' enableviewstate="true"/>
+
+                        <script type='text/javascript'>
+                            $(document).ready(function () {
+                                $('.box').hide();
+
+                                // First Way :
+                                $('#HiddenInput').empty();
+                                $('#HiddenInput').val($('#dropdown').val());
+                                var value = $('#HiddenInput').val();
+                                $('#dropdown').val(value);
+                                $('#div' + value).show();
+
+                                $('#dropdown').change(function () {
+                                    $('.box').hide();
+                                    $('#HiddenInput').val($(this).val());
+                                    $('#div' + $(this).val()).show();
+                                });
+                            });
+                        </script>
+
+
+
+         <%--               <form action="${pageContext.request.contextPath}/category/${categoryName}/${productName}" method="post">
                         <p><span><spring:message code="choose.base"/>: </span>
-                            <select class="form-control" name="baseId" path="baseId" style="max-width: 50%">
+
+
+
+                            <select id="dropdown" name="dropdown">
+                                <option value="0">Choose</option>
+
+
+                            <select id="dropdown" class="form-control" name="baseId" path="baseId" style="max-width: 50%">
+                                <option value="0">Choose</option>
                                 <c:forEach items="${bases}" var="base">
                                     <option name="baseId" value=${base.id}>${base.name}</option>
                                 </c:forEach>
@@ -142,16 +190,22 @@
                                   placeholder="Comment" maxlength="255" rows="6"
                                   style=" /*height: 105%;*/ width: 100%"></textarea>
                             </sec:authorize>
-                        <h2 style="position: absolute; bottom: 0;">-Temp- от ${product.price} .руб
-                            -Temp-</h2><%--TODO придумать как бы цена менялась динамически от jQuery--%>
+                        <h2 style="position: absolute; bottom: 0;"> ${product.price} .руб
+                            </h2>&lt;%&ndash;TODO придумать как бы цена менялась динамически от jQuery&ndash;%&gt;
                             <sec:authorize access="isAuthenticated()">
                         <button type="submit" class="btn btn-success"
                                 style="position: absolute; bottom: 3%; right: 3%;"><h2><spring:message
                                 code="button.addToCart"/></h2></button>
                             </sec:authorize>
-                        </form>
+                        </form>--%>
+
+
+
+
+
+
                     </div>
-                    <%-- </div>--%>
+                     </div>
                 </div>
             </div>
 

@@ -37,7 +37,7 @@ public class CategoryController {
     public String categoryList(Model model) {
         model.addAttribute("categories", categoryService.getAllStandardCategories());
         //TODO скрыть кастомную
-        //model.addAttribute("bases", baseService.findAll());
+        model.addAttribute("bases", baseService.findAll());
         model.addAttribute("cheapestProducts", productService.findAllByBase(baseService.findCheapest()));
         return "category/categories";
     }
@@ -64,7 +64,7 @@ public class CategoryController {
     }
 
     @GetMapping(value = "/{categoryName}/addProduct")
-    public String addPizza(@PathVariable("categoryName") String categoryName,
+    public String addProduct(@PathVariable("categoryName") String categoryName,
                        Model model) {
         model.addAttribute("category", categoryService.findByName(categoryName));
         model.addAttribute("bases", baseService.findAll());
@@ -76,6 +76,22 @@ public class CategoryController {
         model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
         model.addAttribute("ingredientTypes", IngredientType.values());
         return "category/addProduct";
+    }
+
+
+    @PostMapping(value = "/{categoryName}/addProduct")
+    public String addProductPage(@PathVariable("categoryName") String categoryName,
+                           Model model) {
+/*        model.addAttribute("category", categoryService.findByName(categoryName));
+        model.addAttribute("bases", baseService.findAll());
+        model.addAttribute("ingredients", ingredientService.findAll());
+        model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
+        model.addAttribute("cheeses", ingredientService.findByType(IngredientType.CHEESE));
+        model.addAttribute("meat", ingredientService.findByType(IngredientType.MEAT));
+        model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
+        model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
+        model.addAttribute("ingredientTypes", IngredientType.values());*/
+        return "redirect:/category";
     }
 
 

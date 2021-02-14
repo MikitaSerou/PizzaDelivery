@@ -67,10 +67,11 @@ html {
     width: 100%;
     object-fit: contain;
     backdrop-filter: blur(7px);
-    margin: 0;
+    padding-bottom: 25px;
     padding: 0;
     overflow: auto;
     min-width: 100%;
+
 }
 #pageHeader{
     background-color: rgb(39,43,48);
@@ -95,6 +96,7 @@ html {
     margin-left: 50px;
     position: relative;
     text-align: center;
+    height: 25px;
     /*left: 0;*/
     /*padding: 10px;*/
     /*background: #3e444c;*/
@@ -628,7 +630,10 @@ pre code {
 
 .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
     width: 100%;
-min-height: 80%;
+/*min-height: 0%;* TODO/
+ */
+    /*height: 90%;*/
+    padding-bottom: 0;
     padding-right: 15px;
     padding-left: 15px;
     margin: 0 auto -50px;
@@ -4315,6 +4320,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     padding-left: 0;
     margin-bottom: 0;
     list-style: none
+    height:10%;/*TODO*/
 }
 
 .nav-link {
