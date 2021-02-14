@@ -84,7 +84,26 @@ html {
     background-color: #ed5a56;
     border-radius: 10px;
     font-weight: bolder;
-    font-size: 36px;
+    font-size: 30px;
+}
+.formLable{
+    background-color: #ed5a56;
+    border-radius: 10px;
+    font-weight: bolder;
+    font-size: 30px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.formLableSecondary{
+    background-color: #1f8c22;
+    color: white;
+    border-radius: 10px;
+    font-weight: bolder;
+    font-size: 30px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #myFooter {

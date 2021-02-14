@@ -43,7 +43,7 @@ public class CategoryService {
 
     public void editCategory(Short categoryId, String categoryName, Double categoryPrice) {
         Category categoryForUpdate = categoryRepository.findById(categoryId).get();
-        if (categoryName != null) {
+        if (!categoryName.equals("")) {
             categoryForUpdate.setName(categoryName);
         }
         if (categoryPrice != null) {

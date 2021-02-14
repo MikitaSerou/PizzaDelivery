@@ -12,7 +12,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
-    <title>${productName}</title>
+    <title>${category.name}&nbsp;<spring:message code="add.product"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
 </head>
@@ -98,7 +98,6 @@
                 </svg>
                 <spring:message code="promotions.title"/></a></button>
         </div>
-        <h1>${user.id}</h1>
     </nav>
 </div>
 
@@ -121,50 +120,67 @@
             <br/>
 
             <div class="card text-white bg-primary mb-3" style="width: 100%;">
-                <div class="card text-white bg-primary mb-4" style="width: 280px;"></div>
+
                 <div class="card-body">
 
 
                     <form action="${pageContext.request.contextPath}/category/${categoryName}/${productName}"
                           method="post">
-                        <div class="form-group">
-                            <label for="formInput1"><h2><spring:message code="p.name"/></h2></label>
+                        <div class="form-group" style="width: 50%">
+                            <label for="formInput1" class="formLable"><h2><spring:message code="p.name"/></h2></label>
                             <input type="text" class="form-control" name="name" id="formInput1"
                                    placeholder="<spring:message code="p.name"/>">
                         </div>
                         <div class="form-group">
-                        <label for="formInput2"><h2 style="max-width: 100%"><spring:message code="choose.base"/></h2></label>
-                            <select class="form-control" id="formInput2" name="baseId" path="baseId" style="max-width: 50%">
-                                <c:forEach items="${bases}" var="base">
-                                    <option name="baseId" value=${base.id}>${base.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="formInput3"><h2 style="max-width: 100%"><spring:message code="choose.sauce"/></h2></label>
-                            <select class="form-control" id="formInput3" name="sauce" path="sauce" style="max-width: 50%">
+                            <label class="formLable" for="formInput2"><h2 style="max-width: 100%"><spring:message
+                                    code="choose.sauce"/></h2></label>
+                            <select class="form-control" id="formInput2" name="sauce" path="sauce"
+                                    style="max-width: 50%">
                                 <c:forEach items="${sauces}" var="sauce">
                                     <option name="sauceId" value=${sauce.id}>${sauce.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
+
+                        <h2 class="formLable"><spring:message
+                                code="add.ingredients"/>:</h2>
+                        <c:forEach var="ingredientType" items="${ingredientTypes}">
+                            <c:if test="${!ingredientType.toString().equals('SAUCE')}">
+
+
+                                <h2 class="formLableSecondary">${ingredientType}</h2>
+                                <div class="btn-group" style="max-width: 100%" role="group"
+                                     aria-label="Basic checkbox toggle button group">
+                                    <c:forEach var="ingredient" items="${ingredients}">
+                                        <c:if test="${ingredient.getType().equals(ingredientType)}">
+                                            <input type="checkbox" class="btn-check" id="${ingredient.id}"
+                                                   autocomplete="off">
+                                            <label class="btn btn-outline-primary"
+                                                   for="${ingredient.id}">${ingredient.name}</label>
+                                        </c:if>
+                                    </c:forEach>
+                                </div>
+
+                            </c:if>
+                        </c:forEach>
+
+
                         <div class="form-group">
-                            <label for="formInput4"><h2 style="max-width: 100%"><spring:message code="description"/></h2></label>
+                            <label class="formLable" for="formInput4"><h2 style="max-width: 100%"><spring:message
+                                    code="description"/></h2></label>
                             <textarea id="formInput4" name="comment" path="comment"
                                       placeholder="Comment" maxlength="255" rows="6"
                                       style=" /*height: 105%;*/ width: 100%"></textarea>
                         </div>
 
 
-
-                            <br/>
-
+                        <br/>
 
 
                         <sec:authorize access="isAuthenticated()">
                             <button type="submit" class="btn btn-success"
-                                    style="position: absolute; bottom: 3%; right: 3%;"><h2><spring:message
-                                    code="button.addToCart"/></h2></button>
+                                   <%-- style="position: absolute; bottom: 3%; right: 3%;"--%>><h2><spring:message
+                                    code="add.button"/></h2></button>
                         </sec:authorize>
                     </form>
 

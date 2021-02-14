@@ -217,7 +217,7 @@
                                         <c:forEach var="base" items="${bases}">
                                             <div id="div${product.id+base.id}"
                                                  class="${product.id}">
-                                                <h4>${base.getPriceMultiplier()*category.getPrice()}</h4></div>
+                                                <h4>${base.getPriceMultiplier()*category.getPrice()}&nbsp;<spring:message code="currency"/></h4></div>
                                         </c:forEach>
                                         <input type='hidden' value='testing' id='HiddenInput${product.id}'
                                                enableviewstate="true"/>
