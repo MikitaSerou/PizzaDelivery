@@ -24,7 +24,7 @@ public class Ingredient {
     @Column(name = "ingredient_type", nullable = false)
     private IngredientType ingredientType;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "product_ingredient",
             joinColumns = @JoinColumn(name = "ingredient_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))

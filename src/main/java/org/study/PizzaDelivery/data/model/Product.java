@@ -27,7 +27,7 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(cascade = {CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name = "product_ingredient",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
@@ -60,6 +60,11 @@ public class Product {
 
         public Builder price(Double price) {
             Product.this.price = price;
+            return this;
+        }
+
+        public Builder ingredients(List<Ingredient> ingredients) {
+            Product.this.ingredients = ingredients;
             return this;
         }
 

@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import org.study.PizzaDelivery.data.enums.IngredientType;
 import org.study.PizzaDelivery.data.model.Base;
 import org.study.PizzaDelivery.data.model.Category;
+import org.study.PizzaDelivery.data.model.Ingredient;
 import org.study.PizzaDelivery.data.model.User;
 import org.study.PizzaDelivery.data.service.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -81,7 +83,22 @@ public class CategoryController {
 
     @PostMapping(value = "/{categoryName}/addProduct")
     public String addProductPage(@PathVariable("categoryName") String categoryName,
+                                 @RequestParam(required = true, defaultValue = "") String productName,
+                                 @RequestParam(required = true, defaultValue = "") Short sauceId,
+                                 @RequestParam(required = true, defaultValue = "") String description,
+                                 @RequestParam(required = true, defaultValue = "") short[] ingredients,
                            Model model) {
+        productService.addNewProductToCategory(productName, categoryService.findByName(categoryName),
+                sauceId, description, ingredients);
+/*        System.err.println(categoryName);*/
+
+/*        for(short id : ingredients) {
+            //TODO переписать
+            System.err.println(ingredientService.findById(id).toString());
+            //System.out.println(ingredientService.findById(ingredientId));
+        }*/
+
+
 /*        model.addAttribute("category", categoryService.findByName(categoryName));
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("ingredients", ingredientService.findAll());
@@ -113,7 +130,8 @@ public class CategoryController {
             System.out.println("EDIT");
             categoryService.editCategory(categoryId, categoryName, categoryPrice);
         }
-        if (action.equals("deleteProduct")) {
+        if (action.equals("deleteProduct")) { //TODO не работает
+            System.err.println(productName + "deleteAss");
             productService.deleteAllVariablesOfProductByName(productName);
         }
 

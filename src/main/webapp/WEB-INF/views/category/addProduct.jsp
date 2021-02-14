@@ -124,11 +124,11 @@
                 <div class="card-body">
 
 
-                    <form action="${pageContext.request.contextPath}/category/${categoryName}/${productName}"
+                    <form action="${pageContext.request.contextPath}/category/${categoryName}/addProduct"
                           method="post">
                         <div class="form-group" style="width: 50%">
                             <label for="formInput1" class="formLable"><h2><spring:message code="p.name"/></h2></label>
-                            <input type="text" class="form-control" name="name" id="formInput1"
+                            <input type="text" class="form-control" name="productName" id="formInput1"
                                    placeholder="<spring:message code="p.name"/>">
                         </div>
                         <div class="form-group">
@@ -154,7 +154,7 @@
                                     <c:forEach var="ingredient" items="${ingredients}">
                                         <c:if test="${ingredient.getType().equals(ingredientType)}">
                                             <input type="checkbox" class="btn-check" id="${ingredient.id}"
-                                                   autocomplete="off">
+                                                   autocomplete="off" name="ingredients" value="${ingredient.id}">
                                             <label class="btn btn-outline-primary"
                                                    for="${ingredient.id}">${ingredient.name}</label>
                                         </c:if>
@@ -168,20 +168,15 @@
                         <div class="form-group">
                             <label class="formLable" for="formInput4"><h2 style="max-width: 100%"><spring:message
                                     code="description"/></h2></label>
-                            <textarea id="formInput4" name="comment" path="comment"
+                            <textarea id="formInput4" name="description" path="description"
                                       placeholder="Comment" maxlength="255" rows="6"
                                       style=" /*height: 105%;*/ width: 100%"></textarea>
                         </div>
-
-
                         <br/>
-
-
-                        <sec:authorize access="isAuthenticated()">
                             <button type="submit" class="btn btn-success"
                                    <%-- style="position: absolute; bottom: 3%; right: 3%;"--%>><h2><spring:message
                                     code="add.button"/></h2></button>
-                        </sec:authorize>
+
                     </form>
 
                 </div>

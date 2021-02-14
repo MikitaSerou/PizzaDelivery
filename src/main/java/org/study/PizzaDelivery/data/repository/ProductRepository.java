@@ -34,6 +34,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
 
     @Transactional
     @Modifying
+    @Query(value = "DELETE  FROM PRODUCT WHERE name=?1", nativeQuery = true) //TODO переделать, ругается на ингридиенты
     void deleteAllByName(String name);
 
     @Transactional

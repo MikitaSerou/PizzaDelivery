@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.data.model.Base;
 import org.study.PizzaDelivery.data.model.Category;
+import org.study.PizzaDelivery.data.model.Ingredient;
 import org.study.PizzaDelivery.data.model.Product;
 import org.study.PizzaDelivery.data.repository.ProductRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -24,6 +26,9 @@ public class ProductService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private IngredientService ingredientService;
 
 
     public Product findOne(long id) {
@@ -41,7 +46,7 @@ public class ProductService {
     }
 
 
-    @Transactional
+/*    @Transactional
     @Modifying
     public void addNewProductWithoutIngredients(String name, Short categoryId, String description) {
         Category category = categoryService.findOne(categoryId);
@@ -54,20 +59,40 @@ public class ProductService {
                     .price(category.getPrice() * b.getPriceMultiplier())
                     .build();
             productRepository.save(product);
-        });
+        });*/
 
+    /*        for (Base base:
+                 baseService.findAll()) {
+                Product product = Product.builder()
+                        .name(name)
+                        .base(base)
+                        .category(category)
+                        .describe(description)
+                        .price(category.getPrice() * base.getPriceMultiplier())
+                        .build();
+                productRepository.save(product);
+            }*/
+    @Transactional
+    @Modifying
+    public void addNewProductToCategory(String name, Category category, Short sauceId, String description, short[] ingredientsId) {
+        ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-/*        for (Base base:
-             baseService.findAll()) {
+        for (short ingredientId : ingredientsId) {
+            ingredients.add(ingredientService.findById(ingredientId));
+        }
+
+        baseService.findAll().forEach(b -> {
             Product product = Product.builder()
                     .name(name)
-                    .base(base)
+                    .base(b)
                     .category(category)
                     .describe(description)
-                    .price(category.getPrice() * base.getPriceMultiplier())
+                    .price(category.getPrice() * b.getPriceMultiplier())
+                    .ingredients(ingredients)
                     .build();
             productRepository.save(product);
-        }*/
+            System.err.println(product.toString());
+        });
     }
 
 
@@ -95,6 +120,8 @@ public class ProductService {
     @Transactional
     @Modifying
     public void deleteAllVariablesOfProductByName(String productName) {
+        System.err.println(productName + "deleteAssssssssS");
+
         if (productRepository.existsByName(productName)) { //TODO вот так можно на null проверять
             productRepository.deleteAllByName(productName);
         }

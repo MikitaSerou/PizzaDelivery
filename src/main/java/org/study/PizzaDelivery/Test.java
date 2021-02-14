@@ -46,8 +46,8 @@ BasketRepository baskr = context.getBean("basketRepository", BasketRepository.cl
         BasketItemRepository bir  = context.getBean("basketItemRepository", BasketItemRepository.class);
         BasketItemService bis = context.getBean("basketItemService", BasketItemService.class);
         //System.out.println(is.findByType(IngredientType.SAUCE));
-        ps.addNewProductWithoutIngredients("Коровка", (short) 4,
-                "Тупа коровка!");
+      //  ps.addNewProductWithoutIngredients("Коровка", (short) 4,
+                //"Тупа коровка!");
 
        // System.out.println(ps.findByNameAndBaseId("Majorino", (short) 1));
 
