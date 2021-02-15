@@ -36,6 +36,7 @@ public class BasketService {
 
     @Transactional
     public Basket getActiveBasketByUserId(Long userId) {
+        System.err.println("getActiveBasketByUserId" + basketRepository.findByUserIdAndActiveIsTrue(userId).getBasketItems().toString());
         return basketRepository.findByUserIdAndActiveIsTrue(userId);
     }
 
@@ -51,6 +52,7 @@ public class BasketService {
 
     public Double calculatePrice(Long basketId) {
         List<BasketItem> items = basketItemService.getAllFromBasketByBasketId(basketId);
+        System.err.println("Items when calculate Price: " + items.toString());
         return items.stream().mapToDouble(BasketItem::getPrice).sum();
     }
 
@@ -61,12 +63,16 @@ public class BasketService {
 
     @Transactional
     @Modifying
-    public void addProductToBasket(User user, String productName, String comment, Short baseId) {
-        System.out.println(user.getId() + " " + productName + " "+ comment + " " + baseId);
+    public void addProductToBasket(User user, String productName, String comment, Short baseId) {//TODO что-то тут мб
         Basket userBasket = getActiveBasketByUserId(user.getId());
+        System.err.println("After get active User basket: " + userBasket.toString() + " items:" + userBasket.getBasketItems().toString());
         Product product = productService.findByNameAndBaseId(productName, baseId);
-        System.out.println(product);
+        System.err.println("Product to insert to active basket: " + product.toString());
         basketItemService.addItem(userBasket, product, comment);
+        System.err.println("addProductToBasket Aftes save item to basket" + userBasket.getBasketItems().toString());
+        basketRepository.save(userBasket);
+        System.err.println("addProductToBasket Aftes save basket" + userBasket.getBasketItems().toString());
+        //
     }
 
 

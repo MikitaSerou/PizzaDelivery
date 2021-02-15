@@ -135,15 +135,15 @@
                         <blockquote style="max-width: 100%">${product.description}</blockquote>
 
 
-                            <select id="dropdown" name="dropdown">
+<%--                            <select id="dropdown" name="dropdown">
                                 <option value="0">Choose</option>
                                 <c:forEach var="base" items="${bases}">
                                     <option value="${base.id}">${base.name}</option>
                                 </c:forEach>
 
-                            </select>
+                            </select>--%>
 
-                        <c:forEach var="base" items="${bases}">
+                      <%--  <c:forEach var="base" items="${bases}">
                             <div id="div${base.id}" class="box">${base.getPriceMultiplier()*category.getPrice()}</div>
                         </c:forEach>
                         <input type='hidden' value='testing' id='HiddenInput' enableviewstate="true"/>
@@ -165,18 +165,12 @@
                                     $('#div' + $(this).val()).show();
                                 });
                             });
-                        </script>
+                        </script>--%>
 
 
 
-         <%--               <form action="${pageContext.request.contextPath}/category/${categoryName}/${productName}" method="post">
+                        <form action="${pageContext.request.contextPath}/category/${categoryName}/${productName}" method="post">
                         <p><span><spring:message code="choose.base"/>: </span>
-
-
-
-                            <select id="dropdown" name="dropdown">
-                                <option value="0">Choose</option>
-
 
                             <select id="dropdown" class="form-control" name="baseId" path="baseId" style="max-width: 50%">
                                 <option value="0">Choose</option>
@@ -191,13 +185,13 @@
                                   style=" /*height: 105%;*/ width: 100%"></textarea>
                             </sec:authorize>
                         <h2 style="position: absolute; bottom: 0;"> ${product.price} .руб
-                            </h2>&lt;%&ndash;TODO придумать как бы цена менялась динамически от jQuery&ndash;%&gt;
+                            </h2><%--TODO придумать как бы цена менялась динамически от jQuery--%>
                             <sec:authorize access="isAuthenticated()">
                         <button type="submit" class="btn btn-success"
                                 style="position: absolute; bottom: 3%; right: 3%;"><h2><spring:message
                                 code="button.addToCart"/></h2></button>
                             </sec:authorize>
-                        </form>--%>
+                        </form>
 
 
 

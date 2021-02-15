@@ -20,7 +20,7 @@ public interface CategoryRepository extends CrudRepository<Category, Short> {
 
 
 
-    @Query(value = " SELECT * FROM CATEGORY WHERE NAME !='Своя' AND NAME !='Архив'", nativeQuery = true)
+    @Query(value = " SELECT * FROM CATEGORY WHERE NAME !='Свои' AND NAME !='Архив'", nativeQuery = true)
     @Transactional
     List<Category> findAllStandard();
 }

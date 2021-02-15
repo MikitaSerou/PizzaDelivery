@@ -27,12 +27,15 @@ public class BasketItemService {
     @Transactional
     @Modifying
     public void addItem(Basket basket, Product product,  String description ){
-        basketItemRepository.save(new BasketItem(basket, product, product.getPrice(), description));
+        BasketItem item = new BasketItem(basket, product, product.getPrice(), description);
+        System.err.println("addItem save item to basket: " + item.toString());
+        basketItemRepository.save(item);
+
     }
 
     public void deleteItem(Long itemId){
         basketItemRepository.deleteByItemId(itemId);
-    //deleteById(itemId);
+
     }
 
 

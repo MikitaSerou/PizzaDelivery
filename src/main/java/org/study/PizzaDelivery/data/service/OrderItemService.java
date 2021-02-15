@@ -25,10 +25,12 @@ public class OrderItemService {
         orderItemRepository.save(oderItem);
     }
 
-    public void addOrderItemsFromBasket(Long basketId, Order order) {
+    public void addOrderItemsFromBasket(Long basketId, Order order) { //TODO добавляет по 3
         Basket basket = basketService.findById(basketId);
+        System.err.println(basket.getBasketItems().toString());
         for (BasketItem basketItem :
                 basket.getBasketItems()) {
+            System.err.println("итерация");
             OrderItem item = new OrderItem(order, basketItem.getProduct(),
                     basketItem.getPrice(), basketItem.getComment());
             orderItemRepository.save(item);

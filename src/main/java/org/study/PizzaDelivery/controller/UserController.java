@@ -40,7 +40,10 @@ public class UserController {
     public String basket(@ModelAttribute User user, Model model) {
         Basket basket =basketService.findActiveByUserID(user.getId());
         model.addAttribute("basket", basket);
+        System.err.println("basket when you wisit page: " + basket);
+        System.err.println("basketITEMS when you wisit page: " + basket.getBasketItems().toString());
         model.addAttribute("basketSum", basketService.calculatePrice(basket.getId()));
+        System.err.println("basketITEMS after calculate: " + basket.getBasketItems().toString());
         model.addAttribute("typesOfPayment", TypeOfPayment.values());
         return "user/basket";
     }
@@ -64,8 +67,11 @@ public class UserController {
             basketService.clearBasket(basketId);
         }
         if (action.equals("submit")) {
-            System.out.println(basketId +" "+ phoneNumber +" "+ comment  +" "+ typeOfPayment );
-            orderService.addOrder(basketId, phoneNumber, comment, typeOfPayment);
+            Basket basket = basketService.getActiveBasketByUserId(user.getId());
+            System.err.println("Before submit: " + basketId +" "+ phoneNumber +" "+ comment  +" "+ typeOfPayment );
+            System.err.println("Before submit items: " +basket.getBasketItems().toString());
+            //TODO тут все идет наперексяк. уже 3 айтема смотреть представление, возможно что-то в посте
+            orderService.addOrder(basket.getId(), phoneNumber, comment, typeOfPayment);
         return "redirect:/user";
         }
 
