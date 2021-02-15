@@ -178,7 +178,7 @@
                     </td>
                     <td>
                         <input type="hidden" name="action" value="add"/>
-                        <button type="submit" class="btn btn-light"><spring:message code="add.button"/></button>
+                        <button type="submit" formmethod="post" class="btn btn-light"><spring:message code="add.button"/></button>
                     </td>
                 </form>
             </tr>

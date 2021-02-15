@@ -1,11 +1,14 @@
 package org.study.PizzaDelivery.data.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.data.model.Category;
+import org.study.PizzaDelivery.data.model.Product;
 import org.study.PizzaDelivery.data.repository.CategoryRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,6 +16,9 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductService productService;
 
     @Transactional
     public Category findOne(short id) {
@@ -35,6 +41,8 @@ public class CategoryService {
     }
 
 
+
+
     public void addCategory(String categoryName, Double categoryPrice) {
         if(categoryName != null && categoryPrice != null){
         Category categoryForAdd = new Category(categoryName, categoryPrice);
@@ -52,7 +60,15 @@ public class CategoryService {
         categoryRepository.save(categoryForUpdate);
     }
 
+    @Transactional
+    @Modifying
     public void deleteCategory(Short categoryId) {
-        categoryRepository.delete(categoryRepository.findById(categoryId).get());
+        List<String> distinctNamesOfCategoryProducts = productService.findAllDistinctNamesByCategoryId(categoryId);
+        //category.setProducts(new ArrayList<Product>());
+        for (String n : distinctNamesOfCategoryProducts) {
+            productService.deleteAllVariablesOfProductByName(n);
+        }
+       categoryRepository.delete(categoryRepository.findById(categoryId).get());
+    /*     categoryRepository.delete(categoryRepository.findById(categoryId).get());*/
     }
 }

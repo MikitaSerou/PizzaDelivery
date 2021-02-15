@@ -45,6 +45,12 @@ BasketRepository baskr = context.getBean("basketRepository", BasketRepository.cl
         BasketService baskS = context.getBean("basketService", BasketService.class);
         BasketItemRepository bir  = context.getBean("basketItemRepository", BasketItemRepository.class);
         BasketItemService bis = context.getBean("basketItemService", BasketItemService.class);
+
+       // ps.findAllDistinctNamesByCategoryId();
+       // System.out.println(pr.findDistinctNameByCategoryId((short) 5));
+     //   cs.deleteCategory((short) 3);
+        //ps.deleteAllVariablesOfProductByName("Деревенщина");
+       // ps.deleteById(30L);
         //System.out.println(is.findByType(IngredientType.SAUCE));
       //  ps.addNewProductWithoutIngredients("Коровка", (short) 4,
                 //"Тупа коровка!");

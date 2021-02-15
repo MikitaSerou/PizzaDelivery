@@ -39,12 +39,23 @@ public class ProductService {
         return productRepository.findDistinctTopByName(productName);
     }
 
+    public void saveProduct(Product product){
+        productRepository.save(product);
+    }
+
     @Transactional
     public Product findByNameAndBaseId(String productName, Short baseId) {
         System.out.println(productName + " " + baseId);
         return productRepository.findByNameAndBaseId(productName, baseId);
     }
 
+    public void deleteById(Long id) {
+        Product product = productRepository.findById(id).get();
+        for (Ingredient i : product.getIngredients()){
+            ingredientService.deleteIngredient(i.getId());
+        }
+        productRepository.deleteById(id);
+    }
 
 /*    @Transactional
     @Modifying
@@ -105,6 +116,11 @@ public class ProductService {
         return productRepository.findAllByCategoryName(name);
     }
 
+    @Transactional
+    public List<String> findAllDistinctNamesByCategoryId(Short categoryId) {
+       return productRepository.findDistinctNamesByCategoryId(categoryId);
+    }
+
     public Iterable<Product> findAll() {
         return productRepository.findAll();
     }
@@ -120,11 +136,12 @@ public class ProductService {
     @Transactional
     @Modifying
     public void deleteAllVariablesOfProductByName(String productName) {
-        System.err.println(productName + "deleteAssssssssS");
-
         if (productRepository.existsByName(productName)) { //TODO вот так можно на null проверять
-            productRepository.deleteAllByName(productName);
+            List<Product> products = productRepository.findAllByName(productName);
+            for (Product product : products) {
+                product.setCategory(categoryService.findByName("Архив"));
+                productRepository.save(product);
+            }
         }
-
     }
 }

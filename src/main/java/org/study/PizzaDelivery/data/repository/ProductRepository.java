@@ -32,18 +32,21 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
 
     boolean existsByName(String name);
 
-    @Transactional
+/*    @Transactional
     @Modifying
     @Query(value = "DELETE  FROM PRODUCT WHERE name=?1", nativeQuery = true) //TODO переделать, ругается на ингридиенты
-    void deleteAllByName(String name);
+    void deleteAllByName(String name);*/
 
     @Transactional
     Product findByNameAndBaseId(String name, Short baseId);
 
+    @Transactional
+    List<Product> findAllByName(String name);
+
     //  @Modifying
     @Transactional
-    @Query(value = "SELECT DISTINCT PRODUCT.name from PUBLIC.PRODUCT", nativeQuery = true)
-    List<String> findDistinctNameByCategoryId();
+    @Query(value = "SELECT DISTINCT PRODUCT.name from PUBLIC.PRODUCT where PRODUCT.CATEGORY_id = ?1", nativeQuery = true)
+    List<String> findDistinctNamesByCategoryId(short categoryId);
 
     @Transactional
     List<Product> findAllByBase(Base base);

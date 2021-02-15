@@ -13,11 +13,11 @@ public class Product {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "category_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER,  cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+    @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "base_id", nullable = false)
     private Base base;
 
@@ -27,18 +27,18 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "product_ingredient",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private List<Ingredient> ingredients;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,
-            cascade = CascadeType.MERGE)
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<OrderItem> orderItems;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<BasketItem> basketItems;
 
 
