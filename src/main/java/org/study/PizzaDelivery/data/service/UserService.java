@@ -1,5 +1,7 @@
 package org.study.PizzaDelivery.data.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.study.PizzaDelivery.controller.MainController;
 import org.study.PizzaDelivery.data.model.Basket;
 import org.study.PizzaDelivery.data.model.Role;
 import org.study.PizzaDelivery.data.model.User;
@@ -21,7 +24,6 @@ import javax.persistence.PersistenceContext;
 import java.util.*;
 
 @Service
-
 public class UserService implements UserDetailsService {
 
     @PersistenceContext
@@ -39,8 +41,10 @@ public class UserService implements UserDetailsService {
     @Autowired
     private BasketService basketService;
 
+    private static final Logger logger = LogManager.getLogger(UserService.class);
 
     public User findByName(String userName) {
+        logger.info("get parameters: " + userName);
         return userRepository.findByUsername(userName);
     }
 

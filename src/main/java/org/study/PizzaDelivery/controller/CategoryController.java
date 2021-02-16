@@ -1,5 +1,9 @@
 package org.study.PizzaDelivery.controller;
 
+
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,12 +39,20 @@ public class CategoryController {
     @Autowired
     private IngredientService ingredientService;
 
+    private static final Logger logger = LogManager.getLogger(CategoryController.class);
+
     @GetMapping
     public String categoryList(Model model) {
+        logger.info("0 Category page...");
+
+        logger.info("1##############################################################...");
+
+        logger.error("Exiting application...");
         model.addAttribute("categories", categoryService.getAllStandardCategories());
         //TODO скрыть кастомную
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("cheapestProducts", productService.findAllByBase(baseService.findCheapest()));
+        logger.info("2##############################################################...");
         return "category/categories";
     }
 
