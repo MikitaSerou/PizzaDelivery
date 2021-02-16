@@ -47,16 +47,17 @@ public class OrderService {
     }
 
 
-    public void addOrder(Long basketId, String phoneNumber, String comment, TypeOfPayment typeOfPayment) {
-        User user = basketService.findById(basketId).getUser();
-        System.err.println("01Basket befor do order: " + basketService.findById(basketId).getBasketItems().toString());
-        double orderPrice = basketService.calculatePrice(basketId);
+    public void addOrder(Basket basket, String phoneNumber, String comment, TypeOfPayment typeOfPayment) {
+        System.err.println("01Basket befor do order: " + basket.getBasketItems().toString());
+        User user = basket.getUser();
+        System.err.println("01Basket befor do order: " + basket.getBasketItems().toString());
+        double orderPrice = basketService.calculatePrice(basket.getId());
         Order order = new Order(user, phoneNumber, orderPrice, typeOfPayment, comment);
         orderRepository.save(order);
         //System.err.println(basketService.findById(basketId).getBasketItems().toString());
-        System.err.println("02Basket befor do order: " + basketService.findById(basketId).getBasketItems().toString());
-        orderItemService.addOrderItemsFromBasket(basketId, order);
-        basketService.clearBasket(basketId);
+        System.err.println("02Basket befor do order: " + basket.getBasketItems().toString());
+        orderItemService.addOrderItemsFromBasket(basket, order);
+        basketService.clearBasket(basket);
     }
 
 

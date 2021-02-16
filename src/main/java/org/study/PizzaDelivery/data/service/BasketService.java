@@ -76,12 +76,12 @@ public class BasketService {
     }
 
 
-    public void clearBasket(Long basketId) {
-        Basket basketForClear = basketRepository.findById(basketId).get();
-        if (!basketForClear.getBasketItems().isEmpty()) {
-            User user = basketForClear.getUser();
-            basketForClear.setActive(false);
-            basketRepository.save(basketForClear);
+    public void clearBasket(Basket basket) {
+
+        if (!basket.getBasketItems().isEmpty()) {
+            User user = basket.getUser();
+            basket.setActive(false);
+            basketRepository.save(basket);
             basketRepository.save(new Basket(true, user));
         } else {
             System.out.println("ALREADY empty EBAT");

@@ -64,14 +64,16 @@ public class UserController {
         }
         if (action.equals("clear")) {
             System.out.println("Clear basket: " + basketId);
-            basketService.clearBasket(basketId);
+            basketService.clearBasket(basketService.getActiveBasketByUserId(user.getId()));
         }
         if (action.equals("submit")) {
             Basket basket = basketService.getActiveBasketByUserId(user.getId());
             System.err.println("Before submit: " + basketId +" "+ phoneNumber +" "+ comment  +" "+ typeOfPayment );
-            System.err.println("Before submit items: " +basket.getBasketItems().toString());
+            System.err.println("Before submit items: " +basket.getBasketItems().toString());//norm
             //TODO тут все идет наперексяк. уже 3 айтема смотреть представление, возможно что-то в посте
-            orderService.addOrder(basket.getId(), phoneNumber, comment, typeOfPayment);
+
+
+            orderService.addOrder(basket, phoneNumber, comment, typeOfPayment);
         return "redirect:/user";
         }
 

@@ -134,10 +134,10 @@
                         <div class="form-group">
                             <label class="formLable" for="formInput2"><h2 style="max-width: 100%"><spring:message
                                     code="choose.sauce"/></h2></label>
-                            <select class="form-control" id="formInput2" name="sauce" path="sauce"
+                            <select class="form-control" id="formInput2" name="ingredients" path="ingredients"
                                     style="max-width: 50%">
                                 <c:forEach items="${sauces}" var="sauce">
-                                    <option name="sauceId" value=${sauce.id}>${sauce.name}</option>
+                                    <option name="ingredients" value=${sauce.id}>${sauce.name}</option>
                                 </c:forEach>
                             </select>
                         </div>

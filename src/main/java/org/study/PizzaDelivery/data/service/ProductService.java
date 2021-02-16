@@ -85,9 +85,9 @@ public class ProductService {
             }*/
     @Transactional
     @Modifying
-    public void addNewProductToCategory(String name, Category category, Short sauceId, String description, short[] ingredientsId) {
+    public void addNewProductToCategory(String name, Category category, String description, short[] ingredientsId) {
         ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-
+        System.err.println(name + category+ description + ingredients.toString());
         for (short ingredientId : ingredientsId) {
             ingredients.add(ingredientService.findById(ingredientId));
         }

@@ -84,12 +84,20 @@ public class CategoryController {
     @PostMapping(value = "/{categoryName}/addProduct")
     public String addProductPage(@PathVariable("categoryName") String categoryName,
                                  @RequestParam(required = true, defaultValue = "") String productName,
-                                 @RequestParam(required = true, defaultValue = "") Short sauceId,
+                               //  @RequestParam(required = true, defaultValue = "") Short sauceId,
                                  @RequestParam(required = true, defaultValue = "") String description,
                                  @RequestParam(required = true, defaultValue = "") short[] ingredients,
                            Model model) {
-        productService.addNewProductToCategory(productName, categoryService.findByName(categoryName),
-                sauceId, description, ingredients);
+
+        for (short id:
+             ingredients) {
+            System.err.println(id);
+        }
+
+
+        System.err.println(productName + " sauceID "+ " desc: " + description
+        +" ingred: " + ingredients.toString());
+        productService.addNewProductToCategory(productName, categoryService.findByName(categoryName), description, ingredients);
 /*        System.err.println(categoryName);*/
 
 /*        for(short id : ingredients) {
