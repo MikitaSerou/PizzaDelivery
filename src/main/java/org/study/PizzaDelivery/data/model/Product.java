@@ -1,10 +1,16 @@
 package org.study.PizzaDelivery.data.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.study.PizzaDelivery.controller.UserController;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class Product {
+
+    private static final Logger logger = LogManager.getLogger(Product.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

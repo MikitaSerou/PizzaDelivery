@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.study.PizzaDelivery.controller.MainController;
+import org.study.PizzaDelivery.controller.UserController;
 import org.study.PizzaDelivery.data.model.Basket;
 import org.study.PizzaDelivery.data.model.Role;
 import org.study.PizzaDelivery.data.model.User;
@@ -25,6 +26,8 @@ import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    private static final Logger logger = LogManager.getLogger(UserService.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -40,8 +43,6 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private BasketService basketService;
-
-    private static final Logger logger = LogManager.getLogger(UserService.class);
 
     public User findByName(String userName) {
         logger.info("get parameters: " + userName);
@@ -98,9 +99,9 @@ public Basket getActiveBasket(Long userId) {
         return false;
     }
 
-    public List<User> usergtList(Long idMin) {
-        return em.createQuery("SELECT u FROM User u WHERE u.id > :paramId", User.class)
+/*    public List<User> usergtList(Long idMin) {
+        return em.createQuery("SELECT u FROM USER u WHERE u.id > :paramId", User.class)
                 .setParameter("paramId", idMin).getResultList();
-    }
+    }*/
 
 }

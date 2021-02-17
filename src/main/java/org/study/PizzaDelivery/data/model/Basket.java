@@ -1,5 +1,9 @@
 package org.study.PizzaDelivery.data.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.study.PizzaDelivery.controller.UserController;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -7,6 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "basket")
 public class Basket {
+
+    private static final Logger logger = LogManager.getLogger(Basket.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

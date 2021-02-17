@@ -1,6 +1,9 @@
 package org.study.PizzaDelivery.data.model;
 
 import com.sun.istack.NotNull;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.study.PizzaDelivery.controller.UserController;
 import org.study.PizzaDelivery.data.enums.IngredientType;
 
 import javax.persistence.*;
@@ -8,6 +11,8 @@ import java.util.List;
 
 @Entity
 public class Ingredient {
+
+    private static final Logger logger = LogManager.getLogger(Ingredient.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

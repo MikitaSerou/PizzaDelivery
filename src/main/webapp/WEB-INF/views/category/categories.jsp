@@ -205,6 +205,9 @@
                                     </a>
                                     <div class="card-body">
                                         <h3 class="card-title"><span id="pizzaName">${product.name}</span></h3>
+                                        <c:forEach var="ingredient" items="${product.ingredients}">
+                                            <span id="ingredientName">${ingredient.name}</span>
+                                        </c:forEach>
                                         <p class="card-text">${product.description}</p>
                                         <select id="dropdown${product.id}" class="form-control"
                                                 name="dropdown${product.id}">

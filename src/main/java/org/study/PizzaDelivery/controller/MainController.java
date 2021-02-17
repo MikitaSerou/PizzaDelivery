@@ -31,6 +31,7 @@ public class MainController {
     @Autowired
     UserService userService;
 
+
     @GetMapping("/")
     public String mainPage(HttpSession session){
         logger.info("Main controller");
@@ -40,8 +41,10 @@ public class MainController {
                 logger.info("Initialize user object in HttpSession");
                 String name = SecurityContextHolder.getContext().getAuthentication().getName();
                 User user = userService.findByName(name);
-                logger.info("Set User in session: " + user.toString());
                 session.setAttribute("user", user);
+               if (session.getAttribute("user")!=null){
+                   logger.info("Set User in session: " + user.toString());
+               }
             }
         }
         return "index";

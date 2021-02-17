@@ -1,6 +1,9 @@
 package org.study.PizzaDelivery.data.model;
 
 import jakarta.validation.constraints.Size;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.study.PizzaDelivery.controller.UserController;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,6 +11,8 @@ import java.util.Objects;
 
 @Entity
 public class Base {
+
+    private static final Logger logger = LogManager.getLogger(Base.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

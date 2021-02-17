@@ -1,10 +1,13 @@
 package org.study.PizzaDelivery.data.service;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.study.PizzaDelivery.controller.UserController;
 import org.study.PizzaDelivery.data.model.Base;
 import org.study.PizzaDelivery.data.model.Category;
 import org.study.PizzaDelivery.data.model.Ingredient;
@@ -17,6 +20,8 @@ import java.util.List;
 
 @Service
 public class ProductService {
+
+    private static final Logger logger = LogManager.getLogger(ProductService.class);
 
     @Autowired
     private ProductRepository productRepository;
@@ -39,7 +44,7 @@ public class ProductService {
         return productRepository.findDistinctTopByName(productName);
     }
 
-    public void saveProduct(Product product){
+    public void saveProduct(Product product) {
         productRepository.save(product);
     }
 
@@ -51,74 +56,60 @@ public class ProductService {
 
     public void deleteById(Long id) {
         Product product = productRepository.findById(id).get();
-        for (Ingredient i : product.getIngredients()){
+        for (Ingredient i : product.getIngredients()) {
             ingredientService.deleteIngredient(i.getId());
         }
         productRepository.deleteById(id);
     }
 
-/*    @Transactional
-    @Modifying
-    public void addNewProductWithoutIngredients(String name, Short categoryId, String description) {
-        Category category = categoryService.findOne(categoryId);
-        baseService.findAll().forEach(b -> {
-            Product product = Product.builder()
-                    .name(name)
-                    .base(b)
-                    .category(category)
-                    .describe(description)
-                    .price(category.getPrice() * b.getPriceMultiplier())
-                    .build();
-            productRepository.save(product);
-        });*/
-
-    /*        for (Base base:
-                 baseService.findAll()) {
-                Product product = Product.builder()
-                        .name(name)
-                        .base(base)
-                        .category(category)
-                        .describe(description)
-                        .price(category.getPrice() * base.getPriceMultiplier())
-                        .build();
-                productRepository.save(product);
-            }*/
     @Transactional
     @Modifying
     public void addNewProductToCategory(String name, Category category, String description, short[] ingredientsId) {
-        ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-        System.err.println(name + category+ description + ingredients.toString());
-        for (short ingredientId : ingredientsId) {
-            ingredients.add(ingredientService.findById(ingredientId));
-        }
 
-        baseService.findAll().forEach(b -> {
-            Product product = Product.builder()
-                    .name(name)
-                    .base(b)
-                    .category(category)
-                    .describe(description)
-                    .price(category.getPrice() * b.getPriceMultiplier())
-                    .ingredients(ingredients)
-                    .build();
-            productRepository.save(product);
-            System.err.println(product.toString());
-        });
+        if (!name.equals("")) {
+            logger.debug("Input parameters:[ name:" + name + "category: " + category.toString() + " description: "
+                    + description + " ingredientsId[]: " + ingredientsId.toString() + "]");
+
+            ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+            for (short ingredientId : ingredientsId) {
+                ingredients.add(ingredientService.findById(ingredientId));
+            }
+
+            logger.debug("Ingredients list from db by ID:[" + ingredients.toString() + "]");
+
+            baseService.findAll().forEach(b -> {
+                Product product = Product.builder()
+                        .name(name)
+                        .base(b)
+                        .category(category)
+                        .describe(description)
+                        .price(category.getPrice() * b.getPriceMultiplier())
+                        .ingredients(ingredients)
+                        .build();
+                productRepository.save(product);
+                logger.debug("Saved product in DB:[" + product.toString() + "]");
+            });
+        }else{
+            logger.error("Name of new product can not be empty");
+        }
     }
 
 
     @Transactional
     public List<Product> findAllByBase(Base base) {
+        logger.debug("Input parameter: base:" + base.toString() + "]");
         return productRepository.findAllByBase(base);
     }
 
     public List<Product> findByCategoryName(String name) {
+        logger.debug("Input parameter: name:" + name + "]");
         return productRepository.findAllByCategoryName(name);
     }
 
     @Transactional
     public List<String> findAllDistinctNamesByCategoryId(Short categoryId) {
-       return productRepository.findDistinctNamesByCategoryId(categoryId);
+        logger.debug("Input parameter: categoryId:" + categoryId + "]");
+        return productRepository.findDistinctNamesByCategoryId(categoryId);
     }
 
     public Iterable<Product> findAll() {
@@ -136,7 +127,8 @@ public class ProductService {
     @Transactional
     @Modifying
     public void deleteAllVariablesOfProductByName(String productName) {
-        if (productRepository.existsByName(productName)) { //TODO вот так можно на null проверять
+        logger.debug("Input parameter: name:" + productName + "]");
+        if (productRepository.existsByName(productName)) {
             List<Product> products = productRepository.findAllByName(productName);
             for (Product product : products) {
                 product.setCategory(categoryService.findByName("Архив"));

@@ -24,6 +24,8 @@ import java.util.List;
 @SessionAttributes("user")
 public class CategoryController {
 
+    private static final Logger logger = LogManager.getLogger(CategoryController.class);
+
     @Autowired
     private CategoryService categoryService;
 
@@ -39,7 +41,6 @@ public class CategoryController {
     @Autowired
     private IngredientService ingredientService;
 
-    private static final Logger logger = LogManager.getLogger(CategoryController.class);
 
     @GetMapping
     public String categoryList(Model model) {
@@ -96,38 +97,12 @@ public class CategoryController {
     @PostMapping(value = "/{categoryName}/addProduct")
     public String addProductPage(@PathVariable("categoryName") String categoryName,
                                  @RequestParam(required = true, defaultValue = "") String productName,
-                               //  @RequestParam(required = true, defaultValue = "") Short sauceId,
                                  @RequestParam(required = true, defaultValue = "") String description,
                                  @RequestParam(required = true, defaultValue = "") short[] ingredients,
                            Model model) {
 
-        for (short id:
-             ingredients) {
-            System.err.println(id);
-        }
-
-
-        System.err.println(productName + " sauceID "+ " desc: " + description
-        +" ingred: " + ingredients.toString());
         productService.addNewProductToCategory(productName, categoryService.findByName(categoryName), description, ingredients);
-/*        System.err.println(categoryName);*/
 
-/*        for(short id : ingredients) {
-            //TODO переписать
-            System.err.println(ingredientService.findById(id).toString());
-            //System.out.println(ingredientService.findById(ingredientId));
-        }*/
-
-
-/*        model.addAttribute("category", categoryService.findByName(categoryName));
-        model.addAttribute("bases", baseService.findAll());
-        model.addAttribute("ingredients", ingredientService.findAll());
-        model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
-        model.addAttribute("cheeses", ingredientService.findByType(IngredientType.CHEESE));
-        model.addAttribute("meat", ingredientService.findByType(IngredientType.MEAT));
-        model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
-        model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
-        model.addAttribute("ingredientTypes", IngredientType.values());*/
         return "redirect:/category";
     }
 

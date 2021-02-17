@@ -1,6 +1,8 @@
 package org.study.PizzaDelivery.controller;
 
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,8 @@ import org.study.PizzaDelivery.data.service.UserService;
 
 @Controller
 public class RegistrationController {
+
+    private static final Logger logger = LogManager.getLogger(RegistrationController.class);
 
     @Autowired
     private UserService userService;

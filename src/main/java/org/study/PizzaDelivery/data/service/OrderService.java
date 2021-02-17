@@ -1,7 +1,10 @@
 package org.study.PizzaDelivery.data.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.study.PizzaDelivery.controller.UserController;
 import org.study.PizzaDelivery.data.enums.Status;
 import org.study.PizzaDelivery.data.enums.TypeOfPayment;
 import org.study.PizzaDelivery.data.model.*;
@@ -13,6 +16,8 @@ import java.util.List;
 
 @Service
 public class OrderService {
+
+    private static final Logger logger = LogManager.getLogger(OrderService.class);
 
     @Autowired
     private OrderRepository orderRepository;

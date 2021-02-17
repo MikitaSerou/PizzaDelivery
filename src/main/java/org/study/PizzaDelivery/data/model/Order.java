@@ -1,6 +1,9 @@
 package org.study.PizzaDelivery.data.model;
 
 import com.sun.istack.NotNull;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.study.PizzaDelivery.controller.UserController;
 import org.study.PizzaDelivery.data.enums.Status;
 import org.study.PizzaDelivery.data.enums.TypeOfPayment;
 
@@ -11,6 +14,8 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order {
+
+    private static final Logger logger = LogManager.getLogger(Order.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

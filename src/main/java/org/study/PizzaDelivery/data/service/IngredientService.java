@@ -1,8 +1,11 @@
 package org.study.PizzaDelivery.data.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.study.PizzaDelivery.controller.UserController;
 import org.study.PizzaDelivery.data.enums.IngredientType;
 import org.study.PizzaDelivery.data.model.Ingredient;
 import org.study.PizzaDelivery.data.repository.IngredientRepository;
@@ -12,10 +15,13 @@ import java.util.List;
 @Service
 public class IngredientService {
 
+    private static final Logger logger = LogManager.getLogger(IngredientService.class);
+
     @Autowired
     private IngredientRepository ingredientRepository;
 
     public Ingredient findById(Short ingredientId){
+        logger.debug("Input parameter: " + ingredientId);
         return ingredientRepository.findById(ingredientId).get();
     }
 

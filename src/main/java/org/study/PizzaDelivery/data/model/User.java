@@ -2,8 +2,11 @@ package org.study.PizzaDelivery.data.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.study.PizzaDelivery.controller.UserController;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -15,6 +18,7 @@ import java.util.Set;
 @Table(name = "user")
 public class User implements UserDetails {
 
+    private static final Logger logger = LogManager.getLogger(User.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

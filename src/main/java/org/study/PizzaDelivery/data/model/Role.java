@@ -1,6 +1,10 @@
 package org.study.PizzaDelivery.data.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.GrantedAuthority;
+import org.study.PizzaDelivery.controller.UserController;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.util.Set;
@@ -8,6 +12,8 @@ import java.util.Set;
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
+
+    private static final Logger logger = LogManager.getLogger(Role.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
