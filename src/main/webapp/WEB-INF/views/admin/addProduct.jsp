@@ -173,8 +173,8 @@
                                       style=" /*height: 105%;*/ width: 100%"></textarea>
                         </div>
                         <br/>
-                            <button type="submit" class="btn btn-success"
-                                   <%-- style="position: absolute; bottom: 3%; right: 3%;"--%>><h2><spring:message
+                            <button formmethod="post" type="submit" class="btn btn-success"
+                                 ><h2><spring:message
                                     code="add.button"/></h2></button>
 
                     </form>

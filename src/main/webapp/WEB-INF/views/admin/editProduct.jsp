@@ -1,4 +1,4 @@
-﻿<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
@@ -12,7 +12,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
-    <title>${productName}</title>
+    <title>${category.name}&nbsp;<spring:message code="add.product"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
 
@@ -20,6 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23019901-1"></script>
 </head>
 
 <body id="bodyDefault">
@@ -103,7 +104,6 @@
                 </svg>
                 <spring:message code="promotions.title"/></a></button>
         </div>
-        <h1>${user.id}</h1>
     </nav>
 </div>
 
@@ -113,7 +113,7 @@
     <div class="row">
         <div class="col-sm-9">
             <h1 class="display-2" align="left" margin="right">
-                <span id="pageHeader"><spring:message code="pizza"/>:&nbsp;${product.name}&nbsp;</span>
+                <span id="pageHeader"><spring:message code="edit.Product"/>:&nbsp;${product.name}</span>
             </h1>
             <button type="button" class="btn btn-secondary"><a href="/category">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -125,79 +125,92 @@
             <br/>
             <br/>
 
-            <%-- <div class="card text-white bg-primary mb-3" style="max-height: 420px; max-width: 80%;">--%>
-            <div style="min-height: auto">
-                <div class="row no-gutters" style="background-color: rgba(39,43,48,0.9); border-radius: 10px;">
-                    <div class="col-md-5"  style="margin-top: auto; margin-bottom: auto;">
-                        <img src='<spring:url value="/resources/images/pizzaItem.png" />' width="420px"
-                             height="420px"/>
-                    </div>
-                    <div class="col-md-7">
-                        <br/>
-                        <h1><span style="color: white; background-color: #ed5a56;border-radius: 10px;font-weight: bolder;font-size: 45px;">
-                            ${product.name}</span></h1>
-                        <h2><spring:message code="ingredients"/>:</h2>
-                        <c:forEach var="ingredient" items="${product.ingredients}">
-                            <span class="badge badge-pill badge-info">${ingredient.name}</span>
-                        </c:forEach>
-                        <blockquote style="max-width: 100%">${product.description}</blockquote>
-                        <form action="${pageContext.request.contextPath}/category/${categoryName}/${productName}"
-                              method="post">
-                            <h2><spring:message code="choose.base"/>:</h2>
-                            <input type="hidden" name="action" value="addToCart">
-                            <select id="dropdown" class="form-control" name="baseId" path="baseId"
+            <div class="card text-white bg-primary mb-3" style="width: 100%;">
+
+                <div class="card-body">
+
+
+                    <form action="${pageContext.request.contextPath}/category/edit/${productName}"
+                          method="post">
+                        <div class="form-group" style="width: 50%">
+                            <label for="formInput1" class="formLable"><h2><spring:message code="p.name"/></h2></label>
+                            <input type="text" class="form-control" name="productName" id="formInput1"
+                                   placeholder="${product.name}">
+                        </div>
+                        <div class="form-group">
+                            <label class="formLable" for="formInput2"><h2 style="max-width: 100%"><spring:message
+                                    code="choose.sauce"/></h2></label>
+                            <select class="form-control" id="formInput2" name="ingredients" path="ingredients"
                                     style="max-width: 50%">
-                                <c:forEach items="${bases}" var="base">
-                                    <option name="baseId" value=${base.id}>${base.name}</option>
+                                <c:forEach items="${sauces}" var="sauce">
+                                    <option name="ingredients" value=${sauce.id}>${sauce.name}</option>
                                 </c:forEach>
                             </select>
-                            <c:forEach items="${bases}" var="base">
-                                <div id="div${base.id}" class="box" style="position: absolute; top: 0; right: 0;">
-                                    <h1>${base.getPriceMultiplier()*category.getPrice()}
-                                        .<spring:message code="currency"/></h1>
-                                </div>
-                            </c:forEach>
-                            <input type='hidden' value='testing' id='HiddenInput' enableviewstate="true"/>
-                            <sec:authorize access="hasRole('ROLE_USER')">
-                                <h2><spring:message code="commentToProduct"/>:</h2>
-                                <div class="form-group" style="padding: 5px;">
-                                <textarea name="comment" path="comment"
-                                          placeholder="Comment" maxlength="255" rows="6"
-                                          style=" height: 105%; width: 100%"></textarea>
-                                    <dr/>
-                                    <dr/>
-                                    <dr/>
-                                </div>
-                            </sec:authorize>
-                            <sec:authorize access="hasRole('ROLE_USER')">
-                                <button type="submit" formmethod="post" class="btn btn-success"
-                                        style="width: 100%; text-align: center;"><h2><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                                    <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
-                                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                                </svg>
-                                    <spring:message code="addToBasket.button"/></h2></button>
-                            </sec:authorize>
-                        </form>
-                        <script type="text/javascript">
-                            $(document).ready(function () {
-                                $('.box').hide();
-                                $('#HiddenInput').empty();
-                                $('#HiddenInput').val($('#dropdown').val());
-                                var value = $('#HiddenInput').val();
-                                $('#dropdown').val(value);
-                                $('#div' + value).show();
-                                $('#dropdown').change(function () {
-                                    $('.box').hide();
-                                    $('#HiddenInput').val($(this).val());
-                                    $('#div' + $(this).val()).show();
-                                });
-                            });
-                        </script>
-                    </div>
-                </div>
+                        </div>
 
+                        <h2 class="formLable"><spring:message
+                                code="add.ingredients"/>:</h2>
+                        <c:forEach var="ingredientType" items="${ingredientTypes}">
+                            <c:if test="${!ingredientType.toString().equals('SAUCE')}">
+
+
+                                <h2 class="formLableSecondary">${ingredientType}</h2>
+                                <div class="btn-group" style="max-width: 100%" role="group"
+                                     aria-label="Basic checkbox toggle button group">
+                                    <c:forEach var="ingredient" items="${ingredients}">
+
+                                        <div class="form-group">
+                                            <c:if test="${ingredient.getType().equals(ingredientType)}">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="${ingredient.id}"
+                                                       name="ingredients" value="${ingredient.id}">
+                                                <label class="custom-control-label" for="${ingredient.id}">${ingredient.name}</label>
+                                            </div>
+                                            </c:if> <%--TODO закончил тут--%>
+                                        </div>
+                            <%--                <div class="form-group">
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
+                                                    <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+                                                </div>
+
+                                            </div>
+
+
+                                        <c:if test="${product.ingredients.contains(ingredient)}">
+                                            <input type="checkbox"  class="btn-check" id="${ingredient.id}"
+                                                   checked autocomplete="off"  name="ingredients" value="${ingredient.id}">
+                                        </c:if>
+                                            <c:if test="${!product.ingredients.contains(ingredient)}">
+                                          &lt;%&ndash;      <input type="checkbox"  class="btn-check" id="${ingredient.id}"
+                                                       autocomplete="off" name="ingredients" value="${ingredient.id}">&ndash;%&gt;
+                                            </c:if>
+                                            <label class="btn btn-outline-primary"
+                                                   for="${ingredient.id}">${ingredient.name}</label>
+                                        </c:if>--%>
+                                    </c:forEach>
+                                </div>
+
+                            </c:if>
+                        </c:forEach>
+
+
+                        <div class="form-group">
+                            <label class="formLable" for="formInput4"><h2 style="max-width: 100%"><spring:message
+                                    code="description"/></h2></label>
+                            <textarea id="formInput4" name="description" path="description"
+                                      placeholder="Comment" maxlength="255" rows="6"
+                                      style=" /*height: 105%;*/ width: 100%"></textarea>
+                        </div>
+                        <br/>
+                        <button formmethod="post" type="submit" class="btn btn-success"
+                        ><h2><spring:message
+                                code="add.button"/></h2></button>
+
+                    </form>
+
+                </div>
             </div>
-            <%-- </div>--%>
 
         </div>
 
@@ -211,7 +224,7 @@
                                  class="bi bi-person" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                             </svg>
-                            <spring:message code="admin"/> <%--УБРАТЬ--%>
+                            <spring:message code="admin"/>
                         </h4>
                         <div class="list-group">
                             <a href="/admin" class="list-group-item list-group-item-action">
@@ -232,84 +245,6 @@
                                 <spring:message code="logout.ref"/>
                             </a>
                         </div>
-                    </sec:authorize>
-                    <sec:authorize access="hasRole('ROLE_USER')">
-                        <h4 class="display-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                 class="bi bi-person" viewBox="0 0 16 16">
-                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                            </svg>
-                                ${user.getUsername()}
-                        </h4>
-                        <div class="list-group">
-                            <a href="/user"
-                               class="list-group-item list-group-item-action">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                     class="bi bi-briefcase" viewBox="0 0 16 16">
-                                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
-                                </svg>
-                                <spring:message code="userOffice.title"/></a>
-                            <a href="/user/basket" class="list-group-item list-group-item-action">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                                </svg>
-                                <spring:message code="basket.title"/></a>
-                            <a href="/logout"
-                               class="list-group-item list-group-item-action list-group-item-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                     class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                          d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
-                                    <path fill-rule="evenodd"
-                                          d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-                                </svg>
-                                <spring:message code="logout.ref"/></a>
-                            </a>
-                        </div>
-                    </sec:authorize>
-
-                    <sec:authorize access="!isAuthenticated()">
-                        <form method="POST" action="/login" class="field">
-                            <h4><spring:message code="office.entrance"/></h4>
-                            <div class="form-group">
-                                <label for="formGroupExampleInput"><spring:message code="username"/></label>
-                                <input type="text" class="form-control" name="username" id="formGroupExampleInput"
-                                       placeholder="Username">
-                            </div>
-                            <div class="form-group">
-                                <label for="formGroupExampleInput2"><spring:message code="password"/></label>
-                                <input type="password" name="password" class="form-control" id="formGroupExampleInput2"
-                                       placeholder="Password">
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"
-                                       name="remember-me">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    <spring:message code="remember.me"/>
-                                </label>
-                            </div>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="submit" class="btn btn-success">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                              d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                                    </svg>
-                                    <spring:message code="login.ref"/>
-                                </button>
-                                <button type="button" class="btn btn-secondary"><a href="/registration">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-person-plus" viewBox="0 0 16 16">
-                                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-                                    </svg>
-                                    <spring:message code="registration.ref"/></a>
-                                </button>
-                            </div>
-                        </form>
                     </sec:authorize>
                 </div>
             </section>
@@ -344,6 +279,5 @@
 </svg>
     <spring:message code="phone"/></span>
 </div>
-
 </body>
 </html>

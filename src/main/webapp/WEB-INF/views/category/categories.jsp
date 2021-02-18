@@ -15,6 +15,7 @@
     <title><spring:message code="category.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
+
     <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             type="text/javascript"></script>
@@ -199,59 +200,109 @@
                             <div class="col mb-4">
 
                                 <div class="card text-white bg-primary mb-4" style="width: 280px;">
-                                    <a href="/category/${category.name}/${product.name}">
-                                        <img src='<spring:url value="/resources/images/pizzaItem.png" />' width="280px"
-                                             height="280px"/>
-                                    </a>
-                                    <div class="card-body">
-                                        <h3 class="card-title"><span id="pizzaName">${product.name}</span></h3>
-                                        <c:forEach var="ingredient" items="${product.ingredients}">
-                                            <span id="ingredientName">${ingredient.name}</span>
-                                        </c:forEach>
-                                        <p class="card-text">${product.description}</p>
-                                        <select id="dropdown${product.id}" class="form-control"
-                                                name="dropdown${product.id}">
-                                            <c:forEach var="base" items="${bases}">
-                                                <option value="${product.id+base.id}">${base.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="card-footer">
-                                        <c:forEach var="base" items="${bases}">
-                                            <div id="div${product.id+base.id}"
-                                                 class="${product.id}">
-                                                <h4>${base.getPriceMultiplier()*category.getPrice()}&nbsp;<spring:message code="currency"/></h4></div>
-                                        </c:forEach>
-                                        <input type='hidden' value='testing' id='HiddenInput${product.id}'
-                                               enableviewstate="true"/>
-                                    </div>
 
-                                    <script type='text/javascript'>
-                                        $(document).ready(function () {
-                                            $('.${product.id}').hide();
-                                            $('#HiddenInput${product.id}').empty();
-                                            $('#HiddenInput${product.id}').val($('#dropdown${product.id}').val());
-                                            var value = $('#HiddenInput${product.id}').val();
-                                            $('#dropdown${product.id}').val(value);
-                                            $('#div' + value).show();
+                                    <sec:authorize access="hasRole('ROLE_USER')">
+                                    <a href="/category/${category.name}/${product.name}"></sec:authorize>
+                                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                        <a href="/admin/edit/${product.name}"></sec:authorize>
+                                            <img src='<spring:url value="/resources/images/pizzaItem.png" />'
+                                                 width="280px"
+                                                 height="280px"/>
+                                        </a>
 
-                                            $('#dropdown${product.id}').change(function () {
+                                        <form action="${pageContext.request.contextPath}/category/${category.name}/${product.name}"
+                                              method="post">
+                                            <input type="hidden" name="action" value="addToBasket">
+                                            <div class="card-body">
+                                                <h3 class="card-title"><span id="pizzaName">${product.name}</span></h3>
+                                                <c:forEach var="ingredient" items="${product.ingredients}">
+                                                    <span class="badge badge-pill badge-info">${ingredient.name}</span>
+                                                </c:forEach>
+                                                <br/>
+                                                <br/>
+                                                <select id="${product.id}" class="form-control"
+                                                        name="baseId">
+                                                    <c:forEach var="base" items="${bases}">
+                                                        <option value="${base.id}">${base.name}</option>
+                                                    </c:forEach>
+                                                </select>
+
+                                                <input type="hidden" name="comment" value="">
+                                            </div>
+                                            <div class="card-footer">
+                                                <c:forEach var="base" items="${bases}">
+                                                    <div id="${product.id}div${base.id}"
+                                                         class="${product.id}">
+
+                                                        <h4><span>${base.getPriceMultiplier()*category.getPrice()}&nbsp;<spring:message
+                                                                code="currency"/></span>
+                                                            <sec:authorize access="hasRole('ROLE_USER')">
+                                                                <button type="submit" formmethod="post"
+                                                                        class="btn btn-success"
+                                                                        style="position: absolute; right: 0; bottom: 0.3%;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                                                                         height="30" fill="currentColor"
+                                                                         class="bi bi-cart-plus" viewBox="0 0 16 16">
+                                                                        <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
+                                                                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                                                    </svg>
+                                                                    <spring:message code="basket.title"/>
+                                                                </button>
+                                                            </sec:authorize>
+                                                        </h4>
+                                                    </div>
+                                                </c:forEach>
+                                                <input type='hidden' value='testing' id='HiddenInput${product.id}'
+                                                       enableviewstate="true"/>
+
+                                            </div>
+                                                <%-- <sec:authorize access="hasRole('ROLE_USER')">
+                                                     <button type="submit" formmethod="post" class="btn btn-success"
+                                                             style="width: 100%; text-align: center;"><h2>
+                                                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
+                                                             <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
+                                                             <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                                         </svg>
+                                                         <spring:message code="addToBasket.button"/></h2></button>
+                                                 </sec:authorize>--%>
+                                        </form>
+
+                                        <script type='text/javascript'>
+                                            $(document).ready(function () {
                                                 $('.${product.id}').hide();
-                                                $('#HiddenInput${product.id}').val($(this).val());
-                                                $('#div' + $(this).val()).show();/*+ base.id*/
+                                                $('#HiddenInput${product.id}').empty();
+                                                $('#HiddenInput${product.id}').val($('#${product.id}').val());
+                                                var value = $('#HiddenInput${product.id}').val();
+                                                $('#${product.id}').val(value);
+                                                $('#${product.id}div' + value).show();
+
+                                                $('#${product.id}').change(function () {
+                                                    $('.${product.id}').hide();
+                                                    $('#HiddenInput${product.id}').val($(this).val());
+                                                    $('#${product.id}div' + $(this).val()).show();/*+ base.id*/
+                                                });
                                             });
-                                        });
-                                    </script>
-                                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                        </script>
+
+
+                                        <sec:authorize access="hasRole('ROLE_ADMIN')">
                                         <form action="${pageContext.request.contextPath}/category"
                                               method="post">
                                             <input type="hidden" name="productName" value="${product.name}">
                                             <input type="hidden" name="action" value="deleteProduct"/>
-                                            <button type="submit" class="btn btn-danger" style="width: 100%;">
-                                                <spring:message
-                                                        code="delete.button"/></button>
+                                            <button type="submit" class="btn btn-danger"
+                                                    style="position: absolute;  top:0; right: 0; padding: 0;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+                                                     fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                                                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                                </svg>
+                                                    <%--<spring:message
+                                                            code="delete.button"/>--%></button>
                                         </form>
-                                    </sec:authorize>
+                                        </sec:authorize>
+
+
                                 </div>
 
 
@@ -260,7 +311,7 @@
                     </c:forEach>
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
                         <div class="col mb-4">
-                            <a href="/category/${category.name}/addProduct">
+                            <a href="/admin/${category.name}/addProduct">
                                 <div class="card text-white bg-success mb-4" style="width: 280px;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="270" height="270" fill="currentColor"
                                          class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
@@ -330,11 +381,9 @@
                                 </svg>
                                 <spring:message code="userOffice.title"/></a>
                             <a href="/user/basket" class="list-group-item list-group-item-action">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                     fill="currentColor"
-                                     class="bi bi-basket2" viewBox="0 0 16 16">
-                                    <path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z"/>
-                                    <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-cart3" viewBox="0 0 16 16">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                                 </svg>
                                 <spring:message code="basket.title"/></a>
                             <a href="/logout"
@@ -436,72 +485,6 @@
 </svg>
     <spring:message code="phone"/></span>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
 
-
-<%--
-<div class="card text-white bg-primary mb-4" style="width: 280px;">
-    <a href="/category/${category.name}/${product.name}">
-        <img src='<spring:url value="/resources/images/pizzaItem.png" />' width="280px"
-             height="280px"/>
-    </a>
-    <div class="card-body">
-        <h3 class="card-title"><span id="pizzaName">${product.name}</span></h3>
-        <p class="card-text">${product.description}</p>
-
-        &lt;%&ndash;    <select class="form-control" name="ingredientType" path="ingredientType">
-                <c:forEach items="${types}" var="ingredientType">
-                    <option name="ingredientType" value=${ingredientType} text="${ingredientType}">${ingredientType}</option>
-                </c:forEach>
-            </select>&ndash;%&gt;
-
-
-        <select id="dropdown" class="form-control" name="dropdown">
-            <c:forEach var="base" items="${bases}">
-                <option value="${base.id}">${base.name}</option>
-            </c:forEach>
-        </select>
-    </div>
-
-    <div class="card-footer">
-        <c:forEach var="base" items="${bases}">
-            <div id="div${base.id}" class="box">
-                <h4>${base.getPriceMultiplier()*category.getPrice()}</h4></div>
-        </c:forEach>
-        <input type='hidden' value='testing' id='HiddenInput' enableviewstate="true"/>
-
-        <script type='text/javascript'>
-            $(document).ready(function () {
-                $('.box').hide();
-                $('#HiddenInput').empty();
-                $('#HiddenInput').val($('#dropdown').val());
-                var value = $('#HiddenInput').val();
-                $('#dropdown').val(value);
-                $('#div' + value).show();
-
-                $('#dropdown').change(function () {
-                    $('.box').hide();
-                    $('#HiddenInput').val($(this).val());
-                    $('#div' + $(this).val()).show();
-                });
-            });
-        </script>
-        <sec:authorize access="hasRole('ROLE_ADMIN')">
-            <form action="${pageContext.request.contextPath}/category"
-                  method="post">
-                <input type="hidden" name="productName" value="${product.name}">
-                <input type="hidden" name="action" value="deleteProduct"/>
-                <button type="submit" class="btn btn-danger" style="width: 100%;">
-                    <spring:message
-                            code="delete.button"/></button>
-            </form>
-        </sec:authorize>
-
-
-    </div>
-</div>--%>

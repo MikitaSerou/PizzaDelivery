@@ -1,7 +1,6 @@
 package org.study.PizzaDelivery.controller;
 
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +62,16 @@ public class CategoryController {
                        Model model) {
         model.addAttribute("category", categoryService.findByName(categoryName));
         model.addAttribute("product", productService.findDistinctTopByName(productName));
+        model.addAttribute("ingredients", ingredientService.findAll());
         model.addAttribute("bases", baseService.findAll());
+        model.addAttribute("cheeses", ingredientService.findByType(IngredientType.CHEESE));
+        model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
+        model.addAttribute("meat", ingredientService.findByType(IngredientType.MEAT));
+        model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
+        model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
+        model.addAttribute("ingredientTypes", IngredientType.values());
+
+
         return "category/product";
     }
 
@@ -71,27 +79,25 @@ public class CategoryController {
     public String addProductToCart(@PathVariable("categoryName") String categoryName,
                                    @PathVariable("productName") String productName,
                                    @ModelAttribute User user,
-                                   @RequestParam(required = true, defaultValue = "") String comment,
-                                   @RequestParam(required = true, defaultValue = "") Short baseId,
+                                   @RequestParam(defaultValue = "") String comment,
+                                   @RequestParam(defaultValue = "") Short baseId,
+                                   @RequestParam(defaultValue = "") String action,
                                    Model model) {//TODO проверки на введенные null
-        basketService.addProductToBasket(user, productName, comment, baseId);
+
+        if (action.equals("addToBasket")) {
+            logger.info("Add to basket request: " + productName + user.getId() + baseId);
+            System.err.println("Add to basket request: " + productName + "userId: " +  user.getId()+ "base.id: " + baseId + "baseName: " + baseService.findById(baseId) + "comment: " + comment);
+            basketService.addProductToBasket(user, productName, comment, baseId);
+        }
+
+        if(action.equals("edit")){
+            logger.info("Edit request: " + categoryName + " " + productName + " " + comment+ " " + action);
+        }
+
         return "redirect:/category";
     }
 
-    @GetMapping(value = "/{categoryName}/addProduct")
-    public String addProduct(@PathVariable("categoryName") String categoryName,
-                       Model model) {
-        model.addAttribute("category", categoryService.findByName(categoryName));
-        model.addAttribute("bases", baseService.findAll());
-        model.addAttribute("ingredients", ingredientService.findAll());
-        model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
-        model.addAttribute("cheeses", ingredientService.findByType(IngredientType.CHEESE));
-        model.addAttribute("meat", ingredientService.findByType(IngredientType.MEAT));
-        model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
-        model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
-        model.addAttribute("ingredientTypes", IngredientType.values());
-        return "category/addProduct";
-    }
+
 
 
     @PostMapping(value = "/{categoryName}/addProduct")
@@ -99,7 +105,7 @@ public class CategoryController {
                                  @RequestParam(required = true, defaultValue = "") String productName,
                                  @RequestParam(required = true, defaultValue = "") String description,
                                  @RequestParam(required = true, defaultValue = "") short[] ingredients,
-                           Model model) {
+                                 Model model) {
 
         productService.addNewProductToCategory(productName, categoryService.findByName(categoryName), description, ingredients);
 

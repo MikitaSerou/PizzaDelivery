@@ -74,7 +74,7 @@ html {
 
 }
 #pageHeader{
-    background-color: rgb(39,43,48);
+    background-color: rgba(39,43,48,0.9);
     border-radius: 10px;
     font-weight: bolder;
     border: solid black 1px;
