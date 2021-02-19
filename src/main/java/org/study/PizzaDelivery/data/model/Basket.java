@@ -7,6 +7,7 @@ import org.study.PizzaDelivery.controller.UserController;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "basket")
@@ -87,6 +88,19 @@ public class Basket {
 
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Basket basket = (Basket) o;
+        return id == basket.id && isActive.equals(basket.isActive) && time.equals(basket.time) && user.equals(basket.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isActive, time, user);
     }
 
     @Override

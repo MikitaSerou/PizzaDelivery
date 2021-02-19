@@ -135,14 +135,19 @@
                         <div class="form-group" style="width: 50%">
                             <label for="formInput1" class="formLable"><h2><spring:message code="p.name"/></h2></label>
                             <input type="text" class="form-control" name="productName" id="formInput1"
-                                   placeholder="${product.name}">
+                                   placeholder='<spring:message code="p.name"/>' value="${product.name}">
                         </div>
                         <div class="form-group">
-                            <label class="formLable" for="formInput2"><h2 style="max-width: 100%"><spring:message
-                                    code="choose.sauce"/></h2></label>
+                            <label class="formLable" for="formInput2"><h2><span>
+                                <img  src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
+                                                                                          width="50px" height="50px"/>
+                            </span><spring:message code="choose.sauce"/></h2></label>
                             <select class="form-control" id="formInput2" name="ingredients" path="ingredients"
                                     style="max-width: 50%">
                                 <c:forEach items="${sauces}" var="sauce">
+                                    <c:if test="${product.ingredients.contains(sauce)}">
+                                        <option name="ingredients" value=${sauce.id} selected>${sauce.name}</option>
+                                    </c:if>
                                     <option name="ingredients" value=${sauce.id}>${sauce.name}</option>
                                 </c:forEach>
                             </select>
@@ -150,56 +155,59 @@
 
                         <h2 class="formLable"><spring:message
                                 code="add.ingredients"/>:</h2>
-                        <c:forEach var="ingredientType" items="${ingredientTypes}">
-                            <c:if test="${!ingredientType.toString().equals('SAUCE')}">
-
-
-                                <h2 class="formLableSecondary">${ingredientType}</h2>
-                                <div class="btn-group" style="max-width: 100%" role="group"
-                                     aria-label="Basic checkbox toggle button group">
-                                    <c:forEach var="ingredient" items="${ingredients}">
-
-                                        <div class="form-group">
-                                            <c:if test="${ingredient.getType().equals(ingredientType)}">
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="${ingredient.id}"
-                                                       name="ingredients" value="${ingredient.id}">
-                                                <label class="custom-control-label" for="${ingredient.id}">${ingredient.name}</label>
-                                            </div>
-                                            </c:if> <%--TODO закончил тут--%>
-                                        </div>
-                            <%--                <div class="form-group">
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                                                    <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+                        <table class="table table-bordered" style="width: 100%; border-radius: 10px;">
+                            <tr>
+                                <c:forEach var="ingredientType" items="${ingredientTypes}">
+                                    <c:if test="${!ingredientType.toString().equals('SAUCE')}">
+                                        <td><h2 id="ingredientName" align="center"
+                                                style="font-size: 20px">
+                                                <span><img  src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
+                                                            width="50px" height="50px"/></span><br/>
+                                                ${ingredientType}</h2></td>
+                                    </c:if>
+                                </c:forEach>
+                            </tr>
+                            <tr>
+                                <c:forEach var="ingredientType" items="${ingredientTypes}">
+                                    <c:if test="${!ingredientType.toString().equals('SAUCE')}">
+                                        <td>
+                                            <c:forEach var="ingredient" items="${ingredients}">
+                                                <div class="form-group">
+                                                    <c:if test="${ingredient.getType().equals(ingredientType)}">
+                                                        <div class="alert alert-dismissible alert-light">
+                                                            <div class="custom-control custom-switch">
+                                                                <c:if test="${product.ingredients.contains(ingredient)}">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="${ingredient.id}"
+                                                                           name="ingredients" value="${ingredient.id}"
+                                                                           checked>
+                                                                    <label class="custom-control-label"
+                                                                           for="${ingredient.id}">${ingredient.name}</label
+                                                                </c:if>
+                                                                <c:if test="${!product.ingredients.contains(ingredient)}">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="${ingredient.id}"
+                                                                           name="ingredients" value="${ingredient.id}">
+                                                                    <label class="custom-control-label"
+                                                                           for="${ingredient.id}">${ingredient.name}</label>
+                                                                </c:if>
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
                                                 </div>
-
-                                            </div>
-
-
-                                        <c:if test="${product.ingredients.contains(ingredient)}">
-                                            <input type="checkbox"  class="btn-check" id="${ingredient.id}"
-                                                   checked autocomplete="off"  name="ingredients" value="${ingredient.id}">
-                                        </c:if>
-                                            <c:if test="${!product.ingredients.contains(ingredient)}">
-                                          &lt;%&ndash;      <input type="checkbox"  class="btn-check" id="${ingredient.id}"
-                                                       autocomplete="off" name="ingredients" value="${ingredient.id}">&ndash;%&gt;
-                                            </c:if>
-                                            <label class="btn btn-outline-primary"
-                                                   for="${ingredient.id}">${ingredient.name}</label>
-                                        </c:if>--%>
-                                    </c:forEach>
-                                </div>
-
-                            </c:if>
-                        </c:forEach>
+                                            </c:forEach>
+                                        </td>
+                                    </c:if>
+                                </c:forEach>
+                            </tr>
+                        </table>
 
 
                         <div class="form-group">
                             <label class="formLable" for="formInput4"><h2 style="max-width: 100%"><spring:message
                                     code="description"/></h2></label>
                             <textarea id="formInput4" name="description" path="description"
-                                      placeholder="Comment" maxlength="255" rows="6"
+                                      placeholder="${product.description}" maxlength="255" rows="6"
                                       style=" /*height: 105%;*/ width: 100%"></textarea>
                         </div>
                         <br/>

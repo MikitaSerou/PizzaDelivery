@@ -6,6 +6,7 @@ import org.study.PizzaDelivery.controller.UserController;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Product {
@@ -183,6 +184,20 @@ public class Product {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id == product.id && name.equals(product.name) && category.equals(product.category) &&
+                base.equals(product.base) && price.equals(product.price) && description.equals(product.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, category, base, price, description);
+    }
+
+    @Override
     public String toString() {
         return "\nProduct{" +
                 "id=" + id +
@@ -191,9 +206,6 @@ public class Product {
                 ", base=" + base.getName() +
                 ", price=" + price +
                 ", description='" + description + '\'' +
-                /*", ingredients=" + ingredients +*/
-                /*", orderItems=" + orderItems +
-                ", basketItems=" + basketItems +*/
                 '}';
     }
 

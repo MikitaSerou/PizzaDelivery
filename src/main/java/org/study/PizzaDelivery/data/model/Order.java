@@ -10,6 +10,7 @@ import org.study.PizzaDelivery.data.enums.TypeOfPayment;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "orders")
@@ -224,6 +225,21 @@ public class Order {
         this.orderItems = orders_Order_items;
         this.price = orders_Order_items.stream()
                 .mapToDouble(OrderItem::getPrice).sum(); // проверить на правильность расчета!!!
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return id == order.id && user.equals(order.user) && phoneNumber.equals(order.phoneNumber) &&
+                price.equals(order.price) && typeOfPayment == order.typeOfPayment && time.equals(order.time) &&
+                comment.equals(order.comment) && status == order.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, phoneNumber, price, typeOfPayment, time, comment, status);
     }
 
     @Override

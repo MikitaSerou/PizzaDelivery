@@ -43,16 +43,11 @@ public class CategoryController {
 
     @GetMapping
     public String categoryList(Model model) {
-        logger.info("0 Category page...");
 
-        logger.info("1##############################################################...");
-
-        logger.error("Exiting application...");
         model.addAttribute("categories", categoryService.getAllStandardCategories());
-        //TODO скрыть кастомную
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("cheapestProducts", productService.findAllByBase(baseService.findCheapest()));
-        logger.info("2##############################################################...");
+
         return "category/categories";
     }
 
@@ -96,22 +91,6 @@ public class CategoryController {
 
         return "redirect:/category";
     }
-
-
-
-
-    @PostMapping(value = "/{categoryName}/addProduct")
-    public String addProductPage(@PathVariable("categoryName") String categoryName,
-                                 @RequestParam(required = true, defaultValue = "") String productName,
-                                 @RequestParam(required = true, defaultValue = "") String description,
-                                 @RequestParam(required = true, defaultValue = "") short[] ingredients,
-                                 Model model) {
-
-        productService.addNewProductToCategory(productName, categoryService.findByName(categoryName), description, ingredients);
-
-        return "redirect:/category";
-    }
-
 
     @PostMapping
     public String ingredients(@RequestParam(required = true, defaultValue = "") Short categoryId,

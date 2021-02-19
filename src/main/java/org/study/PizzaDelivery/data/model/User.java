@@ -11,6 +11,7 @@ import org.study.PizzaDelivery.controller.UserController;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -171,6 +172,20 @@ public class User implements UserDetails {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && username.equals(user.username) && password.equals(user.password) &&
+                mail.equals(user.mail) && phoneNumber.equals(user.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, mail, phoneNumber);
     }
 
     @Override

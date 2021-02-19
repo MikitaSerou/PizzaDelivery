@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.study.PizzaDelivery.controller.UserController;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "order_item")
@@ -93,6 +94,20 @@ public class OrderItem {
 
     public void setComment(String comment) {
         this.description = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderItem orderItem = (OrderItem) o;
+        return id == orderItem.id && order.equals(orderItem.order) && product.equals(orderItem.product) &&
+                price.equals(orderItem.price) && description.equals(orderItem.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, order, product, price, description);
     }
 
     @Override

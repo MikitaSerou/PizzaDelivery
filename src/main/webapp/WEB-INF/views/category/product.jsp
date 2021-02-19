@@ -124,8 +124,6 @@
                 <spring:message code="back.button"/></a></button>
             <br/>
             <br/>
-
-            <%-- <div class="card text-white bg-primary mb-3" style="max-height: 420px; max-width: 80%;">--%>
             <div style="min-height: auto">
                 <div class="row no-gutters" style="background-color: rgba(39,43,48,0.9); border-radius: 10px;">
                     <div class="col-md-5"  style="margin-top: auto; margin-bottom: auto;">
@@ -139,8 +137,9 @@
                         <h2><spring:message code="ingredients"/>:</h2>
                         <c:forEach var="ingredient" items="${product.ingredients}">
                             <span class="badge badge-pill badge-info">${ingredient.name}</span>
-                        </c:forEach>
-                        <blockquote style="max-width: 100%">${product.description}</blockquote>
+                        </c:forEach><br/>
+                        <h2><spring:message code="description"/>:</h2>
+                        <p style="max-width: 100%">${product.description}</p>
                         <form action="${pageContext.request.contextPath}/category/${categoryName}/${productName}"
                               method="post">
                             <h2><spring:message code="choose.base"/>:</h2>
@@ -159,7 +158,7 @@
                             </c:forEach>
                             <input type='hidden' value='testing' id='HiddenInput' enableviewstate="true"/>
                             <sec:authorize access="hasRole('ROLE_USER')">
-                                <h2><spring:message code="commentToProduct"/>:</h2>
+                                <h3><spring:message code="commentToProduct"/>:</h3>
                                 <div class="form-group" style="padding: 5px;">
                                 <textarea name="comment" path="comment"
                                           placeholder="Comment" maxlength="255" rows="6"
