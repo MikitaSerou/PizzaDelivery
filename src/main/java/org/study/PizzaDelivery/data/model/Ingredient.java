@@ -1,13 +1,19 @@
 package org.study.PizzaDelivery.data.model;
 
 import com.sun.istack.NotNull;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.study.PizzaDelivery.controller.UserController;
 import org.study.PizzaDelivery.data.enums.IngredientType;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Ingredient {
+
+    private static final Logger logger = LogManager.getLogger(Ingredient.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,6 +88,19 @@ public class Ingredient {
         this.products = products;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ingredient that = (Ingredient) o;
+        return id == that.id && name.equals(that.name) && price.equals(that.price) &&
+                ingredientType == that.ingredientType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, ingredientType);
+    }
 
     @Override
     public String toString() {

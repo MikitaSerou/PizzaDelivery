@@ -1,17 +1,21 @@
 package org.study.PizzaDelivery.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.study.PizzaDelivery.data.enums.IngredientType;
-import org.study.PizzaDelivery.data.service.IngredientService;
-import org.study.PizzaDelivery.data.service.OrderService;
-import org.study.PizzaDelivery.data.service.UserService;
+import org.study.PizzaDelivery.data.model.Category;
+import org.study.PizzaDelivery.data.model.Product;
+import org.study.PizzaDelivery.data.service.*;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    private static final Logger logger = LogManager.getLogger(AdminController.class);
 
     @Autowired
     private UserService userService;
@@ -21,6 +25,16 @@ public class AdminController {
 
     @Autowired
     private OrderService orderService;
+
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private BaseService baseService;
+
+    @Autowired
+    private ProductService productService;
 
 
     @GetMapping
@@ -51,6 +65,62 @@ public class AdminController {
         model.addAttribute("userOrders", orderService.findOrdersByUserId(userId));
         return "admin/userOrders";
     }
+
+    @GetMapping("/archive")
+    public String showUser(Model model) {
+        Category archiveCategory = categoryService.findByName("Архив");//TODO поменять потом на англ
+        model.addAttribute("category", categoryService.findOne(archiveCategory.getId()));
+        model.addAttribute("products", archiveCategory.getProducts());
+
+        return "admin/archive";
+    }
+
+
+    @GetMapping(value = "/{categoryName}/addProduct")
+    public String addProduct(@PathVariable("categoryName") String categoryName,
+                             Model model) {
+        model.addAttribute("category", categoryService.findByName(categoryName));
+        model.addAttribute("bases", baseService.findAll());
+        model.addAttribute("ingredients", ingredientService.findAll());
+        model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
+        model.addAttribute("cheeses", ingredientService.findByType(IngredientType.CHEESE));
+        model.addAttribute("meat", ingredientService.findByType(IngredientType.MEAT));
+        model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
+        model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
+        model.addAttribute("ingredientTypes", IngredientType.values());
+        return "admin/addProduct";
+    }
+
+    @PostMapping(value = "/{categoryName}/addProduct")
+    public String addProductPage(@PathVariable("categoryName") String categoryName,
+                                 @RequestParam(required = true, defaultValue = "") String productName,
+                                 @RequestParam(required = true, defaultValue = "") String description,
+                                 @RequestParam(required = true, defaultValue = "") short[] ingredients,
+                                 Model model) {
+
+        productService.addNewProductToCategory(productName, categoryService.findByName(categoryName), description, ingredients);
+
+        return "redirect:/category";
+    }
+
+
+    @GetMapping("/edit/{productName}")
+    public String showUser(@PathVariable("productName") String productName, Model model) {
+        Product product = productService.findDistinctTopByName(productName);
+        System.err.println(product.getIngredients());
+        model.addAttribute("product", productService.findDistinctTopByName(productName));
+       // model.addAttribute("productIngredients", product.getIngredients());
+        model.addAttribute("bases", baseService.findAll());
+        model.addAttribute("ingredients", ingredientService.findAll());
+        model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
+        model.addAttribute("cheeses", ingredientService.findByType(IngredientType.CHEESE));
+        model.addAttribute("meat", ingredientService.findByType(IngredientType.MEAT));
+        model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
+        model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
+        model.addAttribute("ingredientTypes", IngredientType.values());
+        return "admin/editProduct";
+    }
+
 
     @GetMapping("/orders")
     public String activeOrdersList(Model model) {

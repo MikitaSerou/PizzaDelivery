@@ -1,11 +1,18 @@
 package org.study.PizzaDelivery.data.model;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.study.PizzaDelivery.controller.UserController;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "basket_item")
 public class BasketItem {
+
+    private static final Logger logger = LogManager.getLogger(BasketItem.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,6 +88,19 @@ public class BasketItem {
 
     public void setComment(String comment) {
         this.description = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BasketItem that = (BasketItem) o;
+        return id == that.id && basket.equals(that.basket) && product.equals(that.product) && price.equals(that.price) && description.equals(that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, basket, product, price, description);
     }
 
     @Override

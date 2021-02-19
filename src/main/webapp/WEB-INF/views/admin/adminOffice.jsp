@@ -106,6 +106,8 @@
                                 code="ingredients.table"/></a>
                         <a href="admin/orders" class="list-group-item list-group-item-action"><spring:message
                                 code="activeOrders.table"/></a>
+                        <a href="/admin/archive" class="list-group-item list-group-item-action"><spring:message
+                                code="archive"/></a>
                     </div>
                 </div>
                 <div class="col-sm-4"></div>

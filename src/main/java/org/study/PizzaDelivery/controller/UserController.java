@@ -1,5 +1,7 @@
 package org.study.PizzaDelivery.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,9 @@ import org.study.PizzaDelivery.data.service.UserService;
 @RequestMapping("/user")
 @SessionAttributes("user")
 public class UserController {
+
+    private static final Logger logger = LogManager.getLogger(UserController.class);
+
     @Autowired
     private UserService userService;
 
@@ -40,7 +45,10 @@ public class UserController {
     public String basket(@ModelAttribute User user, Model model) {
         Basket basket =basketService.findActiveByUserID(user.getId());
         model.addAttribute("basket", basket);
+        System.err.println("basket when you wisit page: " + basket);
+        System.err.println("basketITEMS when you wisit page: " + basket.getBasketItems().toString());
         model.addAttribute("basketSum", basketService.calculatePrice(basket.getId()));
+        System.err.println("basketITEMS after calculate: " + basket.getBasketItems().toString());
         model.addAttribute("typesOfPayment", TypeOfPayment.values());
         return "user/basket";
     }
@@ -61,11 +69,16 @@ public class UserController {
         }
         if (action.equals("clear")) {
             System.out.println("Clear basket: " + basketId);
-            basketService.clearBasket(basketId);
+            basketService.clearBasket(basketService.getActiveBasketByUserId(user.getId()));
         }
         if (action.equals("submit")) {
-            System.out.println(basketId +" "+ phoneNumber +" "+ comment  +" "+ typeOfPayment );
-            orderService.addOrder(basketId, phoneNumber, comment, typeOfPayment);
+            Basket basket = basketService.getActiveBasketByUserId(user.getId());
+            System.err.println("Before submit: " + basketId +" "+ phoneNumber +" "+ comment  +" "+ typeOfPayment );
+            System.err.println("Before submit items: " +basket.getBasketItems().toString());//norm
+            //TODO тут все идет наперексяк. уже 3 айтема смотреть представление, возможно что-то в посте
+
+
+            orderService.addOrder(basket, phoneNumber, comment, typeOfPayment);
         return "redirect:/user";
         }
 

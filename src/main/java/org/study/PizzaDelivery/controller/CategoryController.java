@@ -1,5 +1,8 @@
 package org.study.PizzaDelivery.controller;
 
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,8 @@ import java.util.List;
 @SessionAttributes("user")
 public class CategoryController {
 
+    private static final Logger logger = LogManager.getLogger(CategoryController.class);
+
     @Autowired
     private CategoryService categoryService;
 
@@ -35,12 +40,14 @@ public class CategoryController {
     @Autowired
     private IngredientService ingredientService;
 
+
     @GetMapping
     public String categoryList(Model model) {
+
         model.addAttribute("categories", categoryService.getAllStandardCategories());
-        //TODO скрыть кастомную
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("cheapestProducts", productService.findAllByBase(baseService.findCheapest()));
+
         return "category/categories";
     }
 
@@ -50,7 +57,16 @@ public class CategoryController {
                        Model model) {
         model.addAttribute("category", categoryService.findByName(categoryName));
         model.addAttribute("product", productService.findDistinctTopByName(productName));
+        model.addAttribute("ingredients", ingredientService.findAll());
         model.addAttribute("bases", baseService.findAll());
+        model.addAttribute("cheeses", ingredientService.findByType(IngredientType.CHEESE));
+        model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
+        model.addAttribute("meat", ingredientService.findByType(IngredientType.MEAT));
+        model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
+        model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
+        model.addAttribute("ingredientTypes", IngredientType.values());
+
+
         return "category/product";
     }
 
@@ -58,59 +74,23 @@ public class CategoryController {
     public String addProductToCart(@PathVariable("categoryName") String categoryName,
                                    @PathVariable("productName") String productName,
                                    @ModelAttribute User user,
-                                   @RequestParam(required = true, defaultValue = "") String comment,
-                                   @RequestParam(required = true, defaultValue = "") Short baseId,
+                                   @RequestParam(defaultValue = "") String comment,
+                                   @RequestParam(defaultValue = "") Short baseId,
+                                   @RequestParam(defaultValue = "") String action,
                                    Model model) {//TODO проверки на введенные null
-        basketService.addProductToBasket(user, productName, comment, baseId);
+
+        if (action.equals("addToBasket")) {
+            logger.info("Add to basket request: " + productName + user.getId() + baseId);
+            System.err.println("Add to basket request: " + productName + "userId: " +  user.getId()+ "base.id: " + baseId + "baseName: " + baseService.findById(baseId) + "comment: " + comment);
+            basketService.addProductToBasket(user, productName, comment, baseId);
+        }
+
+        if(action.equals("edit")){
+            logger.info("Edit request: " + categoryName + " " + productName + " " + comment+ " " + action);
+        }
+
         return "redirect:/category";
     }
-
-    @GetMapping(value = "/{categoryName}/addProduct")
-    public String addProduct(@PathVariable("categoryName") String categoryName,
-                       Model model) {
-        model.addAttribute("category", categoryService.findByName(categoryName));
-        model.addAttribute("bases", baseService.findAll());
-        model.addAttribute("ingredients", ingredientService.findAll());
-        model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
-        model.addAttribute("cheeses", ingredientService.findByType(IngredientType.CHEESE));
-        model.addAttribute("meat", ingredientService.findByType(IngredientType.MEAT));
-        model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
-        model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
-        model.addAttribute("ingredientTypes", IngredientType.values());
-        return "category/addProduct";
-    }
-
-
-    @PostMapping(value = "/{categoryName}/addProduct")
-    public String addProductPage(@PathVariable("categoryName") String categoryName,
-                                 @RequestParam(required = true, defaultValue = "") String productName,
-                                 @RequestParam(required = true, defaultValue = "") Short sauceId,
-                                 @RequestParam(required = true, defaultValue = "") String description,
-                                 @RequestParam(required = true, defaultValue = "") short[] ingredients,
-                           Model model) {
-        productService.addNewProductToCategory(productName, categoryService.findByName(categoryName),
-                sauceId, description, ingredients);
-/*        System.err.println(categoryName);*/
-
-/*        for(short id : ingredients) {
-            //TODO переписать
-            System.err.println(ingredientService.findById(id).toString());
-            //System.out.println(ingredientService.findById(ingredientId));
-        }*/
-
-
-/*        model.addAttribute("category", categoryService.findByName(categoryName));
-        model.addAttribute("bases", baseService.findAll());
-        model.addAttribute("ingredients", ingredientService.findAll());
-        model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
-        model.addAttribute("cheeses", ingredientService.findByType(IngredientType.CHEESE));
-        model.addAttribute("meat", ingredientService.findByType(IngredientType.MEAT));
-        model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
-        model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
-        model.addAttribute("ingredientTypes", IngredientType.values());*/
-        return "redirect:/category";
-    }
-
 
     @PostMapping
     public String ingredients(@RequestParam(required = true, defaultValue = "") Short categoryId,

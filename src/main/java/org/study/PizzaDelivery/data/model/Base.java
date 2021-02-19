@@ -1,6 +1,9 @@
 package org.study.PizzaDelivery.data.model;
 
 import jakarta.validation.constraints.Size;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.study.PizzaDelivery.controller.UserController;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,6 +11,8 @@ import java.util.Objects;
 
 @Entity
 public class Base {
+
+    private static final Logger logger = LogManager.getLogger(Base.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,12 +76,12 @@ public class Base {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Base base = (Base) o;
-        return id == base.id && Double.compare(base.priceMultiplier, priceMultiplier) == 0 && name.equals(base.name);
+        return id == base.id && name.equals(base.name) && priceMultiplier.equals(base.priceMultiplier);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, priceMultiplier, products);
+        return Objects.hash(id, name, priceMultiplier);
     }
 
     @Override

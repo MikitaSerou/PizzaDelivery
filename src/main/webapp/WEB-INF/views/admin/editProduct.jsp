@@ -15,6 +15,12 @@
     <title>${category.name}&nbsp;<spring:message code="add.product"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
+
+    <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23019901-1"></script>
 </head>
 
 <body id="bodyDefault">
@@ -107,7 +113,7 @@
     <div class="row">
         <div class="col-sm-9">
             <h1 class="display-2" align="left" margin="right">
-                <span id="pageHeader">(${category.name}) <spring:message code="add.product"/>&nbsp;</span>
+                <span id="pageHeader"><spring:message code="edit.Product"/>:&nbsp;${product.name}</span>
             </h1>
             <button type="button" class="btn btn-secondary"><a href="/category">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -124,58 +130,90 @@
                 <div class="card-body">
 
 
-                    <form action="${pageContext.request.contextPath}/category/${categoryName}/addProduct"
+                    <form action="${pageContext.request.contextPath}/category/edit/${productName}"
                           method="post">
                         <div class="form-group" style="width: 50%">
                             <label for="formInput1" class="formLable"><h2><spring:message code="p.name"/></h2></label>
                             <input type="text" class="form-control" name="productName" id="formInput1"
-                                   placeholder="<spring:message code="p.name"/>">
+                                   placeholder='<spring:message code="p.name"/>' value="${product.name}">
                         </div>
                         <div class="form-group">
-                            <label class="formLable" for="formInput2"><h2 style="max-width: 100%"><spring:message
-                                    code="choose.sauce"/></h2></label>
-                            <select class="form-control" id="formInput2" name="sauce" path="sauce"
+                            <label class="formLable" for="formInput2"><h2><span>
+                                <img  src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
+                                                                                          width="50px" height="50px"/>
+                            </span><spring:message code="choose.sauce"/></h2></label>
+                            <select class="form-control" id="formInput2" name="ingredients" path="ingredients"
                                     style="max-width: 50%">
                                 <c:forEach items="${sauces}" var="sauce">
-                                    <option name="sauceId" value=${sauce.id}>${sauce.name}</option>
+                                    <c:if test="${product.ingredients.contains(sauce)}">
+                                        <option name="ingredients" value=${sauce.id} selected>${sauce.name}</option>
+                                    </c:if>
+                                    <option name="ingredients" value=${sauce.id}>${sauce.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
 
                         <h2 class="formLable"><spring:message
                                 code="add.ingredients"/>:</h2>
-                        <c:forEach var="ingredientType" items="${ingredientTypes}">
-                            <c:if test="${!ingredientType.toString().equals('SAUCE')}">
-
-
-                                <h2 class="formLableSecondary">${ingredientType}</h2>
-                                <div class="btn-group" style="max-width: 100%" role="group"
-                                     aria-label="Basic checkbox toggle button group">
-                                    <c:forEach var="ingredient" items="${ingredients}">
-                                        <c:if test="${ingredient.getType().equals(ingredientType)}">
-                                            <input type="checkbox" class="btn-check" id="${ingredient.id}"
-                                                   autocomplete="off" name="ingredients" value="${ingredient.id}">
-                                            <label class="btn btn-outline-primary"
-                                                   for="${ingredient.id}">${ingredient.name}</label>
-                                        </c:if>
-                                    </c:forEach>
-                                </div>
-
-                            </c:if>
-                        </c:forEach>
+                        <table class="table table-bordered" style="width: 100%; border-radius: 10px;">
+                            <tr>
+                                <c:forEach var="ingredientType" items="${ingredientTypes}">
+                                    <c:if test="${!ingredientType.toString().equals('SAUCE')}">
+                                        <td><h2 id="ingredientName" align="center"
+                                                style="font-size: 20px">
+                                                <span><img  src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
+                                                            width="50px" height="50px"/></span><br/>
+                                                ${ingredientType}</h2></td>
+                                    </c:if>
+                                </c:forEach>
+                            </tr>
+                            <tr>
+                                <c:forEach var="ingredientType" items="${ingredientTypes}">
+                                    <c:if test="${!ingredientType.toString().equals('SAUCE')}">
+                                        <td>
+                                            <c:forEach var="ingredient" items="${ingredients}">
+                                                <div class="form-group">
+                                                    <c:if test="${ingredient.getType().equals(ingredientType)}">
+                                                        <div class="alert alert-dismissible alert-light">
+                                                            <div class="custom-control custom-switch">
+                                                                <c:if test="${product.ingredients.contains(ingredient)}">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="${ingredient.id}"
+                                                                           name="ingredients" value="${ingredient.id}"
+                                                                           checked>
+                                                                    <label class="custom-control-label"
+                                                                           for="${ingredient.id}">${ingredient.name}</label
+                                                                </c:if>
+                                                                <c:if test="${!product.ingredients.contains(ingredient)}">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="${ingredient.id}"
+                                                                           name="ingredients" value="${ingredient.id}">
+                                                                    <label class="custom-control-label"
+                                                                           for="${ingredient.id}">${ingredient.name}</label>
+                                                                </c:if>
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                </div>
+                                            </c:forEach>
+                                        </td>
+                                    </c:if>
+                                </c:forEach>
+                            </tr>
+                        </table>
 
 
                         <div class="form-group">
                             <label class="formLable" for="formInput4"><h2 style="max-width: 100%"><spring:message
                                     code="description"/></h2></label>
                             <textarea id="formInput4" name="description" path="description"
-                                      placeholder="Comment" maxlength="255" rows="6"
+                                      placeholder="${product.description}" maxlength="255" rows="6"
                                       style=" /*height: 105%;*/ width: 100%"></textarea>
                         </div>
                         <br/>
-                            <button type="submit" class="btn btn-success"
-                                   <%-- style="position: absolute; bottom: 3%; right: 3%;"--%>><h2><spring:message
-                                    code="add.button"/></h2></button>
+                        <button formmethod="post" type="submit" class="btn btn-success"
+                        ><h2><spring:message
+                                code="add.button"/></h2></button>
 
                     </form>
 
@@ -249,9 +287,5 @@
 </svg>
     <spring:message code="phone"/></span>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

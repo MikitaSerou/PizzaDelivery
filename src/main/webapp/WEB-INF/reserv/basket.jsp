@@ -176,7 +176,7 @@
                         <th></th>
                         </thead>
                         <c:forEach items="${basket.basketItems}" var="item">
-                            <tr class="table-secondary" id="basketTable">
+                            <tr class="table-secondary">
                                 <td width="10%">${item.product.name} ${item.product.base.name}</td>
                                 <td width="10%">${item.product.price}</td>
                                 <td width="35%">${item.product.description}</td>
@@ -197,7 +197,7 @@
                     </table>
 
                     <h2 id="editOrder" align="center"><spring:message code="orderSettings"/></h2>
-                    <form method="POST">
+                    <form method="POST" modelAttribute="userForm">
                         <table width="100%">
                             <td>
                                 <input type="hidden" class="form-control" name="basketId" path="basketId"
@@ -232,7 +232,7 @@
                             </td>
                             <td width="10%">
                                 <input type="hidden" name="action" value="submit"/>
-                                <button type="submit" formmethod="post" class="btn btn-success">
+                                <button type="submit" class="btn btn-success">
                                     <h2 class="align-items-md-center" size="70"
                                         style="margin-right: auto; margin-left: auto; padding-top: 15px; padding-bottom: 15px;">
                                         <spring:message
