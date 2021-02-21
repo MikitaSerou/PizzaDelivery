@@ -121,6 +121,17 @@ public class AdminController {
         return "admin/editProduct";
     }
 
+    @PostMapping(value = "/edit/{productName}")
+    public String editProductPage(@PathVariable("productName") String productName,
+                                 @RequestParam(defaultValue = "") String newName,
+                                 @RequestParam(defaultValue = "") String description,
+                                 @RequestParam(defaultValue = "") short[] ingredients,
+                                 Model model) {
+        productService.editProductFromCategory(productName, newName, description, ingredients);
+
+        return "redirect:/category";
+    }
+
 
     @GetMapping("/orders")
     public String activeOrdersList(Model model) {

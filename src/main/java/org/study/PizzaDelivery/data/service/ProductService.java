@@ -50,7 +50,6 @@ public class ProductService {
 
     @Transactional
     public Product findByNameAndBaseId(String productName, Short baseId) {
-        System.out.println(productName + " " + baseId);
         return productRepository.findByNameAndBaseId(productName, baseId);
     }
 
@@ -65,7 +64,7 @@ public class ProductService {
     @Transactional
     @Modifying
     public void addNewProductToCategory(String name, Category category, String description, short[] ingredientsId) {
-
+//TODO проверки на null
         if (!name.equals("")) {
             logger.debug("Input parameters:[ name:" + name + "category: " + category.toString() + " description: "
                     + description + " ingredientsId[]: " + ingredientsId.toString() + "]");
@@ -89,11 +88,36 @@ public class ProductService {
                 productRepository.save(product);
                 logger.debug("Saved product in DB:[" + product.toString() + "]");
             });
-        }else{
+        } else {
             logger.error("Name of new product can not be empty");
         }
     }
 
+    @Transactional
+    @Modifying
+    public void editProductFromCategory(String name, String newName, String description, short[] ingredientsId) {
+
+        List<Product> products = productRepository.findAllByName(name);
+        if (!newName.equals("")) {
+            for (Product product : products) {
+                logger.debug("Input parameters:[ new name:" + name + " description: "
+                        + description + " ingredientsId[]: " + ingredientsId.toString() + "]");
+
+                ArrayList<Ingredient> ingredients = new ArrayList<>();
+                for (short ingredientId : ingredientsId) {
+                    ingredients.add(ingredientService.findById(ingredientId));
+                }
+                logger.debug("Ingredients list from db by ID:[" + ingredients.toString() + "]");
+                product.setName(newName);
+                product.setDescription(description);
+                product.setIngredients(ingredients);
+                    productRepository.save(product);
+                    logger.debug("Updated product in DB:[" + product.toString() + "]");
+            }
+        } else {
+            logger.error("Name of new product can not be empty");
+        }
+    }
 
     @Transactional
     public List<Product> findAllByBase(Base base) {

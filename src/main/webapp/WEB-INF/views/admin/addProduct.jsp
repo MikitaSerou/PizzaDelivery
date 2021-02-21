@@ -143,8 +143,6 @@
                                 </c:forEach>
                             </select>
                         </div>
-
-
                         <h2 class="formLable"><spring:message
                                 code="add.ingredients"/>:</h2>
                         <table class="table table-bordered" style="width: 100%; border-radius: 10px;">
@@ -163,37 +161,32 @@
                                     <c:if test="${!ingredientType.toString().equals('SAUCE')}">
                                         <td>
                                             <c:forEach var="ingredient" items="${ingredients}">
-                                                <div class="form-group">
+                                                <%--<div class="form-group">--%>
                                                     <c:if test="${ingredient.getType().equals(ingredientType)}">
-                                                        <div class="alert alert-dismissible alert-light">
+                                                        <div class="alert alert-dismissible alert-light" style="width: 100%; padding: 2px;">
                                                             <div class="custom-control custom-switch">
                                                                 <input type="checkbox" class="custom-control-input"
                                                                        id="${ingredient.id}"
                                                                        name="ingredients" value="${ingredient.id}">
+
+
                                                                 <label class="custom-control-label"
-                                                                       for="${ingredient.id}">${ingredient.name}</label
+                                                                       for="${ingredient.id}">
+                                                                    ${ingredient.name}
+                                                                </label>
                                                             </div>
-                                                        </div>
+                                                           <%-- <span style="align-content: end; width:100%; right:0;">&nbsp;(${ingredient.price}.<spring:message code="currency"/>)</span>--%>
+
+                                                            </div>
+
                                                     </c:if>
-                                                </div>
+                                               <%-- </div>--%>
                                             </c:forEach>
                                         </td>
                                     </c:if>
                                 </c:forEach>
                             </tr>
                         </table>
-                        <%--          <h2 class="formLableSecondary">${ingredientType}</h2>
-                                                  <div class="btn-group" style="max-width: 100%" role="group"
-                                                       aria-label="Basic checkbox toggle button group">
-                                                      <c:forEach var="ingredient" items="${ingredients}">
-                                                          <c:if test="${ingredient.getType().equals(ingredientType)}">
-                                                              <input type="checkbox" class="btn-check" id="${ingredient.id}"
-                                                                     autocomplete="off" name="ingredients" value="${ingredient.id}">
-                                                              <label class="btn btn-outline-primary"
-                                                                     for="${ingredient.id}">${ingredient.name}</label>
-                                                          </c:if>
-                                                      </c:forEach>
-                                                  </div>--%>
                         <div class="form-group">
                             <label class="formLable" for="formInput4"><h2 style="max-width: 100%"><spring:message
                                     code="description"/></h2></label>
@@ -205,9 +198,7 @@
                         <button formmethod="post" type="submit" class="btn btn-success"
                         ><h2><spring:message
                                 code="add.button"/></h2></button>
-
                     </form>
-
                 </div>
             </div>
 

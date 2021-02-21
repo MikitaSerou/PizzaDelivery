@@ -12,7 +12,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
-    <title>${category.name}&nbsp;<spring:message code="add.product"/></title>
+    <title><spring:message code="edit.Product"/>&nbsp;${product.name}</title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
 
@@ -130,11 +130,11 @@
                 <div class="card-body">
 
 
-                    <form action="${pageContext.request.contextPath}/category/edit/${productName}"
+                    <form action="${pageContext.request.contextPath}/admin/edit/${productName}"
                           method="post">
                         <div class="form-group" style="width: 50%">
                             <label for="formInput1" class="formLable"><h2><spring:message code="p.name"/></h2></label>
-                            <input type="text" class="form-control" name="productName" id="formInput1"
+                            <input type="text" class="form-control" name="newName" id="formInput1"
                                    placeholder='<spring:message code="p.name"/>' value="${product.name}">
                         </div>
                         <div class="form-group">
@@ -148,7 +148,9 @@
                                     <c:if test="${product.ingredients.contains(sauce)}">
                                         <option name="ingredients" value=${sauce.id} selected>${sauce.name}</option>
                                     </c:if>
+                                    <c:if test="${!product.ingredients.contains(sauce)}">
                                     <option name="ingredients" value=${sauce.id}>${sauce.name}</option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                         </div>
@@ -174,7 +176,7 @@
                                             <c:forEach var="ingredient" items="${ingredients}">
                                                 <div class="form-group">
                                                     <c:if test="${ingredient.getType().equals(ingredientType)}">
-                                                        <div class="alert alert-dismissible alert-light">
+                                                        <div class="alert alert-dismissible alert-light" style="width: 100%; padding: 2px;">
                                                             <div class="custom-control custom-switch">
                                                                 <c:if test="${product.ingredients.contains(ingredient)}">
                                                                     <input type="checkbox" class="custom-control-input"
@@ -189,7 +191,8 @@
                                                                            id="${ingredient.id}"
                                                                            name="ingredients" value="${ingredient.id}">
                                                                     <label class="custom-control-label"
-                                                                           for="${ingredient.id}">${ingredient.name}</label>
+                                                                           for="${ingredient.id}">
+                                                                            ${ingredient.name}</label>
                                                                 </c:if>
                                                             </div>
                                                         </div>
@@ -213,7 +216,7 @@
                         <br/>
                         <button formmethod="post" type="submit" class="btn btn-success"
                         ><h2><spring:message
-                                code="add.button"/></h2></button>
+                                code="edit.button"/></h2></button>
 
                     </form>
 
