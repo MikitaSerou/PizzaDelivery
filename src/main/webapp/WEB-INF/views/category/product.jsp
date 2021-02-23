@@ -113,7 +113,7 @@
     <div class="row">
         <div class="col-sm-9">
             <h1 class="display-2" align="left" margin="right">
-                <span id="pageHeader"><spring:message code="pizza"/>:&nbsp;${product.name}&nbsp;</span>
+                <span id="pageHeader"><spring:message code="pizza"/></span>
             </h1>
             <button type="button" class="btn btn-secondary"><a href="/category">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -127,10 +127,12 @@
             <div style="min-height: auto">
                 <div class="row no-gutters" style="background-color: rgba(39,43,48,0.9); border-radius: 10px;">
                     <div class="col-md-5"  style="margin-top: auto; margin-bottom: auto;">
-                        <img src='<spring:url value="/resources/images/pizzaItem.png" />' width="420px"
-                             height="420px"/>
+                        <img src='<spring:url value="/resources/images/pizzaItem.png" />' width="280px"
+                             height="280px"/>
                     </div>
                     <div class="col-md-7">
+                        <br/>
+                        <br/>
                         <br/>
                         <h1><span style="color: white; background-color: #ed5a56;border-radius: 10px;font-weight: bolder;font-size: 45px;">
                             ${product.name}</span></h1>
@@ -152,7 +154,7 @@
                             </select>
                             <c:forEach items="${bases}" var="base">
                                 <div id="div${base.id}" class="box" style="position: absolute; top: 0; right: 0;">
-                                    <h1>${base.getPriceMultiplier()*category.getPrice()}
+                                    <h1 class="btn-warning">${base.getPriceMultiplier()*category.getPrice()}
                                         .<spring:message code="currency"/></h1>
                                 </div>
                             </c:forEach>
