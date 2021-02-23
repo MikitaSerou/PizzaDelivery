@@ -9,6 +9,7 @@ import org.study.PizzaDelivery.data.enums.TypeOfPayment;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,8 +53,11 @@ public class Order {
             cascade = {CascadeType.MERGE})
     private List<OrderItem> orderItems;
 
+    @Transient
+    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+
     public Order() {
-        this.time = LocalDateTime.now();
+        this.time = LocalDateTime.parse(LocalDateTime.now().format(FORMATTER), FORMATTER);
         this.status = Status.NOT_PAID;
     }
 
@@ -61,7 +65,7 @@ public class Order {
         this.user = user;
         this.phoneNumber = phoneNumber;
         this.typeOfPayment = typeOfPayment;
-        this.time = LocalDateTime.now();
+        this.time = LocalDateTime.parse(LocalDateTime.now().format(FORMATTER), FORMATTER);
         this.comment = comment;
         this.status = Status.NOT_PAID;
     }
@@ -72,7 +76,7 @@ public class Order {
         this.phoneNumber = phoneNumber;
         this.price = orderItems.stream().mapToDouble(OrderItem::getPrice).sum(); //???? is it work???
         this.typeOfPayment = typeOfPayment;
-        this.time = LocalDateTime.now();
+        this.time = LocalDateTime.parse(LocalDateTime.now().format(FORMATTER), FORMATTER);
         this.comment = comment;
         this.status = Status.NOT_PAID;
         this.orderItems = orderItems;
@@ -84,7 +88,7 @@ public class Order {
         this.phoneNumber = phoneNumber;
         this.price = price;
         this.typeOfPayment = typeOfPayment;
-        this.time = LocalDateTime.now();
+        this.time = LocalDateTime.parse(LocalDateTime.now().format(FORMATTER), FORMATTER);
         this.comment = comment;
         this.status = Status.NOT_PAID;
     }
@@ -123,7 +127,7 @@ public class Order {
         }
 
         public Order.Builder time(LocalDateTime time) {
-            Order.this.time = time;
+            Order.this.time = LocalDateTime.parse(time.format(FORMATTER), FORMATTER);
             return this;
         }
 

@@ -2,10 +2,10 @@ package org.study.PizzaDelivery.data.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.study.PizzaDelivery.controller.UserController;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +33,8 @@ public class Basket {
             cascade = {CascadeType.ALL})
     private List<BasketItem> basketItems;
 
+    @Transient
+    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
     public Basket() {
 
@@ -41,13 +43,13 @@ public class Basket {
     public Basket(boolean isActive, User user) {
         this.isActive = isActive;
         this.user = user;
-        this.time = LocalDateTime.now();
+        this.time = LocalDateTime.parse(LocalDateTime.now().format(FORMATTER), FORMATTER);
     }
 
     public Basket(User user) {
         this.user = user;
         this.isActive = true;
-        this.time = LocalDateTime.now();
+        this.time = LocalDateTime.parse(LocalDateTime.now().format(FORMATTER), FORMATTER);
     }
 
     public long getId() {

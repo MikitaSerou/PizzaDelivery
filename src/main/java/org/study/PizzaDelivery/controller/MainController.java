@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.study.PizzaDelivery.data.enums.IngredientType;
 import org.study.PizzaDelivery.data.model.User;
-import org.study.PizzaDelivery.data.service.UserService;
+import org.study.PizzaDelivery.data.service.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,6 +31,22 @@ public class MainController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private IngredientService ingredientService;
+
+    @Autowired
+    private OrderService orderService;
+
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private BaseService baseService;
+
+    @Autowired
+    private ProductService productService;
 
 
     @GetMapping("/")
@@ -49,4 +66,19 @@ public class MainController {
         }
         return "index";
     }
+
+    @GetMapping("/constructor")
+    public String constructor(Model model){
+
+        model.addAttribute("bases", baseService.findAll());
+        model.addAttribute("ingredients", ingredientService.findAll());
+        model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
+        model.addAttribute("cheeses", ingredientService.findByType(IngredientType.CHEESE));
+        model.addAttribute("meat", ingredientService.findByType(IngredientType.MEAT));
+        model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
+        model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
+        model.addAttribute("ingredientTypes", IngredientType.values());
+        return "constructor";
+    }
+
 }

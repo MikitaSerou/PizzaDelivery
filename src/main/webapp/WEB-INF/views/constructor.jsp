@@ -12,9 +12,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
-    <title>${category.name}&nbsp;<spring:message code="add.product"/></title>
+    <title><spring:message code="constructor"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
+
+    <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23019901-1"></script>
 </head>
 
 <body id="bodyDefault">
@@ -82,15 +88,6 @@
                     <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935zM3.504 1c.007.517.026 1.006.056 1.469.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.501.501 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667.03-.463.049-.952.056-1.469H3.504z"/>
                 </svg>
                 <spring:message code="category.title"/></a></button>
-            <sec:authorize access="!hasRole('ROLE_ADMIN')">
-                <button type="button" class="btn btn-secondary"><a href="/custom">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-pie-chart" viewBox="0 0 16 16">
-                        <path d="M7.5 1.018a7 7 0 0 0-4.79 11.566L7.5 7.793V1.018zm1 0V7.5h6.482A7.001 7.001 0 0 0 8.5 1.018zM14.982 8.5H8.207l-4.79 4.79A7 7 0 0 0 14.982 8.5zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
-                    </svg>
-                    <spring:message code="custom.title"/></a>
-                </button>
-            </sec:authorize>
             <button type="button" class="btn btn-secondary"><a href="/promotions">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gift"
                      viewBox="0 0 16 16">
@@ -107,7 +104,7 @@
     <div class="row">
         <div class="col-sm-9">
             <h1 class="display-2" align="left" margin="right">
-                <span id="pageHeader">(${category.name})<br/> <spring:message code="add.product"/>&nbsp;</span>
+                <span id="pageHeader"><spring:message code="edit.Product"/></span>
             </h1>
             <button type="button" class="btn btn-secondary"><a href="/category">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -122,39 +119,33 @@
             <div class="card text-white bg-primary mb-3" style="width: 100%;">
 
                 <div class="card-body">
-
-
-                    <form action="${pageContext.request.contextPath}/admin/${categoryName}/addProduct"
+                    <h1 class="display-2"><spring:message code="constructor"/></h1>
+                    <form action="${pageContext.request.contextPath}/constructor"
                           method="post">
-                        <div class="form-group" style="width: 50%">
-                            <label for="formInput1" class="formLable"><h2><spring:message code="p.name"/></h2></label>
-                            <input type="text" class="form-control" name="productName" id="formInput1"
-                                   placeholder="<spring:message code="p.name"/>">
-                        </div>
                         <div class="form-group">
-                            <label class="formLable" for="formInput2"><h2 style="max-width: 100%">
-                                <span><img src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
-                                           width="50px" height="50px"/></span>
-                                <spring:message code="choose.sauce"/></h2></label>
+                            <label class="formLable" for="formInput2"><h2><span>
+                                <img  src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
+                                      width="50px" height="50px"/>
+                            </span><spring:message code="choose.sauce"/></h2></label>
                             <select class="form-control" id="formInput2" name="ingredients" path="ingredients"
                                     style="max-width: 50%">
                                 <c:forEach items="${sauces}" var="sauce">
-                                    <option name="ingredients" value=${sauce.id}>${sauce.name}</option>
+                                        <option name="ingredients" value=${sauce.id}>${sauce.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
+
                         <h2 class="formLable"><spring:message
                                 code="add.ingredients"/>:</h2>
                         <table class="table" style="width: 100%; border-radius: 10px;">
                             <tr>
                                 <c:forEach var="ingredientType" items="${ingredientTypes}">
                                     <c:if test="${!ingredientType.toString().equals('SAUCE')}">
-                                        <td>
-                                            <h2 id="ingredientName" align="center"
-                                                style="font-size: 20px"><span><img
-                                                    src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
-                                                    width="50px" height="50px"/></span><br/>${ingredientType.toString()}
-                                            </h2></td>
+                                        <td><h2 id="ingredientName" align="center"
+                                                style="font-size: 20px">
+                                                <span><img  src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
+                                                            width="50px" height="50px"/></span><br/>
+                                                ${ingredientType.toString()}</h2></td>
                                     </c:if>
                                 </c:forEach>
                             </tr>
@@ -163,45 +154,42 @@
                                     <c:if test="${!ingredientType.toString().equals('SAUCE')}">
                                         <td>
                                             <c:forEach var="ingredient" items="${ingredients}">
-                                                <%--<div class="form-group">--%>
-                                                <c:if test="${ingredient.getType().equals(ingredientType)}">
-                                                    <div class="alert alert-dismissible alert-light"
-                                                         style="width: 100%; padding: 2px;">
-                                                        <div class="custom-control custom-switch">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                   id="${ingredient.id}"
-                                                                   name="ingredients" value="${ingredient.id}">
-
-
-                                                            <label class="custom-control-label"
-                                                                   for="${ingredient.id}">
-                                                                    ${ingredient.name}
-                                                            </label>
+                                                <div class="form-group">
+                                                    <c:if test="${ingredient.getType().equals(ingredientType)}">
+                                                        <div class="alert alert-dismissible alert-light" style="width: 100%; padding: 2px;">
+                                                            <div class="custom-control custom-switch">
+                                                                <c:if test="${product.ingredients.contains(ingredient)}">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="${ingredient.id}"
+                                                                           name="ingredients" value="${ingredient.id}"
+                                                                           checked>
+                                                                    <label class="custom-control-label"
+                                                                           for="${ingredient.id}">${ingredient.name}</label
+                                                                </c:if>
+                                                                <c:if test="${!product.ingredients.contains(ingredient)}">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="${ingredient.id}"
+                                                                           name="ingredients" value="${ingredient.id}">
+                                                                    <label class="custom-control-label"
+                                                                           for="${ingredient.id}">
+                                                                            ${ingredient.name}</label>
+                                                                </c:if>
+                                                            </div>
                                                         </div>
-                                                            <%-- <span style="align-content: end; width:100%; right:0;">&nbsp;(${ingredient.price}.<spring:message code="currency"/>)</span>--%>
-
-                                                    </div>
-
-                                                </c:if>
-                                                <%-- </div>--%>
+                                                    </c:if>
+                                                </div>
                                             </c:forEach>
                                         </td>
                                     </c:if>
                                 </c:forEach>
                             </tr>
                         </table>
-                        <div class="form-group">
-                            <label class="formLable" for="formInput4"><h2 style="max-width: 100%"><spring:message
-                                    code="description"/></h2></label>
-                            <textarea id="formInput4" name="description" path="description"
-                                      placeholder="Comment" maxlength="255" rows="6"
-                                      style=" /*height: 105%;*/ width: 100%"></textarea>
-                        </div>
                         <br/>
                         <button formmethod="post" type="submit" class="btn btn-success"
-                        ><h2><spring:message
-                                code="add.button"/></h2></button>
+                        ><h2><spring:message code="addToBasket.button"/></h2></button>
+
                     </form>
+
                 </div>
             </div>
 
@@ -211,21 +199,22 @@
         <div class="col-sm-3">
             <section class="sticky-top" style="padding-top: 90px; text-align: center">
                 <div class="card text-white bg-dark mb-4">
-                    <sec:authorize access="hasRole('ROLE_ADMIN')">
-                        <h4 class="display-4">
+                    <sec:authorize access="hasRole('ROLE_USER')">
+                        <h4 class="display-5">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                                  class="bi bi-person" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                             </svg>
-                            <spring:message code="admin"/>
+                                ${user.getUsername()}
                         </h4>
                         <div class="list-group">
-                            <a href="/admin" class="list-group-item list-group-item-action">
+                            <a href="/user"
+                               class="list-group-item list-group-item-action">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                     class="bi bi-tools" viewBox="0 0 16 16">
-                                    <path d="M1 0L0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.356 3.356a1 1 0 0 0 1.414 0l1.586-1.586a1 1 0 0 0 0-1.414l-3.356-3.356a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0zm9.646 10.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708zM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11z"/>
+                                     class="bi bi-briefcase" viewBox="0 0 16 16">
+                                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
                                 </svg>
-                                <spring:message code="adminOffice.title"/></a>
+                                <spring:message code="userOffice.title"/></a>
                             <a href="/logout"
                                class="list-group-item list-group-item-action list-group-item-danger">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -235,7 +224,7 @@
                                     <path fill-rule="evenodd"
                                           d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
                                 </svg>
-                                <spring:message code="logout.ref"/>
+                                <spring:message code="logout.ref"/></a>
                             </a>
                         </div>
                     </sec:authorize>
@@ -280,9 +269,5 @@
 </svg>
     <spring:message code="phone"/></span>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

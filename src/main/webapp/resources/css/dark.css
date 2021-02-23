@@ -78,7 +78,7 @@ html {
     border-radius: 10px;
     font-weight: bolder;
     border: solid black 1px;
-    opacity: 0.8;
+    width: 100%;
 }
 
 #pizzaName{
@@ -4346,7 +4346,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     flex-wrap: wrap;
     padding-left: 0;
     margin-bottom: 0;
-    list-style: none
+    list-style: none;
     height:10%;/*TODO*/
 }
 
