@@ -43,7 +43,7 @@ BasketRepository baskr = context.getBean("basketRepository", BasketRepository.cl
         BasketItemRepository bir  = context.getBean("basketItemRepository", BasketItemRepository.class);
         BasketItemService bis = context.getBean("basketItemService", BasketItemService.class);
         Category c = cr.findById((short) 2);
-        c.setPrice(18.0);
+        c.setPrice(15.0);
 cr.save(c);
        // ps.findAllDistinctNamesByCategoryId();
        // System.out.println(pr.findDistinctNameByCategoryId((short) 5));

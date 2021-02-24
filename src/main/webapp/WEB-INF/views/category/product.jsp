@@ -20,6 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<c:url value="/resources/js/productPrice.js" />"></script>
 </head>
 
 <body id="bodyDefault">
@@ -179,26 +180,11 @@
                                     <spring:message code="addToBasket.button"/></h2></button>
                             </sec:authorize>
                         </form>
-                        <script type="text/javascript">
-                            $(document).ready(function () {
-                                $('.box').hide();
-                                $('#HiddenInput').empty();
-                                $('#HiddenInput').val($('#dropdown').val());
-                                var value = $('#HiddenInput').val();
-                                $('#dropdown').val(value);
-                                $('#div' + value).show();
-                                $('#dropdown').change(function () {
-                                    $('.box').hide();
-                                    $('#HiddenInput').val($(this).val());
-                                    $('#div' + $(this).val()).show();
-                                });
-                            });
-                        </script>
                     </div>
                 </div>
 
             </div>
-            <%-- </div>--%>
+
 
         </div>
 

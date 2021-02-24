@@ -22,6 +22,8 @@
             type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23019901-1"></script>
+    <script src="<c:url value="/resources/js/constructorPrice.js" />"></script>
+
 </head>
 
 <body id="bodyDefault">
@@ -130,7 +132,10 @@
                             <select id="base" class="form-control" name="baseId" path="baseId"
                                     style="max-width: 50%">
                                 <c:forEach items="${bases}" var="base">
-                                    <option name="baseId" value=${base.priceMultiplier}>${base.name} ( x ${base.priceMultiplier})</option>
+                                    <option name="basePrice" value=${base.priceMultiplier*category.price}>${base.name}
+                                        (${base.priceMultiplier*category.price} <spring:message
+                                                code="currency"/>)
+                                    </option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -142,6 +147,7 @@
                             </span><spring:message code="choose.sauce"/></h2></label>
                             <select class="form-control" id="sauce" name="ingredients" path="ingredients"
                                     style="max-width: 50%">
+                                <option value="0"><spring:message code="without.sauce"/></option>
                                 <c:forEach items="${sauces}" var="sauce">
                                     <option id="saucePrice" name="ingredients" value=${sauce.price}>${sauce.name}&nbsp;
                                         (${sauce.price} <spring:message code="currency"/>)
@@ -173,22 +179,32 @@
                                             <c:forEach var="ingredient" items="${ingredients}">
                                                 <div class="form-group">
                                                     <c:if test="${ingredient.getType().equals(ingredientType)}">
-                                                        <div class="alert alert-dismissible alert-light"
-                                                             style="width: 100%; padding: 2px;">
-                                                            <div class="custom-control custom-switch">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                       id="${ingredient.id}"
-                                                                       name="ingredients" value="${ingredient.id}"
-                                                                       data-exval="${ingredient.price}">
-                                                                <label class="custom-control-label"
-                                                                       for="${ingredient.id}">
-                                                                        ${ingredient.name}</label>
-                                                                <span id="ingredientPrice" class="badge-danger"
-                                                                      style="font-size: 10px; float: right;">&nbsp;
-                                                                        (${ingredient.price} <spring:message
-                                                                            code="currency"/>)</span>
+                                                        <div class="row">
+                                                            <div class="col-sm-9" style="width: 90%; padding:0;">
+                                                                <div class="alert alert-dismissible alert-light"
+                                                                     style=" padding: 2px;">
+                                                                    <div class="custom-control custom-switch" >
+                                                                        <input type="checkbox"
+                                                                               class="custom-control-input"
+                                                                               id="${ingredient.id}"
+                                                                               name="ingredients"
+                                                                               value="${ingredient.id}"
+                                                                               data-exval="${ingredient.price}" style="text-align: center;">
+                                                                        <label class="custom-control-label"
+                                                                               for="${ingredient.id}" style="text-align: center;">
+                                                                            <span style="font-size: 12px">${ingredient.name}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3" style=" width: 10%; padding:0; margin:0;">
+                                                                <div id="ingredientPrice" class="alert alert-dismissible alert-danger"
+                                                                     style="font-size: 12px; width: 80%; padding:5px; margin:0; text-align: center;">${ingredient.price}
+                                                                </div>
                                                             </div>
                                                         </div>
+
+
                                                     </c:if>
                                                 </div>
                                             </c:forEach>
@@ -196,55 +212,6 @@
                                     </c:if>
                                 </c:forEach>
                             </tr>
-                 <%--           <c:forEach items="${bases}" var="base">
-                                <div id="div${base.id}" class="box">
-                                    <h1 class="btn-warning">${base.getPriceMultiplier()}
-                                        .<spring:message code="currency"/></h1>
-                                </div>
-                            </c:forEach>
-                            <input type='hidden' value='testing' id='HiddenInput' enableviewstate="true"/>--%>
-               <%--             <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $('.box').hide();
-                                    $('#HiddenInput').empty();
-                                    $('#HiddenInput').val($('#dropdown').val());
-                                    var value = $('#HiddenInput').val();
-                                    $('#dropdown').val(value);
-                                    $('#div' + value).show();
-                                    $('#dropdown').change(function () {
-                                        $('.box').hide();
-                                        $('#HiddenInput').val($(this).val());
-                                        $('#div' + $(this).val()).show();
-                                    });
-                                });
-                            </script>--%>
-                            <script type='text/javascript'>
-                                $(document).ready(function () {
-                                    var baseMul = $("#base option:selected").val();
-                                    var sauce = $("#sauce option:selected").val();
-                                    var ingredientsSum = 0;
-                                    var total = (sauce + ingredientsSum) * baseMul;
-                                    $("#result").text(sauce*baseMul + ingredientsSum*baseMul+${category.price});
-                                    $('#base').change(function () {
-                                        baseMul = $(this).val();
-
-                                        $("#result").text(sauce*baseMul + ingredientsSum*baseMul+${category.price}*baseMul);
-                                    });
-                                    $('#sauce').change(function () {
-                                        sauce = $(this).val();
-                                        $("#result").text(sauce*baseMul + ingredientsSum*baseMul+${category.price}*baseMul);
-                                    });
-                                    $("#boxes input[type='checkbox']").click(function () {
-                                            ingredientsSum = 0;
-                                        //sauce = $("#sauce option:selected").val();
-                                        $("#boxes input[type='checkbox']:checked").each(function () {
-                                            ingredientsSum += parseFloat($(this).data("exval"));
-                                        });
-                                        $("#result").text(sauce*baseMul + ingredientsSum*baseMul+${category.price}*baseMul);
-                                    });
-                                });
-                            </script>
-
                         </table>
                         <br/>
                         <div><h1><spring:message code="price"/>: <span id="result"></span>&nbsp;<span><spring:message
