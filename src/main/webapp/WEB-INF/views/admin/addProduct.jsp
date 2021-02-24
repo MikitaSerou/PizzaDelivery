@@ -148,19 +148,19 @@
                         <table class="table" style="width: 100%; border-radius: 10px;">
                             <tr>
                                 <c:forEach var="ingredientType" items="${ingredientTypes}">
-                                    <c:if test="${!ingredientType.toString().equals('SAUCE')}">
+                                    <c:if test="${!ingredientType.toString().equals('Sauce')}">
                                         <td>
                                             <h2 id="ingredientName" align="center"
                                                 style="font-size: 20px"><span><img
                                                     src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
-                                                    width="50px" height="50px"/></span><br/>${ingredientType.toString()}
+                                                    width="50px" height="50px"/></span><br/> <spring:message code="${ingredientType.toString()}"/>
                                             </h2></td>
                                     </c:if>
                                 </c:forEach>
                             </tr>
                             <tr>
                                 <c:forEach var="ingredientType" items="${ingredientTypes}">
-                                    <c:if test="${!ingredientType.toString().equals('SAUCE')}">
+                                    <c:if test="${!ingredientType.toString().equals('Sauce')}">
                                         <td>
                                             <c:forEach var="ingredient" items="${ingredients}">
                                                 <%--<div class="form-group">--%>

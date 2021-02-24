@@ -69,7 +69,7 @@ public class MainController {
 
     @GetMapping("/constructor")
     public String constructor(Model model){
-
+        model.addAttribute("category", categoryService.findByName("Свои"));
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("ingredients", ingredientService.findAll());
         model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));

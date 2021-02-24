@@ -26,7 +26,7 @@ public class IngredientService {
     }
 
    public List<Ingredient> findByType(IngredientType ingredientType){
-        String type = ingredientType.toString();
+        String type = ingredientType.toString().toUpperCase();
         return ingredientRepository.findAllByType(type);
    }
 

@@ -16,6 +16,7 @@
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
 
+
     <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             type="text/javascript"></script>
@@ -104,7 +105,7 @@
     <div class="row">
         <div class="col-sm-9">
             <h1 class="display-2" align="left" margin="right">
-                <span id="pageHeader"><spring:message code="edit.Product"/></span>
+                <span id="pageHeader"><spring:message code="custom.title"/></span>
             </h1>
             <button type="button" class="btn btn-secondary"><a href="/category">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -120,17 +121,31 @@
 
                 <div class="card-body">
                     <h1 class="display-2"><spring:message code="constructor"/></h1>
-                    <form action="${pageContext.request.contextPath}/constructor"
-                          method="post">
+                    <div action="${pageContext.request.contextPath}/constructor"
+                         method="post">
+
                         <div class="form-group">
-                            <label class="formLable" for="formInput2"><h2><span>
-                                <img  src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
-                                      width="50px" height="50px"/>
+                            <label class="formLable" for="base"><h2><spring:message code="choose.base"/></h2>
+                            </label>
+                            <select id="base" class="form-control" name="baseId" path="baseId"
+                                    style="max-width: 50%">
+                                <c:forEach items="${bases}" var="base">
+                                    <option name="baseId" value=${base.priceMultiplier}>${base.name} ( x ${base.priceMultiplier})</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="formLable" for="sauce"><h2><span>
+                                <img src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
+                                     width="50px" height="50px"/>
                             </span><spring:message code="choose.sauce"/></h2></label>
-                            <select class="form-control" id="formInput2" name="ingredients" path="ingredients"
+                            <select class="form-control" id="sauce" name="ingredients" path="ingredients"
                                     style="max-width: 50%">
                                 <c:forEach items="${sauces}" var="sauce">
-                                        <option name="ingredients" value=${sauce.id}>${sauce.name}</option>
+                                    <option id="saucePrice" name="ingredients" value=${sauce.price}>${sauce.name}&nbsp;
+                                        (${sauce.price} <spring:message code="currency"/>)
+                                    </option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -140,40 +155,38 @@
                         <table class="table" style="width: 100%; border-radius: 10px;">
                             <tr>
                                 <c:forEach var="ingredientType" items="${ingredientTypes}">
-                                    <c:if test="${!ingredientType.toString().equals('SAUCE')}">
+                                    <c:if test="${!ingredientType.toString().equals('Sauce')}">
                                         <td><h2 id="ingredientName" align="center"
                                                 style="font-size: 20px">
-                                                <span><img  src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
-                                                            width="50px" height="50px"/></span><br/>
-                                                ${ingredientType.toString()}</h2></td>
+                                                <span><img
+                                                        src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
+                                                        width="50px" height="50px"/></span><br/>
+                                            <spring:message code="${ingredientType.toString()}"/></h2></td>
+
                                     </c:if>
                                 </c:forEach>
                             </tr>
-                            <tr>
+                            <tr id="boxes">
                                 <c:forEach var="ingredientType" items="${ingredientTypes}">
-                                    <c:if test="${!ingredientType.toString().equals('SAUCE')}">
+                                    <c:if test="${!ingredientType.toString().equals('Sauce')}">
                                         <td>
                                             <c:forEach var="ingredient" items="${ingredients}">
                                                 <div class="form-group">
                                                     <c:if test="${ingredient.getType().equals(ingredientType)}">
-                                                        <div class="alert alert-dismissible alert-light" style="width: 100%; padding: 2px;">
+                                                        <div class="alert alert-dismissible alert-light"
+                                                             style="width: 100%; padding: 2px;">
                                                             <div class="custom-control custom-switch">
-                                                                <c:if test="${product.ingredients.contains(ingredient)}">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                           id="${ingredient.id}"
-                                                                           name="ingredients" value="${ingredient.id}"
-                                                                           checked>
-                                                                    <label class="custom-control-label"
-                                                                           for="${ingredient.id}">${ingredient.name}</label
-                                                                </c:if>
-                                                                <c:if test="${!product.ingredients.contains(ingredient)}">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                           id="${ingredient.id}"
-                                                                           name="ingredients" value="${ingredient.id}">
-                                                                    <label class="custom-control-label"
-                                                                           for="${ingredient.id}">
-                                                                            ${ingredient.name}</label>
-                                                                </c:if>
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                       id="${ingredient.id}"
+                                                                       name="ingredients" value="${ingredient.id}"
+                                                                       data-exval="${ingredient.price}">
+                                                                <label class="custom-control-label"
+                                                                       for="${ingredient.id}">
+                                                                        ${ingredient.name}</label>
+                                                                <span id="ingredientPrice" class="badge-danger"
+                                                                      style="font-size: 10px; float: right;">&nbsp;
+                                                                        (${ingredient.price} <spring:message
+                                                                            code="currency"/>)</span>
                                                             </div>
                                                         </div>
                                                     </c:if>
@@ -183,18 +196,71 @@
                                     </c:if>
                                 </c:forEach>
                             </tr>
+                 <%--           <c:forEach items="${bases}" var="base">
+                                <div id="div${base.id}" class="box">
+                                    <h1 class="btn-warning">${base.getPriceMultiplier()}
+                                        .<spring:message code="currency"/></h1>
+                                </div>
+                            </c:forEach>
+                            <input type='hidden' value='testing' id='HiddenInput' enableviewstate="true"/>--%>
+               <%--             <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('.box').hide();
+                                    $('#HiddenInput').empty();
+                                    $('#HiddenInput').val($('#dropdown').val());
+                                    var value = $('#HiddenInput').val();
+                                    $('#dropdown').val(value);
+                                    $('#div' + value).show();
+                                    $('#dropdown').change(function () {
+                                        $('.box').hide();
+                                        $('#HiddenInput').val($(this).val());
+                                        $('#div' + $(this).val()).show();
+                                    });
+                                });
+                            </script>--%>
+                            <script type='text/javascript'>
+                                $(document).ready(function () {
+                                    var baseMul = $("#base option:selected").val();
+                                    var sauce = $("#sauce option:selected").val();
+                                    var ingredientsSum = 0;
+                                    var total = (sauce + ingredientsSum) * baseMul;
+                                    $("#result").text(sauce*baseMul + ingredientsSum*baseMul+${category.price});
+                                    $('#base').change(function () {
+                                        baseMul = $(this).val();
+
+                                        $("#result").text(sauce*baseMul + ingredientsSum*baseMul+${category.price}*baseMul);
+                                    });
+                                    $('#sauce').change(function () {
+                                        sauce = $(this).val();
+                                        $("#result").text(sauce*baseMul + ingredientsSum*baseMul+${category.price}*baseMul);
+                                    });
+                                    $("#boxes input[type='checkbox']").click(function () {
+                                            ingredientsSum = 0;
+                                        //sauce = $("#sauce option:selected").val();
+                                        $("#boxes input[type='checkbox']:checked").each(function () {
+                                            ingredientsSum += parseFloat($(this).data("exval"));
+                                        });
+                                        $("#result").text(sauce*baseMul + ingredientsSum*baseMul+${category.price}*baseMul);
+                                    });
+                                });
+                            </script>
+
                         </table>
                         <br/>
+                        <div><h1><spring:message code="price"/>: <span id="result"></span>&nbsp;<span><spring:message
+                                code="currency"/></span></h1>
+
+                        </div>
                         <button formmethod="post" type="submit" class="btn btn-success"
                         ><h2><spring:message code="addToBasket.button"/></h2></button>
 
-                    </form>
+                        </form>
 
+                    </div>
                 </div>
+
             </div>
-
         </div>
-
 
         <div class="col-sm-3">
             <section class="sticky-top" style="padding-top: 90px; text-align: center">
@@ -215,6 +281,12 @@
                                     <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
                                 </svg>
                                 <spring:message code="userOffice.title"/></a>
+                            <a href="/user/basket" class="list-group-item list-group-item-action">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-cart3" viewBox="0 0 16 16">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                </svg>
+                                <spring:message code="basket.title"/></a>
                             <a href="/logout"
                                class="list-group-item list-group-item-action list-group-item-danger">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
