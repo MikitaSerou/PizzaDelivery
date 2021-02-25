@@ -1,7 +1,7 @@
 package org.study.PizzaDelivery.data.enums;
 
 public enum Status {
-    NOT_PAID("Not paid"),
+    NOT_PAID("During"),
     PAID("Paid"),
     CANCELED("Canceled");
 

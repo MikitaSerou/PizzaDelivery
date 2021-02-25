@@ -1,6 +1,13 @@
 package org.study.PizzaDelivery;
 
 
+
+
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.Translate.TranslateOption;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.study.PizzaDelivery.config.DataServiceConfig;
 import org.study.PizzaDelivery.data.enums.IngredientType;
@@ -42,9 +49,26 @@ BasketRepository baskr = context.getBean("basketRepository", BasketRepository.cl
         BasketService baskS = context.getBean("basketService", BasketService.class);
         BasketItemRepository bir  = context.getBean("basketItemRepository", BasketItemRepository.class);
         BasketItemService bis = context.getBean("basketItemService", BasketItemService.class);
-        Category c = cr.findById((short) 2);
+/*        Category c = cr.findById((short) 2);
         c.setPrice(15.0);
 cr.save(c);
+
+        Translate translate = TranslateOptions.getDefaultInstance().getService();
+        String originalText = "Happy coding!";
+        // Translate into Spanish (es)
+        Translation translation =
+                translate.translate(originalText, TranslateOption.targetLanguage("es"));
+
+        // Get the translated text
+        String translatedText = translation.getTranslatedText();
+
+        // Print the translated text
+        System.out.println("Translated text: " + translatedText);*/
+
+
+/*        Translate translate = new Translate();
+String s2 = translate.translate(originalText, Language.ENGLISH, Language.RUSSIAN);*/
+
        // ps.findAllDistinctNamesByCategoryId();
        // System.out.println(pr.findDistinctNameByCategoryId((short) 5));
      //   cs.deleteCategory((short) 3);

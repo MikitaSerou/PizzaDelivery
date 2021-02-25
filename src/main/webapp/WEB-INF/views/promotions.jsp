@@ -299,12 +299,12 @@
                             <div class="form-group">
                                 <label for="formGroupExampleInput"><spring:message code="username"/></label>
                                 <input type="text" class="form-control" name="username" id="formGroupExampleInput"
-                                       placeholder="Username">
+                                       placeholder="<spring:message code="username"/>">
                             </div>
                             <div class="form-group">
                                 <label for="formGroupExampleInput2"><spring:message code="password"/></label>
                                 <input type="password" name="password" class="form-control" id="formGroupExampleInput2"
-                                       placeholder="Password">
+                                       placeholder="<spring:message code="password"/>">
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"

@@ -161,12 +161,12 @@
                     </td>
                     <td>
                         <button type="button" class="btn btn-warning"><a href="/admin/users/${user.id}">
-                            Show Orders</a></button>
+                            <spring:message code="show.orders"/></a></button>
 
                         <form action="${pageContext.request.contextPath}/admin" method="post">
                             <input type="hidden" name="userId" value="${user.id}"/>
                             <input type="hidden" name="action" value="delete"/>
-                            <button type="submit" class="btn btn-danger">Delete User</button>
+                            <button type="submit" class="btn btn-danger"><spring:message code="delete.button"/></button>
                         </form>
                     </td>
                 </tr>

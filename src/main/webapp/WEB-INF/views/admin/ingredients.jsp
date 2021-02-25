@@ -159,19 +159,20 @@
                     <td><h4><spring:message code="add.button"/></h4></td>
                     <td>
                         <input type="text" class="form-control" name="ingredientName" path="ingredientName"
-                               placeholder="Name"/>
+                               placeholder="<spring:message code="p.name"/>"/>
                     </td>
                     <td>
                         <div class="col">
                             <input type="number" min="1" max="10" step="0.1" class="form-control" name="ingredientPrice"
                                    path="ingredientPrice"
-                                   placeholder="Price">
+                                   placeholder="<spring:message code="price"/>">
                         </div>
                     </td>
                     <td>
                         <select class="form-control" name="ingredientType" path="ingredientType">
                             <c:forEach items="${types}" var="ingredientType">
-                                <option name="ingredientType" value=${ingredientType} text="${ingredientType}">${ingredientType}</option>
+                                <option name="ingredientType" value=${ingredientType} text="${ingredientType}">
+                                    <spring:message code="${ingredientType.toString()}"/></option>
                             </c:forEach>
                         </select></br>
 
@@ -187,7 +188,7 @@
                     <td id="${ingredient.id}"><h3>${ingredient.id}</h3></td>
                     <td><h3>${ingredient.name}</h3></td>
                     <td><h3>${ingredient.price}</h3></td>
-                    <td><h3>${ingredient.type}</h3></td>
+                    <td><h3><spring:message code="${ingredient.type.toString()}"/></h3></td>
                     <td>
                         <form action="${pageContext.request.contextPath}/admin/ingredients" method="post">
                             <input type="hidden" name="ingredientId" value="${ingredient.id}"/>
@@ -205,7 +206,7 @@
                                     <path fill-rule="evenodd"
                                           d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z"/>
                                 </svg>
-                                Edit
+                                <spring:message code="edit.button"/>
                             </h4>
                             <div class="col">
                                 <input type="hidden" class="form-control" name="ingredientId" path="ingredientId"
@@ -220,7 +221,7 @@
                             <div class="col">
                                 <input type="number" min="1" step="0.1" class="form-control" name="ingredientPrice"
                                        path="ingredientPrice"
-                                       placeholder="price">
+                                       placeholder="<spring:message code="price"/>">
                             </div>
                         </td>
                         <td>
@@ -228,7 +229,8 @@
                             <select class="form-control" name="ingredientType" path="ingredientType">
                                 <option></option>
                                 <c:forEach items="${types}" var="ingredientType"><%--.toString()--%>
-                                    <option name="ingredientType" value=${ingredientType} text="${ingredientType}">${ingredientType}</option>
+                                    <option name="ingredientType" value=${ingredientType} text="${ingredientType}">
+                                        <spring:message code="${ingredientType.toString()}"/></option>
                                 </c:forEach>
                             </select><br/>
 

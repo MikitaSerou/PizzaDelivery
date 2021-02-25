@@ -142,13 +142,13 @@
 
                     </thead>
                     <c:forEach items="${userOrders}" var="order">
-                        <c:if test="${order.status.toString().equals('NOT_PAID')}">
+                        <c:if test="${order.status.toString().equals('During')}">
                             <tr class="table-warning">
                         </c:if>
-                        <c:if test="${order.status.toString().equals('PAID')}">
+                        <c:if test="${order.status.toString().equals('Paid')}">
                             <tr class="table-success">
                         </c:if>
-                        <c:if test="${order.status.toString().equals('CANCELED')}">
+                        <c:if test="${order.status.toString().equals('Canceled')}">
                             <tr class="table-danger">
                         </c:if>
 
@@ -161,7 +161,7 @@
                         <td>${order.price}</td>
                         <td>${order.comment}</td>
                         <td>${order.time}</td>
-                        <td>${order.status.toString()}</td>
+                        <td><spring:message code="${order.status.toString()}"/></td>
                         </tr>
                     </c:forEach>
                 </table>

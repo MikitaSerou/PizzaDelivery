@@ -43,7 +43,7 @@ public class CategoryController {
 
     @GetMapping
     public String categoryList(Model model) {
-
+        model.addAttribute("customCategory", categoryService.findOne((short) 2));
         model.addAttribute("categories", categoryService.getAllStandardCategories());
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("cheapestProducts", productService.findAllByBase(baseService.findCheapest()));

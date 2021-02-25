@@ -128,8 +128,9 @@
             <div style="min-height: auto">
                 <div class="row no-gutters" style="background-color: rgba(39,43,48,0.9); border-radius: 10px;">
                     <div class="col-md-5"  style="margin-top: auto; margin-bottom: auto;">
-                        <img src='<spring:url value="/resources/images/pizzaItem.png" />' width="280px"
-                             height="280px"/>
+                        <img src='<spring:url value="/resources/images/products/${product.name.toLowerCase()}.png" />'
+                             width="280px" height="280px" class="rounded" alt="${product.name}"/>
+
                     </div>
                     <div class="col-md-7">
                         <br/>
@@ -143,10 +144,11 @@
                         </c:forEach><br/>
                         <h2><spring:message code="description"/>:</h2>
                         <p style="max-width: 100%">${product.description}</p>
-                        <form action="${pageContext.request.contextPath}/category/${categoryName}/${productName}"
+
+                        <form action="${pageContext.request.contextPath}/category/${category.name}/${product.name}"
                               method="post">
                             <h2><spring:message code="choose.base"/>:</h2>
-                            <input type="hidden" name="action" value="addToCart">
+                            <input type="hidden" name="action" value="addToBasket">
                             <select id="dropdown" class="form-control" name="baseId" path="baseId"
                                     style="max-width: 50%">
                                 <c:forEach items="${bases}" var="base">
@@ -164,7 +166,7 @@
                                 <h3><spring:message code="commentToProduct"/>:</h3>
                                 <div class="form-group" style="padding: 5px;">
                                 <textarea name="comment" path="comment"
-                                          placeholder="Comment" maxlength="255" rows="6"
+                                          placeholder="<spring:message code="comment"/>" maxlength="255" rows="6"
                                           style=" height: 105%; width: 100%"></textarea>
                                     <dr/>
                                     <dr/>
@@ -261,12 +263,12 @@
                             <div class="form-group">
                                 <label for="formGroupExampleInput"><spring:message code="username"/></label>
                                 <input type="text" class="form-control" name="username" id="formGroupExampleInput"
-                                       placeholder="Username">
+                                       placeholder="<spring:message code="username"/>">
                             </div>
                             <div class="form-group">
                                 <label for="formGroupExampleInput2"><spring:message code="password"/></label>
                                 <input type="password" name="password" class="form-control" id="formGroupExampleInput2"
-                                       placeholder="Password">
+                                       placeholder="<spring:message code="password"/>">
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"

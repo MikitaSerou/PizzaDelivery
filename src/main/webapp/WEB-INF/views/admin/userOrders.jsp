@@ -182,13 +182,13 @@
 
                 </thead>
                 <c:forEach items="${userOrders}" var="order">
-                    <c:if test="${order.status.toString().equals('NOT_PAID')}">
+                    <c:if test="${order.status.toString().equals('During')}">
                         <tr class="table-warning">
                     </c:if>
-                    <c:if test="${order.status.toString().equals('PAID')}">
+                    <c:if test="${order.status.toString().equals('Paid')}">
                         <tr class="table-success">
                     </c:if>
-                    <c:if test="${order.status.toString().equals('CANCELED')}">
+                    <c:if test="${order.status.toString().equals('Canceled')}">
                         <tr class="table-danger">
                     </c:if>
 
@@ -196,30 +196,34 @@
                     <td><c:forEach items="${order.orderItems}"
                                    var="item">${item.product.name} (${item.product.price})</c:forEach><br/></td>
                     <td>${order.price}</td>
-                    <td>${order.typeOfPayment.toString()}</td>
+                    <td><spring:message code="${order.typeOfPayment.toString()}"/></td>
                     <td>${order.phoneNumber}</td>
                     <td>${order.comment}</td>
                     <td>${order.time}</td>
-                    <td>${order.status.toString()}</td>
+                    <td><spring:message code="${order.status.toString()}"/></td>
                     <td>
 
                         <c:if test="${order.status.toString().equals('NOT_PAID')}">
                             <form action="${pageContext.request.contextPath}/admin/orders" method="post">
                                 <input type="hidden" name="orderId" value="${order.id}"/>
                                 <input type="hidden" name="action" value="paidUp"/>
-                                <button type="submit" class="btn btn-success">Paid up</button>
+                                <button type="submit" class="btn btn-success">
+                                    <spring:message code="paid.up"/>
+                                    Paid up</button>
                             </form>
                             <form action="${pageContext.request.contextPath}/admin/orders" method="post">
                                 <input type="hidden" name="orderId" value="${order.id}"/>
                                 <input type="hidden" name="action" value="cancel"/>
-                                <button type="submit" class="btn btn-danger">Cancel</button>
+                                <button type="submit" class="btn btn-danger">
+                                    <spring:message code="cancel"/></button>
                             </form>
                         </c:if>
                         <c:if test="${order.status.toString().equals('CANCELED')}">
                             <form action="${pageContext.request.contextPath}/admin/orders" method="post">
                                 <input type="hidden" name="orderId" value="${order.id}"/>
                                 <input type="hidden" name="action" value="notPaid"/>
-                                <button type="submit" class="btn btn-warning">Not paid</button>
+                                <button type="submit" class="btn btn-warning">
+                                    <spring:message code="During"/></button>
                             </form>
                         </c:if>
                     </td>

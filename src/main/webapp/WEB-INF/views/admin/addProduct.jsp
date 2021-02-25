@@ -194,7 +194,7 @@
                             <label class="formLable" for="formInput4"><h2 style="max-width: 100%"><spring:message
                                     code="description"/></h2></label>
                             <textarea id="formInput4" name="description" path="description"
-                                      placeholder="Comment" maxlength="255" rows="6"
+                                      placeholder="<spring:message code="description"/>" maxlength="255" rows="6"
                                       style=" /*height: 105%;*/ width: 100%"></textarea>
                         </div>
                         <br/>

@@ -87,6 +87,24 @@ html {
     font-weight: bolder;
     font-size: 30px;
 }
+
+.mainpageParagraph{
+    background-color: rgba(39,43,48,0.8);
+    border-radius: 10px;
+    font-weight: bolder;
+    border: solid black 1px;
+    width: 100%;
+    font-size: 20px;
+}
+
+.quote{
+    background-color: #85221c;
+    border-radius: 10px;
+    border: solid black 1px;
+    margin-left: 10px;
+    width: 80%;
+}
+
 #ingredientName{
     background-color: #2f6473;
     color: white;

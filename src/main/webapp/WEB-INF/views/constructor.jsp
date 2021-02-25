@@ -123,9 +123,7 @@
 
                 <div class="card-body">
                     <h1 class="display-2"><spring:message code="constructor"/></h1>
-                    <div action="${pageContext.request.contextPath}/constructor"
-                         method="post">
-
+                    <form action="${pageContext.request.contextPath}/constructor" method="post">
                         <div class="form-group">
                             <label class="formLable" for="base"><h2><spring:message code="choose.base"/></h2>
                             </label>
@@ -139,7 +137,6 @@
                                 </c:forEach>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label class="formLable" for="sauce"><h2><span>
                                 <img src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
@@ -155,7 +152,6 @@
                                 </c:forEach>
                             </select>
                         </div>
-
                         <h2 class="formLable"><spring:message
                                 code="add.ingredients"/>:</h2>
                         <table class="table" style="width: 100%; border-radius: 10px;">
@@ -183,22 +179,26 @@
                                                             <div class="col-sm-9" style="width: 90%; padding:0;">
                                                                 <div class="alert alert-dismissible alert-light"
                                                                      style=" padding: 2px;">
-                                                                    <div class="custom-control custom-switch" >
+                                                                    <div class="custom-control custom-switch">
                                                                         <input type="checkbox"
                                                                                class="custom-control-input"
                                                                                id="${ingredient.id}"
                                                                                name="ingredients"
                                                                                value="${ingredient.id}"
-                                                                               data-exval="${ingredient.price}" style="text-align: center;">
+                                                                               data-exval="${ingredient.price}"
+                                                                               style="text-align: center;">
                                                                         <label class="custom-control-label"
-                                                                               for="${ingredient.id}" style="text-align: center;">
+                                                                               for="${ingredient.id}"
+                                                                               style="text-align: center;">
                                                                             <span style="font-size: 12px">${ingredient.name}</span>
                                                                         </label>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-3" style=" width: 10%; padding:0; margin:0;">
-                                                                <div id="ingredientPrice" class="alert alert-dismissible alert-danger"
+                                                            <div class="col-sm-3"
+                                                                 style=" width: 10%; padding:0; margin:0;">
+                                                                <div id="ingredientPrice"
+                                                                     class="alert alert-dismissible alert-danger"
                                                                      style="font-size: 12px; width: 80%; padding:5px; margin:0; text-align: center;">${ingredient.price}
                                                                 </div>
                                                             </div>
@@ -221,14 +221,13 @@
                         <button formmethod="post" type="submit" class="btn btn-success"
                         ><h2><spring:message code="addToBasket.button"/></h2></button>
 
-                        </form>
 
-                    </div>
+                        <%--</div>--%>
+                    </form>
+
                 </div>
-
             </div>
         </div>
-
         <div class="col-sm-3">
             <section class="sticky-top" style="padding-top: 90px; text-align: center">
                 <div class="card text-white bg-dark mb-4">

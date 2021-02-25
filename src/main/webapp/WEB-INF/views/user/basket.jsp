@@ -208,7 +208,7 @@
                                             code="phoneNumber"/>:</label>
                                     <input type="text" class="form-control" name="phoneNumber"
                                            id="formGroupExampleInput"
-                                           placeholder="Phone number" path="phoneNumber">
+                                           placeholder="<spring:message code="phoneNumber"/>" path="phoneNumber">
                                     <br/>
                                 </div>
                                 <div class="form-group">
@@ -218,7 +218,7 @@
                                             path="typeOfPayment">
                                         <c:forEach items="${typesOfPayment}" var="type">
                                             <option name="typeOfPayment"
-                                                    value=${type} text="${type}">${type}</option>
+                                                    value=${type} text="${type}"><spring:message code="${type.toString()}"/></option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -226,7 +226,7 @@
                             <td><label for="formGroupExampleInput3"><spring:message code="commentToOrder"/>:</label>
                                 <div class="form-group" style="padding: 5px;">
                                 <textarea id="formGroupExampleInput3" name="comment" path="comment"
-                                          placeholder="Comment" maxlength="255" rows="6"
+                                          placeholder="<spring:message code="commentToOrder"/>" maxlength="255" rows="6"
                                           style=" height: 105%; width: 100%"></textarea>
                                 </div>
                             </td>

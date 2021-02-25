@@ -11,6 +11,11 @@
     <title><spring:message code="registration.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
+
+    <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
 </head>
 
 <body id="loginAndRegBody">
@@ -111,32 +116,32 @@
                 <div class="form-group">
                     <label for="formGroupExampleInput"><spring:message code="username"/></label>
                     <input type="text" class="form-control" name="username" id="formGroupExampleInput"
-                           placeholder="Username" path="username">
+                           placeholder="<spring:message code="username"/>" path="username">
                 </div>
 
                 <div class="form-group">
                     <label for="formGroupExampleInput"><spring:message code="eMail"/></label>
                     <input type="text" class="form-control" name="mail" id="formGroupExampleInput2"
-                           placeholder="example@mail.com" path="mail">
+                           placeholder="<spring:message code="eMail"/>" path="mail">
                 </div>
 
                 <div class="form-group">
                     <label for="formGroupExampleInput"><spring:message code="phoneNumber"/></label>
                     <input type="text" class="form-control" name="phoneNumber" id="formGroupExampleInput3"
-                           placeholder="Phone number" path="phoneNumber">
+                           placeholder="<spring:message code="phoneNumber"/>" path="phoneNumber">
                 </div>
 
                 <div class="form-group">
                     <label for="formGroupExampleInput2"><spring:message code="password"/></label>
                     <input type="password" path="password" name="password" class="form-control"
                            id="formGroupExampleInput4"
-                           placeholder="Password confirm">
+                           placeholder="<spring:message code="passwordConfirm"/>">
                 </div>
                 <div class="form-group">
                     <label for="formGroupExampleInput3"><spring:message code="passwordConfirm"/></label>
                     <input type="password" path="passwordConfirm" name="passwordConfirm" class="form-control"
                            id="formGroupExampleInput5"
-                           placeholder="Confirm your password">
+                           placeholder="<spring:message code="passwordConfirm"/>">
                     <form:errors path="password">${passwordError}</form:errors>
                 </div>
                 <div class="row justify-content-md-center">
@@ -194,9 +199,5 @@
 </svg>
     <spring:message code="phone"/></span>
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
 </body>
 </html>

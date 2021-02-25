@@ -160,22 +160,22 @@
                         <td><c:forEach items="${order.orderItems}"
                                        var="item">${item.product.name} (${item.product.price})</c:forEach><br/></td>
                         <td>${order.price}</td>
-                        <td>${order.typeOfPayment.toString()}</td>
+                        <td><spring:message code="${order.typeOfPayment.toString()}"/></td>
 
                         <td>${order.phoneNumber}</td>
                         <td>${order.comment}</td>
                         <td>${order.time}</td>
-                        <td>${order.status}</td>
+                        <td><spring:message code="${order.status.toString()}"/></td>
                         <td>
                             <form action="${pageContext.request.contextPath}/admin/orders" method="post">
                             <input type="hidden" name="orderId" value="${order.id}"/>
                             <input type="hidden" name="action" value="paidUp"/>
-                            <button type="submit" class="btn btn-success">Paid up</button>
+                            <button type="submit" class="btn btn-success"><spring:message code="paid.up"/></button>
                             </form>
                                 <form action="${pageContext.request.contextPath}/admin/orders" method="post">
                                 <input type="hidden" name="orderId" value="${order.id}"/>
                             <input type="hidden" name="action" value="cancel"/>
-                            <button type="submit" class="btn btn-danger">Cancel</button>
+                            <button type="submit" class="btn btn-danger"><spring:message code="cancel"/></button>
                                 </form>
                         </td>
                     </form>
