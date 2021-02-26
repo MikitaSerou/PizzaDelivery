@@ -126,7 +126,7 @@
                             <select id="base" class="form-control" name="baseId" path="baseId"
                                     style="max-width: 50%">
                                 <c:forEach items="${bases}" var="base">
-                                    <option name="basePrice" value=${base.priceMultiplier*category.price}>${base.name}
+                                    <option name="baseId" value=${base.id} data-capacity="${base.priceMultiplier*category.price}">${base.name}
                                         (${base.priceMultiplier*category.price} <spring:message
                                                 code="currency"/>)
                                     </option>
@@ -139,10 +139,10 @@
                                      width="50px" height="50px"/>
                             </span><spring:message code="choose.sauce"/></h2></label>
                             <select class="form-control" id="sauce" name="ingredients" path="ingredients"
-                                    style="max-width: 50%">
-                                <option value="0"><spring:message code="without.sauce"/></option>
+                                    style="max-width: 50%" >
+                                <option data-capacity="0"><spring:message code="without.sauce"/></option>
                                 <c:forEach items="${sauces}" var="sauce">
-                                    <option id="saucePrice" name="ingredients" value=${sauce.price}>${sauce.name}&nbsp;
+                                    <option id="sauceId" name="ingredients" value=${sauce.id} data-capacity="${sauce.price}">${sauce.name}&nbsp;
                                         (${sauce.price} <spring:message code="currency"/>)
                                     </option>
                                 </c:forEach>
@@ -181,7 +181,7 @@
                                                                                id="${ingredient.id}"
                                                                                name="ingredients"
                                                                                value="${ingredient.id}"
-                                                                               data-exval="${ingredient.price}"
+                                                                               data-price="${ingredient.price}"
                                                                                style="text-align: center;">
                                                                         <label class="custom-control-label"
                                                                                for="${ingredient.id}"
