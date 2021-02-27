@@ -121,7 +121,7 @@
                                     <img src='<spring:url value="/resources/images/products/${product.name.toLowerCase()}.png" />'
                                          width="250px" height="250px" class="rounded" alt="${product.name}"/>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body" style=" min-height: 240px;">
                                     <h3 class="card-title">
                                                     <span id="pizzaName" style="margin-right: auto; margin-left: auto;">
                                                             ${product.name}

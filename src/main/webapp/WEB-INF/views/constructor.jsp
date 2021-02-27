@@ -120,7 +120,7 @@
                 <div class="card-body">
                     <h1 class="display-2"><spring:message code="constructor"/></h1>
                     <img class="rounded" src='<spring:url value="/resources/images/constructor.png"/>'
-                         width="250px" height="250px" style="position: absolute; right:50px;"/>
+                         width="250px" height="250px" style="position: absolute; right:50px; top:100px;"/>
                     <form action="${pageContext.request.contextPath}/constructor" method="post">
                         <div class="form-group">
                             <label class="formLable" for="base"><h2><spring:message code="choose.base"/></h2>

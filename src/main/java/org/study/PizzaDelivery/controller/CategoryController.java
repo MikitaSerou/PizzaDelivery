@@ -8,15 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.study.PizzaDelivery.data.enums.IngredientType;
-import org.study.PizzaDelivery.data.model.Base;
-import org.study.PizzaDelivery.data.model.Category;
-import org.study.PizzaDelivery.data.model.Ingredient;
 import org.study.PizzaDelivery.data.model.User;
 import org.study.PizzaDelivery.data.service.*;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 
 @Controller
