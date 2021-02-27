@@ -1,18 +1,18 @@
 $(document).ready(function () {
-    var basePrice = $("#base option:selected").data('capacity');
-    var sauce = $("#sauce option:selected").data('capacity');
+    var basePrice = $("#base option:selected").data('price');
+    var sauce = $("#sauce option:selected").data('price');
     var ingredientsSum = 0;
     var total = Number(sauce) + Number(ingredientsSum) + Number(basePrice);
     $("#result").text(total);
 
     $('select#base').change(function () {
-        basePrice = $("#base option:selected").data('capacity');
+        basePrice = $("#base option:selected").data('price');
         var total = Number(sauce) + Number(ingredientsSum) + Number(basePrice);
         $("#result").text(total);
     });
 
     $('select#sauce').change(function () {
-        sauce = $("#sauce option:selected").data('capacity');
+        sauce = $("#sauce option:selected").data('price');
         var total = Number(sauce) + Number(ingredientsSum) + Number(basePrice);
         $("#result").text(total);
     });

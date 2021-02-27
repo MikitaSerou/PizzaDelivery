@@ -95,10 +95,10 @@ public class AdminController {
     public String addProductPage(@PathVariable("categoryName") String categoryName,
                                  @RequestParam(required = true, defaultValue = "") String productName,
                                  @RequestParam(required = true, defaultValue = "") String description,
-                                 @RequestParam(required = true, defaultValue = "") short[] ingredients,
+                                 @RequestParam(required = true, defaultValue = "") short[] ingredientsIds,
                                  Model model) {
 
-        productService.addNewProductToCategory(productName, categoryService.findByName(categoryName), description, ingredients);
+        productService.addNewProductToCategory(productName, categoryService.findByName(categoryName), description, ingredientsIds);
 
         return "redirect:/category";
     }
@@ -125,9 +125,9 @@ public class AdminController {
     public String editProductPage(@PathVariable("productName") String productName,
                                  @RequestParam(defaultValue = "") String newName,
                                  @RequestParam(defaultValue = "") String description,
-                                 @RequestParam(defaultValue = "") short[] ingredients,
+                                 @RequestParam(defaultValue = "") short[] ingredientsIds,
                                  Model model) {
-        productService.editProductFromCategory(productName, newName, description, ingredients);
+        productService.editProductFromCategory(productName, newName, description, ingredientsIds);
 
         return "redirect:/category";
     }

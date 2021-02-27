@@ -153,7 +153,7 @@
                         <button type="submit" class="btn btn-warning">ID: ${order.user.id}<br/>
                                 ${order.user.username}</button></a></td>
                         <td><c:forEach items="${order.orderItems}"
-                                       var="item">${item.product.name} (${item.product.price})</c:forEach><br/></td>
+                                       var="item">${item.product.name} (${item.price})</c:forEach><br/></td>
                         <td>${order.price}</td>
                         <td><spring:message code="${order.typeOfPayment.toString()}"/></td>
 

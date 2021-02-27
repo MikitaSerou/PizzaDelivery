@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.study.PizzaDelivery.data.enums.IngredientType;
 import org.study.PizzaDelivery.data.model.User;
 import org.study.PizzaDelivery.data.service.*;
@@ -36,8 +33,7 @@ public class MainController {
     private IngredientService ingredientService;
 
     @Autowired
-    private OrderService orderService;
-
+    private BasketService basketService;
 
     @Autowired
     private CategoryService categoryService;
@@ -45,8 +41,6 @@ public class MainController {
     @Autowired
     private BaseService baseService;
 
-    @Autowired
-    private ProductService productService;
 
 
     @GetMapping("/")
@@ -69,7 +63,7 @@ public class MainController {
 
     @GetMapping("/constructor")
     public String constructor(Model model){
-        model.addAttribute("category", categoryService.findByName("Свои"));
+        model.addAttribute("category", categoryService.findByName("Своя"));
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("ingredients", ingredientService.findAll());
         model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
@@ -81,4 +75,14 @@ public class MainController {
         return "constructor";
     }
 
+    @PostMapping(value = "/constructor")
+    public String editProductPage(@ModelAttribute User user,
+                                  @RequestParam(defaultValue ="") Short baseId,
+                                  @RequestParam(defaultValue ="") Short sauceId,
+                                  @RequestParam(defaultValue = "") short[] ingredientsIds,
+                                  Model model) {
+        basketService.addCustomProductToBasket(user, baseId, sauceId, ingredientsIds);
+
+        return "redirect:/category";
+    }
 }

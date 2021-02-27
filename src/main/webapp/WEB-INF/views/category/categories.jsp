@@ -94,7 +94,6 @@
                 </svg>
                 <spring:message code="promotions.title"/></a></button>
         </div>
-        <h1>${user.id}</h1>
     </nav>
 </div>
 
@@ -247,7 +246,7 @@
                                     <form action="${pageContext.request.contextPath}/category/${category.name}/${product.name}"
                                           method="post">
                                         <input type="hidden" name="action" value="addToBasket">
-                                        <div class="card-body">
+                                        <div class="card-body" style=" min-height: 240px;">
                                             <h3 class="card-title">
                                                     <span id="pizzaName" style="margin-right: auto; margin-left: auto;">
                                                             ${product.name}
@@ -256,10 +255,9 @@
                                             <c:forEach var="ingredient" items="${product.ingredients}">
                                                 <span id="ingredientName">${ingredient.name}</span>
                                             </c:forEach>
-                                            <br/>
-                                            <br/>
+
                                             <select id="${product.id}" class="form-control"
-                                                    name="baseId">
+                                                    name="baseId" style="position: absolute; bottom:70px; width: 85%;">
                                                 <c:forEach var="base" items="${bases}">
                                                     <option value="${base.id}">${base.name}</option>
                                                 </c:forEach>

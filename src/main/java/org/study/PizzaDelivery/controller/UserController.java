@@ -37,7 +37,7 @@ public class UserController {
     @GetMapping
     public String account(@ModelAttribute User user, Model model) {
         model.addAttribute("userOrders", orderService.findOrdersByUserId(user.getId()));
-        return "user/cabinet";
+        return "user/ordersHistory";
     }
 
     @GetMapping("/basket")

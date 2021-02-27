@@ -19,4 +19,10 @@ public interface IngredientRepository extends CrudRepository<Ingredient, Short> 
     @Query(value = "SELECT * FROM INGREDIENT WHERE INGREDIENT_TYPE=?1",
             nativeQuery = true)
     List<Ingredient> findAllByType(String type);
+
+
+    @Transactional
+    @Query(value = "SELECT * FROM INGREDIENT ORDER BY INGREDIENT_TYPE",
+            nativeQuery = true)
+    List<Ingredient> findAllAndOrderByIngredientType();
 }

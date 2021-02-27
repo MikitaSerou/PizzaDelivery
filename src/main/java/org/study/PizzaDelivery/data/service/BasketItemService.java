@@ -7,12 +7,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.controller.UserController;
-import org.study.PizzaDelivery.data.model.Basket;
-import org.study.PizzaDelivery.data.model.BasketItem;
-import org.study.PizzaDelivery.data.model.Product;
-import org.study.PizzaDelivery.data.model.User;
+import org.study.PizzaDelivery.data.model.*;
 import org.study.PizzaDelivery.data.repository.BasketItemRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +21,9 @@ public class BasketItemService {
     @Autowired
     private BasketItemRepository basketItemRepository;
 
+    @Autowired
+    private IngredientService ingredientService;
+
 
     public List<BasketItem> getAllFromBasketByBasketId(Long basketId) {
         return basketItemRepository.findAllByBasketId(basketId);
@@ -30,19 +31,35 @@ public class BasketItemService {
 
 
     @Transactional
-    @Modifying
-    public void addItem(Basket basket, Product product,  String description ){
+    public void addItem(Basket basket, Product product, String description) {
         BasketItem item = new BasketItem(basket, product, product.getPrice(), description);
-        System.err.println("addItem save item to basket: " + item.toString());
         basketItemRepository.save(item);
-
     }
 
-    public void deleteItem(Long itemId){
+    @Transactional
+    public void addCustomItem(Basket basket, Product product, Short sauceId, short[] ingredientsIds) {
+        StringBuilder ingredientsDescription = new StringBuilder("Ингридиенты: ");
+        double customProductPrice = product.getCategory().getPrice() * product.getBase().getPriceMultiplier();
+
+        if (sauceId != (short) 0) {
+            ingredientsDescription.append(ingredientService.findById(sauceId).getName());
+            customProductPrice += ingredientService.findById(sauceId).getPrice();
+        }
+
+        for (short ingredientId : ingredientsIds) {
+            ingredientsDescription.append(", " + ingredientService.findById(ingredientId).getName());
+            customProductPrice += ingredientService.findById(ingredientId).getPrice();
+        }
+
+        ingredientsDescription.append(".");
+        BasketItem item = new BasketItem(basket, product, customProductPrice, ingredientsDescription.toString());
+        basketItemRepository.save(item);
+    }
+
+    public void deleteItem(Long itemId) {
         basketItemRepository.deleteByItemId(itemId);
 
     }
-
 
 
 }

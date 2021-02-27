@@ -53,6 +53,12 @@ public class ProductService {
         return productRepository.findByNameAndBaseId(productName, baseId);
     }
 
+    @Transactional
+    public Product findByCategoryNameAndBaseId(String productName, Short baseId) {
+        return productRepository.findByNameAndBaseId(productName, baseId);
+    }
+
+
     public void deleteById(Long id) {
         Product product = productRepository.findById(id).get();
         for (Ingredient i : product.getIngredients()) {
@@ -62,7 +68,6 @@ public class ProductService {
     }
 
     @Transactional
-    @Modifying
     public void addNewProductToCategory(String name, Category category, String description, short[] ingredientsId) {
 //TODO проверки на null
         if (!name.equals("")) {
@@ -94,7 +99,6 @@ public class ProductService {
     }
 
     @Transactional
-    @Modifying
     public void editProductFromCategory(String name, String newName, String description, short[] ingredientsId) {
 
         List<Product> products = productRepository.findAllByName(name);
@@ -109,10 +113,12 @@ public class ProductService {
                 }
                 logger.debug("Ingredients list from db by ID:[" + ingredients.toString() + "]");
                 product.setName(newName);
-                product.setDescription(description);
+                if (!description.equals("")) {
+                    product.setDescription(description);
+                }
                 product.setIngredients(ingredients);
-                    productRepository.save(product);
-                    logger.debug("Updated product in DB:[" + product.toString() + "]");
+                productRepository.save(product);
+                logger.debug("Updated product in DB:[" + product.toString() + "]");
             }
         } else {
             logger.error("Name of new product can not be empty");
@@ -149,7 +155,6 @@ public class ProductService {
     }
 
     @Transactional
-    @Modifying
     public void deleteAllVariablesOfProductByName(String productName) {
         logger.debug("Input parameter: name:" + productName + "]");
         if (productRepository.existsByName(productName)) {

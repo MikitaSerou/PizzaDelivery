@@ -119,6 +119,8 @@
 
                 <div class="card-body">
                     <h1 class="display-2"><spring:message code="constructor"/></h1>
+                    <img class="rounded" src='<spring:url value="/resources/images/constructor.png"/>'
+                         width="250px" height="250px" style="position: absolute; right:50px;"/>
                     <form action="${pageContext.request.contextPath}/constructor" method="post">
                         <div class="form-group">
                             <label class="formLable" for="base"><h2><spring:message code="choose.base"/></h2>
@@ -126,7 +128,7 @@
                             <select id="base" class="form-control" name="baseId" path="baseId"
                                     style="max-width: 50%">
                                 <c:forEach items="${bases}" var="base">
-                                    <option name="baseId" value=${base.id} data-capacity="${base.priceMultiplier*category.price}">${base.name}
+                                    <option name="baseId" value=${base.id} data-price="${base.priceMultiplier*category.price}">${base.name}
                                         (${base.priceMultiplier*category.price} <spring:message
                                                 code="currency"/>)
                                     </option>
@@ -135,29 +137,27 @@
                         </div>
                         <div class="form-group">
                             <label class="formLable" for="sauce"><h2><span>
-                                <img src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
+                                <img class="rounded" src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
                                      width="50px" height="50px"/>
                             </span><spring:message code="choose.sauce"/></h2></label>
-                            <select class="form-control" id="sauce" name="ingredients" path="ingredients"
+                            <select class="form-control" id="sauce" name="sauceId" path="ingredients"
                                     style="max-width: 50%" >
-                                <option data-capacity="0"><spring:message code="without.sauce"/></option>
+                                <option name="sauceId" value="0" data-price="0"><spring:message code="without.sauce"/></option>
                                 <c:forEach items="${sauces}" var="sauce">
-                                    <option id="sauceId" name="ingredients" value=${sauce.id} data-capacity="${sauce.price}">${sauce.name}&nbsp;
+                                    <option id="sauceId" name="sauceId" value=${sauce.id} data-price="${sauce.price}">${sauce.name}&nbsp;
                                         (${sauce.price} <spring:message code="currency"/>)
                                     </option>
                                 </c:forEach>
                             </select>
                         </div>
-                        <h2 class="formLable"><spring:message
-                                code="add.ingredients"/>:</h2>
+                        <h2 class="formLable"><spring:message code="add.ingredients"/>:</h2>
                         <table class="table" style="width: 100%; border-radius: 10px;">
                             <tr>
                                 <c:forEach var="ingredientType" items="${ingredientTypes}">
                                     <c:if test="${!ingredientType.toString().equals('Sauce')}">
                                         <td><h2 id="ingredientName" align="center"
                                                 style="font-size: 20px">
-                                                <span><img
-                                                        src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
+                                                <span><img class="rounded" src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
                                                         width="50px" height="50px"/></span><br/>
                                             <spring:message code="${ingredientType.toString()}"/></h2></td>
 
@@ -179,7 +179,7 @@
                                                                         <input type="checkbox"
                                                                                class="custom-control-input"
                                                                                id="${ingredient.id}"
-                                                                               name="ingredients"
+                                                                               name="ingredientsIds"
                                                                                value="${ingredient.id}"
                                                                                data-price="${ingredient.price}"
                                                                                style="text-align: center;">

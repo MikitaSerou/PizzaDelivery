@@ -100,7 +100,6 @@
                 </svg>
                 <spring:message code="promotions.title"/></a></button>
         </div>
-        <h1>${user.id}</h1>
     </nav>
 </div>
 

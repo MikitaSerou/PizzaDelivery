@@ -90,7 +90,6 @@
                 </svg>
                 <spring:message code="promotions.title"/></a></button>
         </div>
-        <h1>${user.id}</h1>
     </nav>
 </div>
 <div class="container" style="min-height: 80%">
@@ -101,7 +100,7 @@
                 <div class="row no-gutters">
                     <div class="col-md-4">
                         <img src='<spring:url value="/resources/images/userAvatar.png"/>'
-                             alt="User Avatar" class="img-thumbnail">
+                             alt="User Avatar" class="img-thumbnail" style="height: 100%; width: 100%;">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -141,12 +140,17 @@
 
                         </div>
                         <div class="col">
-                            <h2 align="right"><spring:message code="basket.sum"/>: ${basketSum}</h2>
+                            <h1 align="right"><spring:message code="basket.sum"/>: ${basketSum}</h1>
+                            <br/>
+                            <br/>
+                            <br/><br/>
+                            <br/>
+
                             <div class="btn-group btn-group-lg" role="group" aria-label="..."
                                  style="position: absolute; right: 2%; bottom: 10%">
                                 <a href="#editOrder">
-                                    <button class="btn btn-success btn-lg">
-                                        <h2><spring:message code="makeOrder.button"/></h2>
+                                    <button class="btn btn-warning btn-lg">
+                                        <p><spring:message code="makeOrder.button"/></p>
                                     </button>
                                 </a>
                                 <form action="${pageContext.request.contextPath}/user/basket"
@@ -155,7 +159,7 @@
                                     <input type="hidden" name="basketId" value="${basket.id}"/>
                                     <input type="hidden" name="action" value="clear"/>
                                     <button type="submit" class="btn btn-danger btn-lg">
-                                        <h2><spring:message code="clearBasket.button"/></h2>
+                                        <p><spring:message code="clearBasket.button"/></p>
                                     </button>
                                 </form>
                             </div>
@@ -165,7 +169,6 @@
                     <table class="table table-hover table-dark" border="1">
                         <thead>
                         <th><spring:message code="item"/></th>
-
                         <th><spring:message code="price"/></th>
                         <th><spring:message code="description"/></th>
                         <th><spring:message code="comment"/></th>
@@ -174,7 +177,7 @@
                         <c:forEach items="${basket.basketItems}" var="item">
                             <tr class="table-secondary" id="basketTable">
                                 <td width="10%">${item.product.name} ${item.product.base.name}</td>
-                                <td width="10%">${item.product.price}</td>
+                                <td width="10%">${item.price}</td>
                                 <td width="35%">${item.product.description}</td>
                                 <td width="38%">${item.description}</td>
                                 <td width="7%">

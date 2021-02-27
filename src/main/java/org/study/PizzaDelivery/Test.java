@@ -3,10 +3,7 @@ package org.study.PizzaDelivery;
 
 
 
-import com.google.cloud.translate.Translate;
-import com.google.cloud.translate.Translate.TranslateOption;
-import com.google.cloud.translate.TranslateOptions;
-import com.google.cloud.translate.Translation;
+
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.study.PizzaDelivery.config.DataServiceConfig;

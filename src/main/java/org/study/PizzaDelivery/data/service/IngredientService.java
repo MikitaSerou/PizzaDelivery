@@ -54,6 +54,8 @@ public class IngredientService {
 
     @Transactional
     public List<Ingredient> findAll(){
-        return ingredientRepository.findAll();
+        return ingredientRepository.findAllAndOrderByIngredientType();
     }
+
+
 }

@@ -31,10 +31,10 @@ public class OrderItemService {
     }
 
     public void addOrderItemsFromBasket(Basket basket, Order order) { //TODO добавляет по 3
-        System.err.println(basket.getBasketItems().toString());
+    //    System.err.println(basket.getBasketItems().toString());
         for (BasketItem basketItem :
                 basket.getBasketItems()) {
-            System.err.println("итерация");
+         //   System.err.println("итерация");
             OrderItem item = new OrderItem(order, basketItem.getProduct(),
                     basketItem.getPrice(), basketItem.getComment());
             orderItemRepository.save(item);

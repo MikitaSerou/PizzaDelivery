@@ -135,17 +135,17 @@
                         </div>
                         <div class="form-group">
                             <label class="formLable" for="formInput2"><h2><span>
-                                <img  src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
+                                <img class="rounded" src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
                                                                                           width="50px" height="50px"/>
                             </span><spring:message code="choose.sauce"/></h2></label>
-                            <select class="form-control" id="formInput2" name="ingredients" path="ingredients"
+                            <select class="form-control" id="formInput2" name="ingredientsIds" path="ingredients"
                                     style="max-width: 50%">
                                 <c:forEach items="${sauces}" var="sauce">
                                     <c:if test="${product.ingredients.contains(sauce)}">
-                                        <option name="ingredients" value=${sauce.id} selected>${sauce.name}</option>
+                                        <option name="ingredientsIds" value=${sauce.id} selected>${sauce.name}</option>
                                     </c:if>
                                     <c:if test="${!product.ingredients.contains(sauce)}">
-                                    <option name="ingredients" value=${sauce.id}>${sauce.name}</option>
+                                    <option name="ingredientsIds" value=${sauce.id}>${sauce.name}</option>
                                     </c:if>
                                 </c:forEach>
                             </select>
@@ -159,7 +159,7 @@
                                     <c:if test="${!ingredientType.toString().equals('Sauce')}">
                                         <td><h2 id="ingredientName" align="center"
                                                 style="font-size: 20px">
-                                                <span><img  src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
+                                                <span><img class="rounded" src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
                                                             width="50px" height="50px"/></span><br/>
                                             <spring:message code="${ingredientType.toString()}"/></h2></td>
                                     </c:if>
@@ -177,7 +177,7 @@
                                                                 <c:if test="${product.ingredients.contains(ingredient)}">
                                                                     <input type="checkbox" class="custom-control-input"
                                                                            id="${ingredient.id}"
-                                                                           name="ingredients" value="${ingredient.id}"
+                                                                           name="ingredientsIds" value="${ingredient.id}"
                                                                            checked>
                                                                     <label class="custom-control-label"
                                                                            for="${ingredient.id}">${ingredient.name}</label
@@ -185,7 +185,7 @@
                                                                 <c:if test="${!product.ingredients.contains(ingredient)}">
                                                                     <input type="checkbox" class="custom-control-input"
                                                                            id="${ingredient.id}"
-                                                                           name="ingredients" value="${ingredient.id}">
+                                                                           name="ingredientsIds" value="${ingredient.id}">
                                                                     <label class="custom-control-label"
                                                                            for="${ingredient.id}">
                                                                             ${ingredient.name}</label>

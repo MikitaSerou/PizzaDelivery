@@ -53,14 +53,14 @@ public class OrderService {
 
 
     public void addOrder(Basket basket, String phoneNumber, String comment, TypeOfPayment typeOfPayment) {
-        System.err.println("01Basket befor do order: " + basket.getBasketItems().toString());
+      //  System.err.println("01Basket befor do order: " + basket.getBasketItems().toString());
         User user = basket.getUser();
-        System.err.println("01Basket befor do order: " + basket.getBasketItems().toString());
+      //  System.err.println("01Basket befor do order: " + basket.getBasketItems().toString());
         double orderPrice = basketService.calculatePrice(basket.getId());
         Order order = new Order(user, phoneNumber, orderPrice, typeOfPayment, comment);
         orderRepository.save(order);
         //System.err.println(basketService.findById(basketId).getBasketItems().toString());
-        System.err.println("02Basket befor do order: " + basket.getBasketItems().toString());
+     //   System.err.println("02Basket befor do order: " + basket.getBasketItems().toString());
         orderItemService.addOrderItemsFromBasket(basket, order);
         basketService.clearBasket(basket);
     }
@@ -68,7 +68,7 @@ public class OrderService {
 
 
     public boolean cancelOrder(Long orderId) {
-        System.out.println("OS CANCEL");
+    //    System.out.println("OS CANCEL");
         Order order = orderRepository.findById(orderId).get();
         if (order.getStatus() == Status.CANCELED) {
             return false;
@@ -80,7 +80,7 @@ public class OrderService {
 
 
     public boolean paidUpOrder(Long orderId) {
-        System.out.println("OS PAID");
+     //   System.out.println("OS PAID");
         Order order = orderRepository.findById(orderId).get();
         if (order.getStatus() == Status.PAID) {
             return false;
@@ -91,7 +91,7 @@ public class OrderService {
     }
 
     public boolean setOrdernotPaidStatus(Long orderId) {
-        System.out.println("OS NOT PAID");
+      //  System.out.println("OS NOT PAID");
         Order order = orderRepository.findById(orderId).get();
         if (order.getStatus() == Status.NOT_PAID) {
             return false;

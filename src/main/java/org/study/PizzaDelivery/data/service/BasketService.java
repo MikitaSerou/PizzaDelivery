@@ -7,10 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.controller.UserController;
-import org.study.PizzaDelivery.data.model.Basket;
-import org.study.PizzaDelivery.data.model.BasketItem;
-import org.study.PizzaDelivery.data.model.Product;
-import org.study.PizzaDelivery.data.model.User;
+import org.study.PizzaDelivery.data.model.*;
 import org.study.PizzaDelivery.data.repository.BasketRepository;
 import org.study.PizzaDelivery.data.repository.UserRepository;
 
@@ -35,13 +32,14 @@ public class BasketService {
     private ProductService productService;
 
 
+
     public void saveBasket(User user) {
         basketRepository.save(new Basket(true, user));
     }
 
     @Transactional
     public Basket getActiveBasketByUserId(Long userId) {
-        System.err.println("getActiveBasketByUserId" + basketRepository.findByUserIdAndActiveIsTrue(userId).getBasketItems().toString());
+     //   System.err.println("getActiveBasketByUserId" + basketRepository.findByUserIdAndActiveIsTrue(userId).getBasketItems().toString());
         return basketRepository.findByUserIdAndActiveIsTrue(userId);
     }
 
@@ -57,7 +55,7 @@ public class BasketService {
 
     public Double calculatePrice(Long basketId) {
         List<BasketItem> items = basketItemService.getAllFromBasketByBasketId(basketId);
-        System.err.println("Items when calculate Price: " + items.toString());
+     //   System.err.println("Items when calculate Price: " + items.toString());
         return items.stream().mapToDouble(BasketItem::getPrice).sum();
     }
 
@@ -67,17 +65,28 @@ public class BasketService {
     }
 
     @Transactional
-    @Modifying
-    public void addProductToBasket(User user, String productName, String comment, Short baseId) {//TODO что-то тут мб
+    public void addProductToBasket(User user, String productName, String comment, Short baseId) {
         Basket userBasket = getActiveBasketByUserId(user.getId());
-        System.err.println("After get active User basket: " + userBasket.toString() + " items:" + userBasket.getBasketItems().toString());
+      //  System.err.println("After get active User basket: " + userBasket.toString() + " items:" + userBasket.getBasketItems().toString());
         Product product = productService.findByNameAndBaseId(productName, baseId);
-        System.err.println("Product to insert to active basket: " + product.toString());
+    //    System.err.println("Product to insert to active basket: " + product.toString());
         basketItemService.addItem(userBasket, product, comment);
-        System.err.println("addProductToBasket Aftes save item to basket" + userBasket.getBasketItems().toString());
+     //   System.err.println("addProductToBasket Aftes save item to basket" + userBasket.getBasketItems().toString());
         basketRepository.save(userBasket);
-        System.err.println("addProductToBasket Aftes save basket" + userBasket.getBasketItems().toString());
-        //
+    //    System.err.println("addProductToBasket Aftes save basket" + userBasket.getBasketItems().toString());
+    }
+
+
+    @Transactional
+    public void addCustomProductToBasket(User user, Short baseId, Short sauceId, short[] ingredientsIds) {
+        Basket userBasket = getActiveBasketByUserId(user.getId());
+
+        Product product = productService.findByNameAndBaseId("База", baseId);
+
+       basketItemService.addCustomItem(userBasket, product, sauceId, ingredientsIds);
+
+       // basketRepository.save(userBasket);
+
     }
 
 

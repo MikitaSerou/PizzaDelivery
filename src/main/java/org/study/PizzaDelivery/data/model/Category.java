@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Category {
+public class Category implements Comparable<Category>{
 
     private static final Logger logger = LogManager.getLogger(Category.class);
 
@@ -90,5 +90,15 @@ public class Category {
                 ", name='" + name +
                 ", price=" + price +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Category o) {
+
+        if (this.getPrice() < o.getPrice()) return -1;
+        if (this.getPrice()  > o.getPrice()) return 1;
+        return 0;
+
+       // return (int) this.price - o.getPrice();
     }
 }
