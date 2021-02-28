@@ -30,9 +30,11 @@ public class DataServiceConfig {
 
     @Bean
     public DataSource dataSource() {
+        String dataBaseUrl = env.getProperty("db.url.prefix")+getClass().getClassLoader().getResource("").getPath()
+                +env.getProperty("db.url.relative.path");
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(env.getProperty("db.driver"));
-        dataSource.setUrl(env.getProperty("db.url"));
+        dataSource.setUrl(dataBaseUrl);
         dataSource.setUsername(env.getProperty("db.user"));
         dataSource.setPassword(env.getProperty("db.password"));
 
