@@ -1,6 +1,5 @@
 package org.study.PizzaDelivery.config;
 
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -18,11 +17,13 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = {"org.study.PizzaDelivery.data"})
+@ComponentScan(basePackages = {"org.study.PizzaDelivery.model",
+        "org.study.PizzaDelivery.repository",
+        "org.study.PizzaDelivery.service"})
 @PropertySource({"classpath:application.properties"})
 @EnableTransactionManagement
-@EnableAspectJAutoProxy(proxyTargetClass = true) //maven dependency org.aspectj
-@EnableJpaRepositories(basePackages = "org.study.PizzaDelivery.data.repository")
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableJpaRepositories(basePackages = "org.study.PizzaDelivery.repository")
 public class DataServiceConfig {
 
     @Autowired
@@ -30,11 +31,9 @@ public class DataServiceConfig {
 
     @Bean
     public DataSource dataSource() {
-        String dataBaseUrl = env.getProperty("db.url.prefix")+getClass().getClassLoader().getResource("").getPath()
-                +env.getProperty("db.url.relative.path");
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(env.getProperty("db.driver"));
-        dataSource.setUrl(dataBaseUrl);
+        dataSource.setUrl(env.getProperty("db.url"));
         dataSource.setUsername(env.getProperty("db.user"));
         dataSource.setPassword(env.getProperty("db.password"));
 
@@ -48,7 +47,7 @@ public class DataServiceConfig {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("org.study.PizzaDelivery.data.model");
+        factory.setPackagesToScan("org.study.PizzaDelivery.model");
         factory.setDataSource(dataSource());
         factory.setJpaProperties(hibernateProperties());
 

@@ -245,7 +245,7 @@
                                     </div>
                                     <form action="${pageContext.request.contextPath}/category/${category.name}/${product.name}"
                                           method="post">
-                                        <input type="hidden" name="action" value="addToBasket">
+                                    <%--    <input type="hidden" name="action" value="addToBasket">--%>
                                         <div class="card-body" style=" min-height: 240px;">
                                             <h3 class="card-title">
                                                     <span id="pizzaName" style="margin-right: auto; margin-left: auto;">

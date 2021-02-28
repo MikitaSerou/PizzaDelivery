@@ -7,13 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.study.PizzaDelivery.data.enums.TypeOfPayment;
-import org.study.PizzaDelivery.data.model.Basket;
-import org.study.PizzaDelivery.data.model.User;
-import org.study.PizzaDelivery.data.service.BasketItemService;
-import org.study.PizzaDelivery.data.service.BasketService;
-import org.study.PizzaDelivery.data.service.OrderService;
-import org.study.PizzaDelivery.data.service.UserService;
+import org.study.PizzaDelivery.enums.TypeOfPayment;
+import org.study.PizzaDelivery.model.Basket;
+import org.study.PizzaDelivery.model.User;
+import org.study.PizzaDelivery.service.BasketItemService;
+import org.study.PizzaDelivery.service.BasketService;
+import org.study.PizzaDelivery.service.OrderService;
+import org.study.PizzaDelivery.service.UserService;
 
 @Controller
 @RequestMapping("/user")
@@ -34,52 +34,54 @@ public class UserController {
     @Autowired
     private BasketItemService basketItemService;
 
+
     @GetMapping
     public String account(@ModelAttribute User user, Model model) {
+        logger.info("GET request /user");
+
         model.addAttribute("userOrders", orderService.findOrdersByUserId(user.getId()));
+
         return "user/ordersHistory";
     }
 
     @GetMapping("/basket")
     @Transactional
     public String basket(@ModelAttribute User user, Model model) {
-        Basket basket =basketService.findActiveByUserID(user.getId());
+        logger.info("GET request /user/basket");
+
+        Basket basket = basketService.findActiveByUserID(user.getId());
         model.addAttribute("basket", basket);
-        System.err.println("basket when you wisit page: " + basket);
-        System.err.println("basketITEMS when you wisit page: " + basket.getBasketItems().toString());
         model.addAttribute("basketSum", basketService.calculatePrice(basket.getId()));
-        System.err.println("basketITEMS after calculate: " + basket.getBasketItems().toString());
         model.addAttribute("typesOfPayment", TypeOfPayment.values());
+
         return "user/basket";
     }
 
     @PostMapping("/basket")
     public String basketActivity(@ModelAttribute User user,
-                                 @RequestParam(required = true, defaultValue = "") Long basketId,
-                                 @RequestParam(required = true, defaultValue = "") Long itemId,
-                                 @RequestParam(required = true, defaultValue = "") String action,
-                                 @RequestParam(required = true, defaultValue = "") String comment,
-                                 @RequestParam(required = true, defaultValue = "") String phoneNumber,
-                                 @RequestParam(required = true, defaultValue = "") TypeOfPayment typeOfPayment,
+                                 @RequestParam(defaultValue = "") Long itemId,
+                                 @RequestParam(defaultValue = "") String action,
+                                 @RequestParam(defaultValue = "") String comment,
+                                 @RequestParam(defaultValue = "") String phoneNumber,
+                                 @RequestParam(defaultValue = "") TypeOfPayment typeOfPayment,
                                  Model model) {
+        logger.info("POST request /user/basket" +
+                "[user: " + user +
+                ", itemId: " + itemId +
+                ", phoneNumber: " + phoneNumber +
+                ", comment: " + comment +
+                ", typeOfPayment: " + typeOfPayment +
+                ", action: " + action + "]");
 
         if (action.equals("deleteItem")) {
-            System.out.println("DELETE ITEM");
             basketItemService.deleteItem(itemId);
         }
         if (action.equals("clear")) {
-            System.out.println("Clear basket: " + basketId);
-            basketService.clearBasket(basketService.getActiveBasketByUserId(user.getId()));
+            basketService.clearBasket(basketService.findActiveByUserID(user.getId()));
         }
         if (action.equals("submit")) {
-            Basket basket = basketService.getActiveBasketByUserId(user.getId());
-            System.err.println("Before submit: " + basketId +" "+ phoneNumber +" "+ comment  +" "+ typeOfPayment );
-            System.err.println("Before submit items: " +basket.getBasketItems().toString());//norm
-            //TODO тут все идет наперексяк. уже 3 айтема смотреть представление, возможно что-то в посте
-
-
-            orderService.addOrder(basket, phoneNumber, comment, typeOfPayment);
-        return "redirect:/user";
+            orderService.addOrder(user, phoneNumber, comment, typeOfPayment);
+            return "redirect:/user";
         }
 
         return "redirect:/user/basket";

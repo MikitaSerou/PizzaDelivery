@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.study.PizzaDelivery.data.enums.IngredientType;
-import org.study.PizzaDelivery.data.model.Category;
-import org.study.PizzaDelivery.data.model.Product;
-import org.study.PizzaDelivery.data.service.*;
+import org.study.PizzaDelivery.enums.IngredientType;
+import org.study.PizzaDelivery.model.Category;
+import org.study.PizzaDelivery.service.*;
+
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,7 +27,6 @@ public class AdminController {
     @Autowired
     private OrderService orderService;
 
-
     @Autowired
     private CategoryService categoryService;
 
@@ -39,36 +39,46 @@ public class AdminController {
 
     @GetMapping
     public String cabinet() {
+        logger.info("GET request /admin");
         return "admin/adminOffice";
     }
 
-
     @GetMapping("/users")
     public String userList(Model model) {
-        model.addAttribute("allUsers", userService.allUsers());
+        logger.info("GET request /users");
+
+        model.addAttribute("allUsers", userService.findAll());
+
         return "admin/users";
     }
 
     @PostMapping
     public String deleteUser(@RequestParam(defaultValue = "") Long userId,
                              @RequestParam(defaultValue = "") String action) {
-        if (action.equals("delete")) {
-            userService.deleteUser(userId);
-        }
+        logger.info("POST request /admin " +
+                "[userId: " + userId + "]");
+
+        userService.deleteUser(userId);
+
         return "redirect:/admin/users";
     }
 
 
     @GetMapping("/users/{userId}")
     public String showUser(@PathVariable("userId") Long userId, Model model) {
+        logger.info("GET request admin/users/" + userId);
+
         model.addAttribute("user", userService.findUserById(userId));
         model.addAttribute("userOrders", orderService.findOrdersByUserId(userId));
+
         return "admin/userOrders";
     }
 
     @GetMapping("/archive")
     public String showUser(Model model) {
-        Category archiveCategory = categoryService.findByName("Архив");//TODO поменять потом на англ
+        logger.info("GET request admin/archive/");
+
+        Category archiveCategory = categoryService.findByName("Архив");
         model.addAttribute("category", categoryService.findOne(archiveCategory.getId()));
         model.addAttribute("products", archiveCategory.getProducts());
 
@@ -79,6 +89,8 @@ public class AdminController {
     @GetMapping(value = "/{categoryName}/addProduct")
     public String addProduct(@PathVariable("categoryName") String categoryName,
                              Model model) {
+        logger.info("GET request admin/" + categoryName + "/addProduct");
+
         model.addAttribute("category", categoryService.findByName(categoryName));
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("ingredients", ingredientService.findAll());
@@ -88,15 +100,21 @@ public class AdminController {
         model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
         model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
         model.addAttribute("ingredientTypes", IngredientType.values());
+
         return "admin/addProduct";
     }
 
     @PostMapping(value = "/{categoryName}/addProduct")
     public String addProductPage(@PathVariable("categoryName") String categoryName,
-                                 @RequestParam(required = true, defaultValue = "") String productName,
-                                 @RequestParam(required = true, defaultValue = "") String description,
-                                 @RequestParam(required = true, defaultValue = "") short[] ingredientsIds,
+                                 @RequestParam(defaultValue = "") String productName,
+                                 @RequestParam(defaultValue = "") String description,
+                                 @RequestParam(defaultValue = "") short[] ingredientsIds,
                                  Model model) {
+        logger.info("POST request admin/" + categoryName + "/addProduct " +
+                "[categoryName: " + categoryName +
+                ", productName: " + productName +
+                ", description: " + description +
+                ", ingredientsIds: " + Arrays.toString(ingredientsIds) + "]");
 
         productService.addNewProductToCategory(productName, categoryService.findByName(categoryName), description, ingredientsIds);
 
@@ -106,10 +124,9 @@ public class AdminController {
 
     @GetMapping("/edit/{productName}")
     public String showUser(@PathVariable("productName") String productName, Model model) {
-        Product product = productService.findDistinctTopByName(productName);
-        System.err.println(product.getIngredients());
+        logger.info("GET request admin/edit/" + productName);
+
         model.addAttribute("product", productService.findDistinctTopByName(productName));
-       // model.addAttribute("productIngredients", product.getIngredients());
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("ingredients", ingredientService.findAll());
         model.addAttribute("sauces", ingredientService.findByType(IngredientType.SAUCE));
@@ -118,15 +135,22 @@ public class AdminController {
         model.addAttribute("seafood", ingredientService.findByType(IngredientType.SEAFOOD));
         model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
         model.addAttribute("ingredientTypes", IngredientType.values());
+
         return "admin/editProduct";
     }
 
     @PostMapping(value = "/edit/{productName}")
     public String editProductPage(@PathVariable("productName") String productName,
-                                 @RequestParam(defaultValue = "") String newName,
-                                 @RequestParam(defaultValue = "") String description,
-                                 @RequestParam(defaultValue = "") short[] ingredientsIds,
-                                 Model model) {
+                                  @RequestParam(defaultValue = "") String newName,
+                                  @RequestParam(defaultValue = "") String description,
+                                  @RequestParam(defaultValue = "") short[] ingredientsIds,
+                                  Model model) {
+        logger.info("POST request admin/edit/" + productName +
+                "[productName: " + productName +
+                ", newName: " + newName +
+                ", description: " + description +
+                ", ingredientsIds: " + Arrays.toString(ingredientsIds) + "]");
+
         productService.editProductFromCategory(productName, newName, description, ingredientsIds);
 
         return "redirect:/category";
@@ -135,24 +159,29 @@ public class AdminController {
 
     @GetMapping("/orders")
     public String activeOrdersList(Model model) {
+        logger.info("GET request admin/orders");
+
         model.addAttribute("activeOrders", orderService.findNotPaidOrders());
+
         return "admin/orders";
     }
 
     @PostMapping("/orders")
-    public String changeOrderStatus(@RequestParam(required = true, defaultValue = "") Long orderId,
-                                    @RequestParam(required = true, defaultValue = "") String action,
+    public String changeOrderStatus(@RequestParam(defaultValue = "") Long orderId,
+                                    @RequestParam(defaultValue = "") String action,
                                     Model model) {
+        logger.info("POST request admin/orders/" +
+                "[orderId: " + orderId +
+                ", action: " + action + "]");
+
         if (action.equals("cancel")) {
             orderService.cancelOrder(orderId);
         }
-
         if (action.equals("paidUp")) {
             orderService.paidUpOrder(orderId);
         }
-
         if (action.equals("notPaid")) {
-            orderService.setOrdernotPaidStatus(orderId);
+            orderService.setOrderNotPaidStatus(orderId);
         }
 
         return "redirect:/admin/orders";
@@ -160,18 +189,27 @@ public class AdminController {
 
     @GetMapping("/ingredients")
     public String ingredientsList(Model model) {
+        logger.info("GET request admin/ingredients");
+
         model.addAttribute("ingredients", ingredientService.findAll());
         model.addAttribute("types", IngredientType.values());
+
         return "admin/ingredients";
     }
 
     @PostMapping("/ingredients")
-    public String ingredients(@RequestParam(required = true, defaultValue = "") Short ingredientId,
-                              @RequestParam(required = true, defaultValue = "") String ingredientName,
-                              @RequestParam(required = true, defaultValue = "") Double ingredientPrice,
-                              @RequestParam(required = true, defaultValue = "") IngredientType ingredientType,
-                              @RequestParam(required = true, defaultValue = "") String action,
+    public String ingredients(@RequestParam(defaultValue = "") Short ingredientId,
+                              @RequestParam(defaultValue = "") String ingredientName,
+                              @RequestParam(defaultValue = "") Double ingredientPrice,
+                              @RequestParam(defaultValue = "") IngredientType ingredientType,
+                              @RequestParam(defaultValue = "") String action,
                               Model model) {
+        logger.info("POST request admin/ingredients/" +
+                "[ingredientId: " + ingredientId +
+                ", ingredientName: " + ingredientName +
+                ", ingredientPrice: " + ingredientPrice +
+                ", ingredientType: " + ingredientType +
+                ", action: " + action + "]");
 
         if (action.equals("delete")) {
             ingredientService.deleteIngredient(ingredientId);

@@ -161,7 +161,7 @@
 
                         <form action="${pageContext.request.contextPath}/admin" method="post">
                             <input type="hidden" name="userId" value="${user.id}"/>
-                            <input type="hidden" name="action" value="delete"/>
+                            <%--<input type="hidden" name="action" value="delete"/>--%>
                             <button type="submit" class="btn btn-danger"><spring:message code="delete.button"/></button>
                         </form>
                     </td>

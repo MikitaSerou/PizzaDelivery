@@ -1,9 +1,5 @@
 package org.study.PizzaDelivery.controller;
 
-
-
-
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +7,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.study.PizzaDelivery.data.enums.IngredientType;
-import org.study.PizzaDelivery.data.model.User;
-import org.study.PizzaDelivery.data.service.*;
+import org.study.PizzaDelivery.enums.IngredientType;
+import org.study.PizzaDelivery.model.User;
+import org.study.PizzaDelivery.service.*;
 
 import javax.servlet.http.HttpSession;
-
-
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/")
@@ -42,10 +37,10 @@ public class MainController {
     private BaseService baseService;
 
 
-
     @GetMapping("/")
-    public String mainPage(HttpSession session){
-        logger.info("Main controller");
+    public String mainPage(HttpSession session) {
+        logger.info("GET request /");
+
         logger.info("User in HttpSession: " + session.getAttribute("user"));
         if (session.getAttribute("user") == null) {
             if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) {
@@ -53,16 +48,19 @@ public class MainController {
                 String name = SecurityContextHolder.getContext().getAuthentication().getName();
                 User user = userService.findByName(name);
                 session.setAttribute("user", user);
-               if (session.getAttribute("user")!=null){
-                   logger.info("Set User in session: " + user.toString());
-               }
+                if (session.getAttribute("user") != null) {
+                    logger.info("Set User in session: " + user.toString());
+                }
             }
         }
+
         return "index";
     }
 
     @GetMapping("/constructor")
-    public String constructor(Model model){
+    public String constructor(Model model) {
+        logger.info("GET request /constructor");
+
         model.addAttribute("category", categoryService.findByName("Своя"));
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("ingredients", ingredientService.findAll());
@@ -77,10 +75,16 @@ public class MainController {
 
     @PostMapping(value = "/constructor")
     public String editProductPage(@ModelAttribute User user,
-                                  @RequestParam(defaultValue ="") Short baseId,
-                                  @RequestParam(defaultValue ="") Short sauceId,
+                                  @RequestParam(defaultValue = "") Short baseId,
+                                  @RequestParam(defaultValue = "0") Short sauceId,
                                   @RequestParam(defaultValue = "") short[] ingredientsIds,
                                   Model model) {
+        logger.info("POST request /constructor" +
+                "[user: " + user +
+                ", baseId: " + baseId +
+                ", sauceId: " + sauceId +
+                ", ingredientsIds: " + Arrays.toString(ingredientsIds) + "]");
+
         basketService.addCustomProductToBasket(user, baseId, sauceId, ingredientsIds);
 
         return "redirect:/category";

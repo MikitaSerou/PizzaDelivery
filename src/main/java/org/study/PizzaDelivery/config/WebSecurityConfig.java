@@ -14,11 +14,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 @Configuration
 @EnableWebSecurity
 @PropertySource({"classpath:application.properties"})
-//@ComponentScan(basePackages = {"org.study.PizzaDelivery.data.service"})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -33,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception { //TODO не забыть расставить доступ повсем представлениям
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf()
                 .disable()
@@ -43,9 +41,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Only for ADMIN role:
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 //Access for user:
-                .antMatchers("/promotions", "/user/**").hasRole("USER")
+                .antMatchers("/promotions", "/user/**", "/constructor").hasRole("USER")
                 //Access for all:
-                .antMatchers("/","/promotions", "/resources/**", "/category/**", "/login").permitAll()
+                .antMatchers("/", "/promotions", "/resources/**", "/category/**", "/login").permitAll()
                 //All other pages require authentication:
                 .anyRequest().authenticated()
                 .and()
@@ -56,19 +54,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout().deleteCookies("JSESSIONID")
-                .deleteCookies("org.springframework.web.servlet.theme.CookieThemeResolver.THEME")
                 .clearAuthentication(true)
                 .permitAll()
                 .logoutSuccessUrl("/")
                 .and()
-                .rememberMe().key("uniqueAndSecret");//TODO мб переделать под ДБ токен
-
+                .rememberMe().key("uniqueAndSecret");
     }
 
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-        //Default admin/user in memory
+        //Default admin in memory
         auth.inMemoryAuthentication().withUser(env.getProperty("admin.login"))
                 .password(passwordEncoder().encode(env.getProperty("admin.password"))).roles("ADMIN")
                 .and().withUser("Nikita").password(passwordEncoder().encode("Fesuso78")).roles("USER");

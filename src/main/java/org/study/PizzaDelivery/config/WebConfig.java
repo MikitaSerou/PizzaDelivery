@@ -91,7 +91,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public ThemeResolver themeResolver() {
-      //  CookieThemeResolver resolver = new CookieThemeResolver();
         SessionThemeResolver resolver = new SessionThemeResolver();
         resolver.setDefaultThemeName("dark");
 

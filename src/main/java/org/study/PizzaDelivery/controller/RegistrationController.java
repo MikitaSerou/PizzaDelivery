@@ -10,8 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.study.PizzaDelivery.data.model.User;
-import org.study.PizzaDelivery.data.service.UserService;
+import org.study.PizzaDelivery.model.User;
+import org.study.PizzaDelivery.service.UserService;
 
 @Controller
 public class RegistrationController {
@@ -23,7 +23,9 @@ public class RegistrationController {
 
 
     @GetMapping("/registration")
-    public String registration(Model model){
+    public String registration(Model model) {
+        logger.info("GET request /registration");
+
         model.addAttribute("userForm", new User());
 
         return "registration";
@@ -31,16 +33,18 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("userForm") @Valid User userForm,
-                          BindingResult bindingResult, Model model){
+                          BindingResult bindingResult, Model model) {
+        logger.info("POST request /registration" +
+                "[userForm: " + userForm + "]");
 
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "registration";
         }
-        if (!userForm.getPassword().equals(userForm.getPasswordConfirm())){
+        if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
             model.addAttribute("passwordError", "Passwords not match");
             return "registration";
         }
-        if (!userService.saveUser(userForm)){
+        if (!userService.saveUser(userForm)) {
             model.addAttribute("usernameError", "User with this name is already exist");
             return "registration";
         }

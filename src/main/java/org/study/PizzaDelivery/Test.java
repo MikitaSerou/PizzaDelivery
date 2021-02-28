@@ -7,10 +7,8 @@ package org.study.PizzaDelivery;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.study.PizzaDelivery.config.DataServiceConfig;
-import org.study.PizzaDelivery.data.enums.IngredientType;
-import org.study.PizzaDelivery.data.model.*;
-import org.study.PizzaDelivery.data.repository.*;
-import org.study.PizzaDelivery.data.service.*;
+import org.study.PizzaDelivery.repository.*;
+import org.study.PizzaDelivery.service.*;
 
 
 public class Test {
@@ -46,7 +44,9 @@ BasketRepository baskr = context.getBean("basketRepository", BasketRepository.cl
         BasketService baskS = context.getBean("basketService", BasketService.class);
         BasketItemRepository bir  = context.getBean("basketItemRepository", BasketItemRepository.class);
         BasketItemService bis = context.getBean("basketItemService", BasketItemService.class);
-/*        Category c = cr.findById((short) 2);
+        System.out.println(is.findById((short) 1));
+
+        /*        Category c = cr.findById((short) 2);
         c.setPrice(15.0);
 cr.save(c);
 

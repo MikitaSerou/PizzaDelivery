@@ -1,16 +1,14 @@
 package org.study.PizzaDelivery.controller;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.study.PizzaDelivery.data.enums.IngredientType;
-import org.study.PizzaDelivery.data.model.User;
-import org.study.PizzaDelivery.data.service.*;
-
+import org.study.PizzaDelivery.enums.IngredientType;
+import org.study.PizzaDelivery.model.User;
+import org.study.PizzaDelivery.service.*;
 
 @Controller
 @RequestMapping("/category")
@@ -37,7 +35,9 @@ public class CategoryController {
 
     @GetMapping
     public String categoryList(Model model) {
-        model.addAttribute("customCategory",  categoryService.findByName("Своя"));
+        logger.info("GET request /category");
+
+        model.addAttribute("customCategory", categoryService.findByName("Своя"));
         model.addAttribute("categories", categoryService.getAllStandardCategories());
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("cheapestProducts", productService.findAllByBase(baseService.findCheapest()));
@@ -49,6 +49,8 @@ public class CategoryController {
     public String show(@PathVariable("categoryName") String categoryName,
                        @PathVariable("productName") String productName,
                        Model model) {
+        logger.info("GET request /category/" + categoryName + "/" + productName);
+
         model.addAttribute("category", categoryService.findByName(categoryName));
         model.addAttribute("product", productService.findDistinctTopByName(productName));
         model.addAttribute("ingredients", ingredientService.findAll());
@@ -60,7 +62,6 @@ public class CategoryController {
         model.addAttribute("vegetables", ingredientService.findByType(IngredientType.VEGETABLE));
         model.addAttribute("ingredientTypes", IngredientType.values());
 
-
         return "category/product";
     }
 
@@ -70,29 +71,32 @@ public class CategoryController {
                                    @ModelAttribute User user,
                                    @RequestParam(defaultValue = "") String comment,
                                    @RequestParam(defaultValue = "") Short baseId,
-                                   @RequestParam(defaultValue = "") String action,
-                                   Model model) {//TODO проверки на введенные null
+                                   Model model) {
+        logger.info("POST request /category/" + categoryName + "/" + productName +
+                "[categoryName: " + categoryName +
+                ", productName: " + productName +
+                ", user: " + user +
+                ", comment: " + comment +
+                ", baseId: " + baseId + "]");
 
-        if (action.equals("addToBasket")) {
-            logger.info("Add to basket request: " + productName + user.getId() + baseId);
-            System.err.println("Add to basket request: " + productName + "userId: " +  user.getId()+ "base.id: " + baseId + "baseName: " + baseService.findById(baseId) + "comment: " + comment);
-            basketService.addProductToBasket(user, productName, comment, baseId);
-        }
-
-        if(action.equals("edit")){
-            logger.info("Edit request: " + categoryName + " " + productName + " " + comment+ " " + action);
-        }
+        basketService.addProductToBasket(user, productName, comment, baseId);
 
         return "redirect:/category";
     }
 
     @PostMapping
-    public String ingredients(@RequestParam(required = true, defaultValue = "") Short categoryId,
-                              @RequestParam(required = true, defaultValue = "") String categoryName,
-                              @RequestParam(required = true, defaultValue = "") String productName,
-                              @RequestParam(required = true, defaultValue = "") Double categoryPrice,
-                              @RequestParam(required = true, defaultValue = "") String action,
+    public String ingredients(@RequestParam(defaultValue = "") Short categoryId,
+                              @RequestParam(defaultValue = "") String categoryName,
+                              @RequestParam(defaultValue = "") String productName,
+                              @RequestParam(defaultValue = "") Double categoryPrice,
+                              @RequestParam(defaultValue = "") String action,
                               Model model) {
+        logger.info("POST request /category/" +
+                "[categoryId: " + categoryId +
+                ", categoryName: " + categoryName +
+                ", productName: " + productName +
+                ", categoryPrice: " + categoryPrice +
+                ", action: " + action + "]");
 
         if (action.equals("delete")) {
             categoryService.deleteCategory(categoryId);
@@ -101,12 +105,10 @@ public class CategoryController {
             categoryService.addCategory(categoryName, categoryPrice);
         }
         if (action.equals("edit")) {
-            System.out.println("EDIT");
             categoryService.editCategory(categoryId, categoryName, categoryPrice);
         }
-        if (action.equals("deleteProduct")) { //TODO не работает
-            System.err.println(productName + "deleteAss");
-            productService.deleteAllVariablesOfProductByName(productName);
+        if (action.equals("deleteProduct")) {
+            productService.archiveAllVariablesOfProductByName(productName);
         }
 
         return "redirect:/category";
