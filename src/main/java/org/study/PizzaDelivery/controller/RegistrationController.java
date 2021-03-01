@@ -1,6 +1,6 @@
 package org.study.PizzaDelivery.controller;
 
-import jakarta.validation.Valid;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.study.PizzaDelivery.model.User;
 import org.study.PizzaDelivery.service.UserService;
+
+import javax.validation.Valid;
 
 @Controller
 public class RegistrationController {
@@ -38,6 +40,7 @@ public class RegistrationController {
                 "[userForm: " + userForm + "]");
 
         if (bindingResult.hasErrors()) {
+            logger.error("Errors in form \"userForm\"");
             return "registration";
         }
         if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {

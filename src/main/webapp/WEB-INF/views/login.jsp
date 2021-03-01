@@ -106,7 +106,7 @@
         <div class="col-sm"></div>
         <div class="col-sm-6" style="backdrop-filter: blur(7px); border-radius: 30px">
             <h1 align="center"><spring:message code="office.entrance.page"/></h1>
-            <form method="POST" action="/login" class="field">
+            <form method="POST" action="/login" class="field" modelAttribute="userForm"modelAttribute="loginForm">
                 <div class="form-group">
                     <label for="formGroupExampleInput"><spring:message code="username"/></label>
                     <input type="text" class="form-control" name="username" id="formGroupExampleInput"

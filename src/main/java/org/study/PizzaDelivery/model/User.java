@@ -1,13 +1,15 @@
 package org.study.PizzaDelivery.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -24,24 +26,32 @@ public class User implements UserDetails {
     private long id;
 
     @Column(name = "user_name", nullable = false)
-    @Size(min = 2, message = "Не меньше 5 знаков")
+    @NotEmpty(message = "{user.username.empty}")
+    @Size(min = 3, max =30, message = "{user.username.size}")
     private String username;
 
     @Column(name = "user_password", nullable = false)
-    @Size(min = 2, message = "Не меньше 5 знаков")
+    @NotEmpty(message = "{user.password.empty}")
+    @Size(min = 8, message = "{user.password.size}")
     private String password;
 
     @Column(name = "e_mail", nullable = false)
-    @Email
+    @Email(message = "{user.email.invalid}")
+    @NotEmpty(message = "{user.email.empty}")
     private String mail;
 
     @Column(name = "phone_number")
+    @NotEmpty(message = "{user.phoneNumber.empty}")
+    @Pattern(regexp="^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$",
+            message="{user.phoneNumber.pattern}")
     private String phoneNumber;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Basket> baskets;
 
     @Transient
+    @NotEmpty(message = "{user.passwordConfirm.empty}")
+    @Size(min = 8, message = "{user.passwordConfirm.size}")
     private String passwordConfirm;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -54,17 +64,17 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(@Size(min = 5, message = "Не меньше 5 знаков") String username,
-                @Size(min = 5, message = "Не меньше 5 знаков") String password,
+    public User(String username,
+                String password,
                 Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
     }
 
-    public User(@Size(min = 2, message = "Не меньше 5 знаков") String username,
-                @Size(min = 2, message = "Не меньше 5 знаков") String password,
-                @Email String mail,
+    public User(String username,
+                String password,
+                String mail,
                 String phoneNumber,
                 Set<Role> roles) {
         this.username = username;

@@ -13,6 +13,8 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.ui.context.ThemeSource;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.config.annotation.*;
@@ -58,7 +60,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
         registry.addViewController("/promotions").setViewName("promotions");
     }
 
@@ -71,6 +72,14 @@ public class WebConfig implements WebMvcConfigurer {
         messageSource.setDefaultEncoding("UTF-8");
 
         return messageSource;
+    }
+
+    @Override
+    public Validator getValidator() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.setValidationMessageSource(messageSource());
+
+        return validator;
     }
 
     @Bean

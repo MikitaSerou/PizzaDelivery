@@ -108,37 +108,46 @@
         <div class="col-sm"></div>
         <div class="col-sm-6" style="backdrop-filter: blur(7px); border-radius: 30px">
             <h1 align="center"><spring:message code="signUp.entrance.page"/></h1>
-            <form method="POST" modelAttribute="userForm">
+            <form:form action="/registration" method="post" modelAttribute="userForm">
                 <div class="form-group">
                     <label for="formGroupExampleInput"><spring:message code="username"/></label>
-                    <input type="text" class="form-control" name="username" id="formGroupExampleInput"
-                           placeholder="<spring:message code="username"/>" path="username">
+                    <spring:message code="username" var="username"/>
+                    <form:input type="text" class="form-control" name="username" id="formGroupExampleInput"
+                           placeholder='${username}' path="username"/>
+                    <form:errors path="username" cssClass="error" />
                 </div>
 
                 <div class="form-group">
                     <label for="formGroupExampleInput"><spring:message code="eMail"/></label>
-                    <input type="text" class="form-control" name="mail" id="formGroupExampleInput2"
-                           placeholder="<spring:message code="eMail"/>" path="mail">
+                    <spring:message code="eMail" var="eMail"/>
+                    <form:input type="text" class="form-control" name="mail" id="formGroupExampleInput2"
+                           placeholder='${eMail}' path="mail"/>
+                    <form:errors path="mail" cssClass="error" />
                 </div>
 
                 <div class="form-group">
                     <label for="formGroupExampleInput"><spring:message code="phoneNumber"/></label>
-                    <input type="text" class="form-control" name="phoneNumber" id="formGroupExampleInput3"
-                           placeholder="<spring:message code="phoneNumber"/>" path="phoneNumber">
+                    <spring:message code="phoneNumber" var="phoneNumber" />
+                    <form:input type="text" class="form-control" name="phoneNumber" id="formGroupExampleInput3"
+                           placeholder='${phoneNumber}' path="phoneNumber"/>
+                    <form:errors path="phoneNumber" cssClass="error" />
                 </div>
 
                 <div class="form-group">
                     <label for="formGroupExampleInput2"><spring:message code="password"/></label>
-                    <input type="password" path="password" name="password" class="form-control"
+                    <spring:message code="password" var="password"/>
+                    <form:input type="password" path="password" name="password" class="form-control"
                            id="formGroupExampleInput4"
-                           placeholder="<spring:message code="passwordConfirm"/>">
+                           placeholder='${password}'/>
+                    <form:errors path="password" cssClass="error" />
                 </div>
                 <div class="form-group">
                     <label for="formGroupExampleInput3"><spring:message code="passwordConfirm"/></label>
-                    <input type="password" path="passwordConfirm" name="passwordConfirm" class="form-control"
+                    <spring:message code="passwordConfirm" var="passwordConfirm"/>
+                    <form:input type="password" path="passwordConfirm" name="passwordConfirm" class="form-control"
                            id="formGroupExampleInput5"
-                           placeholder="<spring:message code="passwordConfirm"/>">
-                    <form:errors path="password">${passwordError}</form:errors>
+                           placeholder='${passwordConfirm}'/>
+                    <form:errors path="passwordConfirm" cssClass="error" />
                 </div>
                 <div class="row justify-content-md-center">
                     <br/>
@@ -154,7 +163,7 @@
                     </button>
                 </div>
                 <br/>
-            </form>
+            </form:form>
         </div>
         <div class="col-sm"></div>
     </div>

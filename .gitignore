@@ -25,3 +25,4 @@ hs_err_pid*
 /target/
 /.idea/
 /PizzaDb/PizzaDb.trace.db/
+/src/main/webapp/resources/css/щдв/

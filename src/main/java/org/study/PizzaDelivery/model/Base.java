@@ -1,6 +1,6 @@
 package org.study.PizzaDelivery.model;
 
-import jakarta.validation.constraints.Size;
+
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,7 +17,7 @@ public class Base {
     private String name;
 
     @Column(name = "price_multiplier", nullable = false)
-    @Size(min = 1, max = 2, message = "Only 1-2")
+
     private Double priceMultiplier;
 
     @OneToMany(mappedBy = "base", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
