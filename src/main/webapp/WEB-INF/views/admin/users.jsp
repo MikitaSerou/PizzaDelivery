@@ -11,6 +11,12 @@
     <title><spring:message code="user.table"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
+
+    <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<c:url value="/resources/js/userSearch.js" />"></script>
 </head>
 
 <body id="bodyDefault">
@@ -80,6 +86,11 @@
                 </svg>
                 <spring:message code="promotions.title"/></a></button>
         </div>
+        <form class="form-inline my-2 my-lg-0" style="position:absolute; right:0;">
+            <input id="inputsearchquery" class="form-control mr-sm-2" type="number"
+                   placeholder='<spring:message code="user.search.by.id"/>'>
+            <button class="btn btn-secondary my-2 my-sm-0" onclick="mysearch()"><spring:message code="search"/></button>
+        </form>
     </nav>
 </div>
 
@@ -110,7 +121,7 @@
                                  class="bi bi-person" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                             </svg>
-                            ADMIN <%--УБРАТЬ--%>
+                            <spring:message code="admin"/>
                         </h4>
                         <div class="list-group">
                             <a href="/admin" class="list-group-item list-group-item-action">
@@ -135,8 +146,6 @@
                 </div>
             </section>
         </div>
-        <form>
-        </form>
         <table class="table table-hover table-dark" border="1">
             <thead class="table-primary">
             <th>ID</th>
@@ -161,7 +170,6 @@
 
                         <form action="${pageContext.request.contextPath}/admin" method="post">
                             <input type="hidden" name="userId" value="${user.id}"/>
-                            <%--<input type="hidden" name="action" value="delete"/>--%>
                             <button type="submit" class="btn btn-danger"><spring:message code="delete.button"/></button>
                         </form>
                     </td>

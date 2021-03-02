@@ -33,6 +33,7 @@ public class ProductService {
     @Autowired
     private IngredientService ingredientService;
 
+    @Transactional
     public Product findDistinctTopByName(String productName) {
         logger.info("Call method: findDistinctTopByName(productName: " + productName + ")");
 
@@ -128,12 +129,12 @@ public class ProductService {
         return productRepository.findDistinctNamesByCategoryId(categoryId);
     }
 
+    @Transactional
     public Iterable<Product> findAll() {
         logger.info("Call method: findAll()");
 
         return productRepository.findAll();
     }
-
 
     @Transactional
     public void archiveAllVariablesOfProductByName(String productName) {

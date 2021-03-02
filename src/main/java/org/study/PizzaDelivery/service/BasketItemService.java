@@ -23,6 +23,7 @@ public class BasketItemService {
     private IngredientService ingredientService;
 
 
+    @Transactional
     public List<BasketItem> getAllFromBasketByBasketId(Long basketId) {
         logger.info("Call method: getAllFromBasketByBasketId(basketId:" + basketId + ")");
         List<BasketItem> items = basketItemRepository.findAllByBasketId(basketId);

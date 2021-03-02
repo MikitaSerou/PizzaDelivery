@@ -20,6 +20,7 @@ public class BaseService {
     private BaseRepository baseRepository;
 
 
+    @Transactional
     public Base findById(short id) {
         logger.info("Call method: findById(id:" + id + ")");
         Base base = baseRepository.findById(id);
@@ -39,6 +40,7 @@ public class BaseService {
         return baseRepository.findAll();
     }
 
+    @Transactional
     public Base findCheapest() {
         logger.info("Call method: findAll()");
         Base base = baseRepository.findTopOrderByPriceAsc();

@@ -51,6 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 //Redirect to main page after successful sign in:
                 .defaultSuccessUrl("/")
+                .failureUrl("/login?error")
+               // .failureHandler(authenticationFailureHandler())
+
+
                 .permitAll()
                 .and()
                 .logout().deleteCookies("JSESSIONID")

@@ -3,6 +3,7 @@ package org.study.PizzaDelivery.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,19 +19,11 @@ public class LoginController {
 
     private static final Logger logger = LogManager.getLogger(LoginController.class);
     @GetMapping
-    public String getPage() {
+    public String getPage(Model model) {
         logger.info("GET request /login");
+        model.addAttribute("loginForm", new User());
         return "login";
     }
 
-    @PostMapping
-    public String login(@ModelAttribute("loginForm") @Valid User loginForm,
-                        BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "login";
-        }
-        logger.info("POST request /registration" +
-                "[loginForm: " + loginForm + "]");
-        return "redirect:/";
-    }
+
 }

@@ -15,6 +15,11 @@
     <title>${category.name}&nbsp;<spring:message code="add.product"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
+    <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<c:url value="/resources/js/userSearch.js" />"></script>
 </head>
 
 <body id="bodyDefault">
@@ -93,6 +98,11 @@
                 </svg>
                 <spring:message code="promotions.title"/></a></button>
         </div>
+            <form class="form-inline my-2 my-lg-0" style="position:absolute; right:0;">
+                <input id="inputsearchquery" class="form-control mr-sm-2" type="number"
+                       placeholder='<spring:message code="user.search.by.id"/>'>
+                <button class="btn btn-secondary my-2 my-sm-0" onclick="mysearch()"><spring:message code="search"/></button>
+            </form>
     </nav>
 </div>
 
