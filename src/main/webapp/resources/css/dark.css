@@ -15,6 +15,12 @@ html {
     width: 100%;
     min-width: 100%;
 }
+.error {
+    color: white;
+    font-weight: bold;
+    background-color: #ec4844;
+    border-radius: 4px;
+}
 
 #productCard{
     background-color: rgba(39,43,48,0.9);

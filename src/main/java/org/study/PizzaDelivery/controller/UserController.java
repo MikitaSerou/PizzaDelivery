@@ -13,7 +13,9 @@ import org.study.PizzaDelivery.model.User;
 import org.study.PizzaDelivery.service.BasketItemService;
 import org.study.PizzaDelivery.service.BasketService;
 import org.study.PizzaDelivery.service.OrderService;
-import org.study.PizzaDelivery.service.UserService;
+import org.study.PizzaDelivery.utils.Formatter;
+
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/user")
@@ -23,9 +25,6 @@ public class UserController {
     private static final Logger logger = LogManager.getLogger(UserController.class);
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private OrderService orderService;
 
     @Autowired
@@ -33,6 +32,9 @@ public class UserController {
 
     @Autowired
     private BasketItemService basketItemService;
+
+    @Autowired
+    private Formatter formatter;
 
 
     @GetMapping
@@ -57,6 +59,7 @@ public class UserController {
         return "user/basket";
     }
 
+
     @PostMapping("/basket")
     public String basketActivity(@ModelAttribute User user,
                                  @RequestParam(defaultValue = "") Long itemId,
@@ -80,6 +83,12 @@ public class UserController {
             basketService.clearBasket(basketService.findActiveByUserID(user.getId()));
         }
         if (action.equals("submit")) {
+            if (phoneNumber.equals("") ||
+                    !Pattern.matches(formatter.getPhoneRegEx(), phoneNumber)) {
+                logger.error("Errors in form. Phone number not specified.");
+                model.addAttribute("phoneError", "user.phoneNumber.empty");
+                return this.basket(user, model);
+            }
             orderService.addOrder(user, phoneNumber, comment, typeOfPayment);
             return "redirect:/user";
         }

@@ -29,7 +29,7 @@ public class Basket {
     private List<BasketItem> basketItems;
 
     @Transient
-    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
 
     public Basket() {

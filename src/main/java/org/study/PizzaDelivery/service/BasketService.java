@@ -44,7 +44,7 @@ public class BasketService {
         return activeBasket;
     }
 
-
+    @Transactional
     public Basket findById(Long basketId) {
         logger.info("Call method: findById(basketId:" + basketId + ")");
         Optional<Basket> basket = basketRepository.findById(basketId);
@@ -79,7 +79,6 @@ public class BasketService {
         basketRepository.save(userBasket);
     }
 
-
     @Transactional
     public void addCustomProductToBasket(User user, Short baseId, Short sauceId, short[] ingredientsIds) {
         logger.info("Call method: addCustomProductToBasket(user:" + user +
@@ -92,7 +91,6 @@ public class BasketService {
 
         basketRepository.save(userBasket);
     }
-
 
     public void clearBasket(Basket basket) {
         logger.info("Call method: clearBasket(basket:" + basket + ")");

@@ -20,7 +20,7 @@ public class WebInitializer extends
     @Override
     protected Class<?>[] getRootConfigClasses() {
 
-        return new Class[]{DataServiceConfig.class, WebSecurityConfig.class};
+        return new Class[]{ApplicationConfig.class, WebSecurityConfig.class};
     }
 
     @Override

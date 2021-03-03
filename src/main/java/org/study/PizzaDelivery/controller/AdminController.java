@@ -75,7 +75,7 @@ public class AdminController {
     }
 
     @GetMapping("/archive")
-    public String showUser(Model model) {
+    public String archive(Model model) {
         logger.info("GET request admin/archive/");
 
         Category archiveCategory = categoryService.findByName("Архив");
@@ -123,7 +123,7 @@ public class AdminController {
 
 
     @GetMapping("/edit/{productName}")
-    public String showUser(@PathVariable("productName") String productName, Model model) {
+    public String editProductPage(@PathVariable("productName") String productName, Model model) {
         logger.info("GET request admin/edit/" + productName);
 
         model.addAttribute("product", productService.findDistinctTopByName(productName));
@@ -140,7 +140,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/edit/{productName}")
-    public String editProductPage(@PathVariable("productName") String productName,
+    public String editProduct(@PathVariable("productName") String productName,
                                   @RequestParam(defaultValue = "") String newName,
                                   @RequestParam(defaultValue = "") String description,
                                   @RequestParam(defaultValue = "") short[] ingredientsIds,

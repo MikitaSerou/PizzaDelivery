@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.study.PizzaDelivery.enums.Status;
 import org.study.PizzaDelivery.enums.TypeOfPayment;
+import org.study.PizzaDelivery.utils.Formatter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -53,7 +54,7 @@ public class Order {
     private List<OrderItem> orderItems;
 
     @Transient
-    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
 
     public Order() {

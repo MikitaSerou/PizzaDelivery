@@ -33,7 +33,5 @@ public class OrderItemService {
             logger.info("Save new item to order: " + item);
             orderItemRepository.save(item);
         }
-
-        orderService.saveOrder(order);
     }
 }

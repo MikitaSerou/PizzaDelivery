@@ -21,6 +21,7 @@ public class IngredientService {
     private IngredientRepository ingredientRepository;
 
 
+    @Transactional
     public Ingredient findById(Short ingredientId) {
         logger.info("Call method: findById(ingredientId: " + ingredientId + ")");
         Optional<Ingredient> ingredient = ingredientRepository.findById(ingredientId);
@@ -34,6 +35,7 @@ public class IngredientService {
         return ingredientRepository.findById(ingredientId).get();
     }
 
+    @Transactional
     public List<Ingredient> findByType(IngredientType ingredientType) {
         logger.info("Call method: findByType(ingredientType: " + ingredientType + ")");
         String type = ingredientType.toString().toUpperCase();

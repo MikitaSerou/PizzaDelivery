@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -106,31 +107,39 @@
         <div class="col-sm"></div>
         <div class="col-sm-6" style="backdrop-filter: blur(7px); border-radius: 30px">
             <h1 align="center"><spring:message code="office.entrance.page"/></h1>
-            <form method="POST" action="/login" class="field">
+
+            <c:if test="${param.error != null}">
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong><spring:message code="message.badCredentials"/></strong>
+                </div>
+            </c:if>
+            <form:form name="f" method="post" action="/login" class="field" modelAttribute="loginForm">
                 <div class="form-group">
-                    <label for="formGroupExampleInput"><spring:message code="username"/></label>
-                    <input type="text" class="form-control" name="username" id="formGroupExampleInput"
-                           placeholder="<spring:message code="username"/>">
+                    <label for="formGroupExampleInput"><spring:message code="username" var="username"/></label>
+                    <form:input type="text" name="username" class="form-control" id="formGroupExampleInput"
+                                placeholder='${username}' path="username"/>
+                    <form:errors path="username" cssClass="error" />
                 </div>
                 <div class="form-group">
-                    <label for="formGroupExampleInput2"><spring:message code="password"/></label>
-                    <input type="password" name="password" class="form-control" id="formGroupExampleInput2"
-                           placeholder="<spring:message code="password"/>">
+                    <label for="formGroupExampleInput2"><spring:message code="password" var="password"/></label>
+                    <form:input type="password" path="password" name="password" class="form-control"
+                                id="formGroupExampleInput2"
+                                placeholder='${password}'/>
+                    <form:errors path="password" cssClass="error"/>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"
-                           name="remember-me">
-                    <label class="form-check-label" for="defaultCheck1">
-                        <spring:message code="remember.me"/>
-
-                    </label>
+                           name="remember-me"> <label class="form-check-label" for="defaultCheck1">
+                    <spring:message code="remember.me"/>
+                </label>
                 </div>
 
                 <div class="row justify-content-md-center">
                     <br/>
                     <br/>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" name="submit" value="submit" formmethod="post" class="btn btn-success">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
@@ -150,10 +159,10 @@
                             <spring:message code="registration.ref"/></a>
                         </button>
                     </div>
-
                 </div>
                 <br/>
-            </form>
+                <br/>
+            </form:form>
         </div>
         <div class="col-sm"></div>
     </div>

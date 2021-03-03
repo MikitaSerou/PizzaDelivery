@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.model.Basket;
 import org.study.PizzaDelivery.model.Role;
 import org.study.PizzaDelivery.model.User;
@@ -56,6 +57,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    @Transactional
     public User findUserById(Long userId) {
         logger.info("Call method: findUserById(userId: " + userId + ")");
 
@@ -64,6 +66,7 @@ public class UserService implements UserDetailsService {
         return userFromDb.orElse(new User());
     }
 
+    @Transactional
     public List<User> findAll() {
         logger.info("Call method: findAll()");
 

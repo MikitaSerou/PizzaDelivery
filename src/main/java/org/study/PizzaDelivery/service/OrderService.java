@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.enums.Status;
 import org.study.PizzaDelivery.enums.TypeOfPayment;
 import org.study.PizzaDelivery.model.*;
@@ -28,12 +29,8 @@ public class OrderService {
     @Autowired
     private OrderItemService orderItemService;
 
-    public void saveOrder(Order order) {
-        logger.info("Call method: saveOrder(order: " + order + ")");
 
-        orderRepository.save(order);
-    }
-
+    @Transactional
     public Order findById(Long orderId) {
         logger.info("Call method: findById(orderId: " + orderId + ")");
         Optional<Order> order = orderRepository.findById(orderId);
@@ -47,12 +44,14 @@ public class OrderService {
         return order.get();
     }
 
+    @Transactional
     public List<Order> findOrdersByUserId(Long userId) {
         logger.info("Call method: findOrdersByUserId(userId: " + userId + ")");
 
         return orderRepository.findAllByUserId(userId);
     }
 
+    @Transactional
     public List<Order> findNotPaidOrders() {
         logger.info("Call method: findNotPaidOrders()");
 
@@ -71,6 +70,7 @@ public class OrderService {
         logger.info("Save new Order: " + order);
         orderRepository.save(order);
         orderItemService.addOrderItemsFromBasket(basket, order);
+
         basketService.clearBasket(basket);
     }
 
