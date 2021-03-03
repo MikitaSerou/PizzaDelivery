@@ -6,7 +6,7 @@ package org.study.PizzaDelivery;
 
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.study.PizzaDelivery.config.DataServiceConfig;
+import org.study.PizzaDelivery.config.ApplicationConfig;
 import org.study.PizzaDelivery.repository.*;
 import org.study.PizzaDelivery.service.*;
 
@@ -22,7 +22,7 @@ public class Test {
 
 
         AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(DataServiceConfig.class);
+                new AnnotationConfigApplicationContext(ApplicationConfig.class);
 //        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //        System.out.println(encoder.encode("admin@123"));
 

@@ -36,10 +36,14 @@ public class AdminController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private EmailService emailService;
+
 
     @GetMapping
     public String cabinet() {
         logger.info("GET request /admin");
+
         return "admin/adminOffice";
     }
 
