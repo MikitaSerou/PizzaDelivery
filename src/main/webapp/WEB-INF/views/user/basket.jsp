@@ -206,8 +206,9 @@
                                     <label for="formGroupExampleInput"><spring:message
                                             code="phoneNumber"/>:</label>
                                     <input type="text" class="form-control" name="phoneNumber"
-                                           id="formGroupExampleInput"
+                                           id="formGroupExampleInput" value="${user.phoneNumber}"
                                            placeholder="<spring:message code="phoneNumber"/>" path="phoneNumber">
+                                    <span class="error"><spring:message code="${phoneError}"/></span>
                                     <br/>
                                 </div>
                                 <div class="form-group">
