@@ -131,14 +131,13 @@ create table ORDER_ITEM
     PRICE       DOUBLE,
     ORDER_ID    BIGINT not null,
     PRODUCT_ID  BIGINT not null,
-  --  constraint FK6XYEQUV6TP9T8C10GI3CXNQL1
         foreign key (PRODUCT_ID) references PRODUCT (ID),
---    constraint FKT4DC2R9NBVBUJRLJV3E23IIBT
         foreign key (ORDER_ID) references ORDERS (ID)
 );
 
 INSERT INTO PUBLIC.ROLES (NAME) VALUES ('ROLE_USER');
 INSERT INTO PUBLIC.ROLES (NAME) VALUES ('ROLE_ADMIN');
+INSERT INTO USER (USER_NAME, E_MAIL, USER_PASSWORD) VALUES ('Удаленный', '-', '-');
 
 //#########################################################################################
 //                                BASES FOR PRODUCTS

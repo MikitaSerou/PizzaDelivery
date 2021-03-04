@@ -156,6 +156,7 @@
             <th><spring:message code="action"/></th>
             </thead>
             <c:forEach items="${allUsers}" var="user">
+                <c:if test="${!user.username.equalsIgnoreCase('Удаленный')}">
                 <tr>
                     <td>${user.id}</td>
                     <td>${user.username}</td>
@@ -174,6 +175,7 @@
                         </form>
                     </td>
                 </tr>
+                </c:if>
             </c:forEach>
         </table>
     </div>

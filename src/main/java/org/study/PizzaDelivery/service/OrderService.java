@@ -24,11 +24,21 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     private BasketService basketService;
 
     @Autowired
     private OrderItemService orderItemService;
 
+
+    @Transactional
+    public Long getCount() {
+        logger.info("Call method: getCount()");
+
+        return orderRepository.count();
+    }
 
     @Transactional
     public Order findById(Long orderId) {
@@ -49,6 +59,12 @@ public class OrderService {
         logger.info("Call method: findOrdersByUserId(userId: " + userId + ")");
 
         return orderRepository.findAllByUserId(userId);
+    }
+
+    public Order findLastOrderOfUserByUserId(Long userId){
+        logger.info("Call method: findLastOrderOfUserByUserId(userId: " + userId + ")");
+
+        return  orderRepository.findLastOrderOfUserByUserId(userId);
     }
 
     @Transactional
@@ -134,5 +150,11 @@ public class OrderService {
         orderRepository.save(order.get());
 
         return true;
+    }
+
+    public void safeDeleteOrder(Order order){
+        logger.info("Call method: safeDeleteOrder(order: " + order + ")");
+        order.setUser(userService.findByName("Удаленный"));
+        orderRepository.save(order);
     }
 }

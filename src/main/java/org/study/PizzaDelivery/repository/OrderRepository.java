@@ -20,6 +20,11 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
     @Transactional
     List<Order> findAllByUserId(long userId);
 
+    @Query(value = "SELECT * FROM ORDERS WHERE user_id = ?1 AND  id=(SELECT max(id) FROM ORDERS)",
+            nativeQuery = true)
+    @Transactional
+    Order findLastOrderOfUserByUserId(long userId);
+
     Order findById(long aLong);
 
 }

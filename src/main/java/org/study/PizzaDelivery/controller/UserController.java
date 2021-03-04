@@ -3,6 +3,7 @@ package org.study.PizzaDelivery.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.study.PizzaDelivery.model.Basket;
 import org.study.PizzaDelivery.model.User;
 import org.study.PizzaDelivery.service.BasketItemService;
 import org.study.PizzaDelivery.service.BasketService;
+import org.study.PizzaDelivery.service.EmailService;
 import org.study.PizzaDelivery.service.OrderService;
 import org.study.PizzaDelivery.utils.Formatter;
 
@@ -36,11 +38,13 @@ public class UserController {
     @Autowired
     private Formatter formatter;
 
+    @Autowired
+    private EmailService emailService;
+
 
     @GetMapping
     public String account(@ModelAttribute User user, Model model) {
         logger.info("GET request /user");
-
         model.addAttribute("userOrders", orderService.findOrdersByUserId(user.getId()));
 
         return "user/ordersHistory";
@@ -90,6 +94,7 @@ public class UserController {
                 return this.basket(user, model);
             }
             orderService.addOrder(user, phoneNumber, comment, typeOfPayment);
+            emailService.sendOrderInfoMessage(user, orderService.findLastOrderOfUserByUserId(user.getId()));
             return "redirect:/user";
         }
 

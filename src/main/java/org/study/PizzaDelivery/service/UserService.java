@@ -39,6 +39,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private BasketService basketService;
 
+    @Autowired
+    private OrderService orderService;
+
 
     public User findByName(String userName) {
         logger.info("Call method: findByName(userName: " + userName + ")");
@@ -78,7 +81,7 @@ public class UserService implements UserDetailsService {
         User userFromDB = userRepository.findByUsername(user.getUsername());
 
         if (userFromDB != null) {
-            logger.error("User: "+ user +" already exist!");
+            logger.error("User: " + user + " already exist!");
             return false;
         }
 
@@ -105,11 +108,15 @@ public class UserService implements UserDetailsService {
 
         if (userRepository.findById(userId).isPresent()) {
             logger.info("Deleting user with ID: " + userId);
+            orderService.findOrdersByUserId(userId).forEach(o -> {
+                orderService.safeDeleteOrder(o);
+            });
             userRepository.deleteById(userId);
             return true;
-        }else{
+        } else {
             logger.error("user with ID: " + userId + " is not exist.");
         }
+
         return false;
     }
 

@@ -36,14 +36,12 @@ public class AdminController {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private EmailService emailService;
-
 
     @GetMapping
-    public String cabinet() {
+    public String cabinet(Model model) {
         logger.info("GET request /admin");
-
+            model.addAttribute("countOfOrders", orderService.getCount());
+            model.addAttribute("activeOrders", orderService.findNotPaidOrders().size());
         return "admin/adminOffice";
     }
 

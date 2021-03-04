@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.study.PizzaDelivery.model.User;
+import org.study.PizzaDelivery.service.EmailService;
 import org.study.PizzaDelivery.service.UserService;
 
 import javax.validation.Valid;
@@ -24,6 +25,9 @@ public class RegistrationController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
 
     @GetMapping
@@ -46,13 +50,18 @@ public class RegistrationController {
             return "registration";
         }
         if (!registrationForm.getPassword().equals(registrationForm.getPasswordConfirm())) {
+            logger.error("Errors in form \"registrationForm (passwords not match)\"");
             model.addAttribute("matchError", "password.match.error");
             return "registration";
         }
         if (!userService.saveUser(registrationForm)) {
+            logger.error("Errors in form \"registrationForm (user already exist)\"");
             model.addAttribute("uniqueError", "username.unique.error");
             return "registration";
         }
+
+        emailService.sendRegistrationSuccessfulMail(registrationForm);
+
         return "redirect:/";
     }
 }

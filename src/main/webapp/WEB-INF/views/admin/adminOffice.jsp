@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
     <title><spring:message code="adminOffice.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
@@ -61,7 +61,8 @@
         <div class="dropdown">
             <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton2"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src='/resources/images/<spring:message code="img.lang.now"/>.png' width="28" height="20"/><spring:message code="lang.now"/>
+                <img src='/resources/images/<spring:message code="img.lang.now"/>.png' width="28"
+                     height="20"/><spring:message code="lang.now"/>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
@@ -86,15 +87,15 @@
                 <spring:message code="promotions.title"/></a></button>
         </div>
 
-            <form class="form-inline my-2 my-lg-0" style="position:absolute; right:0;">
-                <input id="inputsearchquery" class="form-control mr-sm-2" type="number"
-                       placeholder='<spring:message code="user.search.by.id"/>'>
-                <button class="btn btn-secondary my-2 my-sm-0" onclick="mysearch()"><spring:message code="search"/></button>
-            </form>
+        <form class="form-inline my-2 my-lg-0" style="position:absolute; right:0;">
+            <input id="inputsearchquery" class="form-control mr-sm-2" type="number"
+                   placeholder='<spring:message code="user.search.by.id"/>'>
+            <button class="btn btn-secondary my-2 my-sm-0" onclick="mysearch()"><spring:message code="search"/></button>
+        </form>
 
     </nav>
 </div>
-<div class="container"  style="min-height: 80%">
+<div class="container" style="min-height: 80%">
     <div class="row">
         <div class="col-sm-9">
             <h1 class="display-2" align="left" margin="right">
@@ -102,7 +103,7 @@
             </h1>
             <br/>
             <br/>
-            <div class="row">
+            <div class="row" style="width: 100%;">
                 <div class="col-sm-5">
                     <div class="list-group">
                         <a href="admin/users" class="list-group-item list-group-item-action"><spring:message
@@ -117,7 +118,21 @@
                                 code="archive"/></a>
                     </div>
                 </div>
-                <div class="col-sm-4"></div>
+                <div class="col-sm-4" style="width: 100%;">
+
+                    <table class="table table-hover table-dark" border="1" style="width: 100%;">
+                        <thead>
+                        </thead>
+                        <tr class="table-warning">
+                            <td><spring:message code="total.count.orders"/></td>
+                            <td><h1>${countOfOrders}</h1></td>
+                        </tr>
+                        <tr class="table-success">
+                            <td><spring:message code="active.count.orders"/></td>
+                            <td><h1>${activeOrders}</h1></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="col-sm-3">

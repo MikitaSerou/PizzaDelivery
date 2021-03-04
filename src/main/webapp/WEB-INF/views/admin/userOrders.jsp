@@ -96,7 +96,7 @@
 
     <div class="row">
         <div class="col-sm-9">
-            <c:if test="${user.id == 0}">
+            <c:if test="${user.id == 0 || user.username.equalsIgnoreCase('Удаленный')}">
                 <div class="alert alert-danger"><h1><spring:message code="user.error"/></h1></div>
                 <a href="/admin/users"><button type="button" class="btn btn-secondary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16">
@@ -104,7 +104,7 @@
                     </svg>
                     <spring:message code="back.button"/></button></a>
             </c:if>
-            <c:if test="${user.id != 0}">
+            <c:if test="${user.id != 0 && !user.username.equalsIgnoreCase('Удаленный')}">
             <div class="card text-white bg-primary mb-3" style="max-width: 540px;">
                 <div class="row no-gutters">
                     <div class="col-md-4">
@@ -175,7 +175,7 @@
                 </div>
             </section>
         </div>
-        <c:if test="${user.id != 0}">
+        <c:if test="${user.id != 0 && !user.username.equalsIgnoreCase('Удаленный')}">
             <h1 class="display-2" align="left" margin="right">${user.username}: <spring:message
                     code="orders.title"/></h1>
             <table class="table table-hover table-dark" border="1">
