@@ -61,10 +61,10 @@ public class OrderService {
         return orderRepository.findAllByUserId(userId);
     }
 
-    public Order findLastOrderOfUserByUserId(Long userId){
+    public Order findLastOrderOfUserByUserId(Long userId) {
         logger.info("Call method: findLastOrderOfUserByUserId(userId: " + userId + ")");
 
-        return  orderRepository.findLastOrderOfUserByUserId(userId);
+        return orderRepository.findLastOrderOfUserByUserId(userId);
     }
 
     @Transactional
@@ -152,8 +152,13 @@ public class OrderService {
         return true;
     }
 
-    public void safeDeleteOrder(Order order){
+    public void safeDeleteOrder(Order order) {
         logger.info("Call method: safeDeleteOrder(order: " + order + ")");
+
+        if (order.getStatus() == Status.NOT_PAID) {
+            order.setStatus(Status.CANCELED);
+        }
+
         order.setUser(userService.findByName("Удаленный"));
         orderRepository.save(order);
     }
