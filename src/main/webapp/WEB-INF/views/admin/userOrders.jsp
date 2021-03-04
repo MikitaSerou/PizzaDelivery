@@ -11,6 +11,10 @@
     <title>${user.username} <spring:message code="orders.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
+    <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/userSearch.js" />"></script>
 </head>
 
@@ -214,24 +218,24 @@
                     <td>
 
                         <c:if test="${order.status.toString().equals('During')}">
-                            <form action="${pageContext.request.contextPath}/admin/orders" method="post">
+                            <form action="${pageContext.request.contextPath}/admin/users/${user.id}" method="post">
                                 <input type="hidden" name="orderId" value="${order.id}"/>
                                 <input type="hidden" name="action" value="paidUp"/>
-                                <button type="submit" class="btn btn-success">
+                                <button type="submit" formmethod="post" class="btn btn-success">
                                     <spring:message code="paid.up"/></button>
                             </form>
-                            <form action="${pageContext.request.contextPath}/admin/orders" method="post">
+                            <form action="${pageContext.request.contextPath}/admin/users/${user.id}" method="post">
                                 <input type="hidden" name="orderId" value="${order.id}"/>
                                 <input type="hidden" name="action" value="cancel"/>
-                                <button type="submit" class="btn btn-danger">
+                                <button type="submit" formmethod="post" class="btn btn-danger">
                                     <spring:message code="cancel"/></button>
                             </form>
                         </c:if>
                         <c:if test="${order.status.toString().equals('Canceled')}">
-                            <form action="${pageContext.request.contextPath}/admin/orders" method="post">
+                            <form action="${pageContext.request.contextPath}/admin/users/${user.id}" method="post">
                                 <input type="hidden" name="orderId" value="${order.id}"/>
                                 <input type="hidden" name="action" value="notPaid"/>
-                                <button type="submit" class="btn btn-warning">
+                                <button type="submit" formmethod="post" class="btn btn-warning">
                                     <spring:message code="During"/></button>
                             </form>
                         </c:if>
@@ -279,8 +283,5 @@
 </svg>
     <spring:message code="phone"/></span>
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

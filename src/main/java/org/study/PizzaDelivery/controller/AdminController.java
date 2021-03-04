@@ -76,6 +76,29 @@ public class AdminController {
         return "admin/userOrders";
     }
 
+    @PostMapping("/users/{userId}")
+    public String changeOrderStatus(@PathVariable("userId") Long userId,
+                                    @RequestParam(defaultValue = "") Long orderId,
+                                    @RequestParam(defaultValue = "") String action,
+                                    Model model) {
+        logger.info("POST request admin/users/" + userId +
+                "[userId: " + userId +
+                ", orderId: " + orderId +
+                ", action: " + action + "]");
+
+        if (action.equals("cancel")) {
+            orderService.cancelOrder(orderId);
+        }
+        if (action.equals("paidUp")) {
+            orderService.paidUpOrder(orderId);
+        }
+        if (action.equals("notPaid")) {
+            orderService.setOrderNotPaidStatus(orderId);
+        }
+
+        return "redirect:/admin/users/" + userId;
+    }
+
     @GetMapping("/archive")
     public String archive(Model model) {
         logger.info("GET request admin/archive/");
