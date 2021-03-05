@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,10 @@
     <title><spring:message code="basket.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
+    <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
 </head>
 
 <body id="bodyDefault">
@@ -140,7 +145,8 @@
 
                         </div>
                         <div class="col">
-                            <h1 align="right"><spring:message code="basket.sum"/>: ${basketSum}</h1>
+                            <h1 align="right"><spring:message code="basket.sum"/>:
+                                <fmt:formatNumber type="number" maxFractionDigits="2" value="${basketSum}"/></h1>
                             <br/>
                             <br/>
                             <br/><br/>
@@ -155,7 +161,6 @@
                                 </a>
                                 <form action="${pageContext.request.contextPath}/user/basket"
                                       method="post">
-                                        <%--    <input type="hidden" name="userName" value="${user.username}"/>--%>
                                     <input type="hidden" name="basketId" value="${basket.id}"/>
                                     <input type="hidden" name="action" value="clear"/>
                                     <button type="submit" class="btn btn-danger btn-lg">
@@ -177,7 +182,8 @@
                         <c:forEach items="${basket.basketItems}" var="item">
                             <tr class="table-secondary" id="basketTable">
                                 <td width="10%">${item.product.name} ${item.product.base.name}</td>
-                                <td width="10%">${item.price}</td>
+                                <td width="10%">
+                                    <fmt:formatNumber type="number" maxFractionDigits="2" value="${item.price}"/></td>
                                 <td width="35%">${item.product.description}</td>
                                 <td width="38%">${item.description}</td>
                                 <td width="7%">
@@ -317,8 +323,5 @@
 </svg>
     <spring:message code="phone"/></span>
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

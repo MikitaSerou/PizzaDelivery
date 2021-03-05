@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.study.PizzaDelivery.enums.IngredientType;
+import org.study.PizzaDelivery.enums.Status;
 import org.study.PizzaDelivery.model.Category;
 import org.study.PizzaDelivery.service.*;
 
@@ -38,8 +39,11 @@ public class AdminController {
 
 
     @GetMapping
-    public String cabinet() {
+    public String cabinet(Model model) {
         logger.info("GET request /admin");
+        model.addAttribute("successfulOfOrders", orderService.findOrdersByStatus(Status.PAID).size());
+        model.addAttribute("activeOrders", orderService.findOrdersByStatus(Status.NOT_PAID).size());
+
         return "admin/adminOffice";
     }
 
@@ -72,6 +76,29 @@ public class AdminController {
         model.addAttribute("userOrders", orderService.findOrdersByUserId(userId));
 
         return "admin/userOrders";
+    }
+
+    @PostMapping("/users/{userId}")
+    public String changeOrderStatus(@PathVariable("userId") Long userId,
+                                    @RequestParam(defaultValue = "") Long orderId,
+                                    @RequestParam(defaultValue = "") String action,
+                                    Model model) {
+        logger.info("POST request admin/users/" + userId +
+                "[userId: " + userId +
+                ", orderId: " + orderId +
+                ", action: " + action + "]");
+
+        if (action.equals("cancel")) {
+            orderService.cancelOrder(orderId);
+        }
+        if (action.equals("paidUp")) {
+            orderService.paidUpOrder(orderId);
+        }
+        if (action.equals("notPaid")) {
+            orderService.setOrderNotPaidStatus(orderId);
+        }
+
+        return "redirect:/admin/users/" + userId;
     }
 
     @GetMapping("/archive")
@@ -116,6 +143,13 @@ public class AdminController {
                 ", description: " + description +
                 ", ingredientsIds: " + Arrays.toString(ingredientsIds) + "]");
 
+        if (productName.equals("")) {
+            logger.error("Empty product name");
+            model.addAttribute("addProductError", "add.product.error");
+           return "redirect:/admin/" + categoryName + "/addProduct";
+
+        }
+
         productService.addNewProductToCategory(productName, categoryService.findByName(categoryName), description, ingredientsIds);
 
         return "redirect:/category";
@@ -141,10 +175,10 @@ public class AdminController {
 
     @PostMapping(value = "/edit/{productName}")
     public String editProduct(@PathVariable("productName") String productName,
-                                  @RequestParam(defaultValue = "") String newName,
-                                  @RequestParam(defaultValue = "") String description,
-                                  @RequestParam(defaultValue = "") short[] ingredientsIds,
-                                  Model model) {
+                              @RequestParam(defaultValue = "") String newName,
+                              @RequestParam(defaultValue = "") String description,
+                              @RequestParam(defaultValue = "") short[] ingredientsIds,
+                              Model model) {
         logger.info("POST request admin/edit/" + productName +
                 "[productName: " + productName +
                 ", newName: " + newName +
@@ -161,7 +195,8 @@ public class AdminController {
     public String activeOrdersList(Model model) {
         logger.info("GET request admin/orders");
 
-        model.addAttribute("activeOrders", orderService.findNotPaidOrders());
+
+        model.addAttribute("activeOrders", orderService.findOrdersByStatus(Status.NOT_PAID));
 
         return "admin/orders";
     }

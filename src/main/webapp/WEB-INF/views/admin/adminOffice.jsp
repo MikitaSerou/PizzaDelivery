@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
     <title><spring:message code="adminOffice.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
@@ -61,7 +61,8 @@
         <div class="dropdown">
             <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton2"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src='/resources/images/<spring:message code="img.lang.now"/>.png' width="28" height="20"/><spring:message code="lang.now"/>
+                <img src='/resources/images/<spring:message code="img.lang.now"/>.png' width="28"
+                     height="20"/><spring:message code="lang.now"/>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
@@ -86,38 +87,76 @@
                 <spring:message code="promotions.title"/></a></button>
         </div>
 
-            <form class="form-inline my-2 my-lg-0" style="position:absolute; right:0;">
-                <input id="inputsearchquery" class="form-control mr-sm-2" type="number"
-                       placeholder='<spring:message code="user.search.by.id"/>'>
-                <button class="btn btn-secondary my-2 my-sm-0" onclick="mysearch()"><spring:message code="search"/></button>
-            </form>
+        <form class="form-inline my-2 my-lg-0" style="position:absolute; right:0;">
+            <input id="inputsearchquery" class="form-control mr-sm-2" type="number"
+                   placeholder='<spring:message code="user.search.by.id"/>'>
+            <button class="btn btn-secondary my-2 my-sm-0" onclick="mysearch()"><spring:message code="search"/></button>
+        </form>
 
     </nav>
 </div>
-<div class="container"  style="min-height: 80%">
-    <div class="row">
+<div class="container" style="min-height: 80%; width: 100%;">
+    <div class="row" >
         <div class="col-sm-9">
-            <h1 class="display-2" align="left" margin="right">
+            <h1 class="display-2" align="left">
                 <span id="pageHeader">&nbsp;<spring:message code="adminOffice.title"/>&nbsp;</span>
             </h1>
             <br/>
             <br/>
-            <div class="row">
+            <div class="row" style="width: 100%;">
                 <div class="col-sm-5">
                     <div class="list-group">
-                        <a href="admin/users" class="list-group-item list-group-item-action"><spring:message
+                        <a href="admin/users" class="list-group-item list-group-item-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
+                            </svg>&nbsp;&nbsp;
+                            <spring:message
                                 code="user.table"/></a>
-                        <a href="/category" class="list-group-item list-group-item-action"><spring:message
+                        <a href="/category" class="list-group-item list-group-item-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trophy" viewBox="0 0 16 16">
+                                <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935zM3.504 1c.007.517.026 1.006.056 1.469.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.501.501 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667.03-.463.049-.952.056-1.469H3.504z"/>
+                            </svg>&nbsp;&nbsp;
+                            <spring:message
                                 code="category.list"/></a>
-                        <a href="admin/ingredients" class="list-group-item list-group-item-action"><spring:message
+                        <a href="admin/ingredients" class="list-group-item list-group-item-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-palette" viewBox="0 0 16 16">
+                                <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                                <path d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8zm-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7z"/>
+                            </svg>&nbsp;&nbsp;
+                            <spring:message
                                 code="ingredients.table"/></a>
-                        <a href="admin/orders" class="list-group-item list-group-item-action"><spring:message
+                        <a href="admin/orders" class="list-group-item list-group-item-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-patch-question" viewBox="0 0 16 16">
+                                <path d="M8.05 9.6c.336 0 .504-.24.554-.627.04-.534.198-.815.847-1.26.673-.475 1.049-1.09 1.049-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.71 1.71 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745z"/>
+                                <path d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>
+                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"/>
+                            </svg>&nbsp;&nbsp;
+                            <spring:message
                                 code="activeOrders.table"/></a>
-                        <a href="/admin/archive" class="list-group-item list-group-item-action"><spring:message
+                        <a href="/admin/archive" class="list-group-item list-group-item-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-earmark-lock" viewBox="0 0 16 16">
+                                <path d="M10 7v1.076c.54.166 1 .597 1 1.224v2.4c0 .816-.781 1.3-1.5 1.3h-3c-.719 0-1.5-.484-1.5-1.3V9.3c0-.627.46-1.058 1-1.224V7a2 2 0 1 1 4 0zM7 7v1h2V7a1 1 0 0 0-2 0zM6 9.3v2.4c0 .042.02.107.105.175A.637.637 0 0 0 6.5 12h3a.64.64 0 0 0 .395-.125c.085-.068.105-.133.105-.175V9.3c0-.042-.02-.107-.105-.175A.637.637 0 0 0 9.5 9h-3a.637.637 0 0 0-.395.125C6.02 9.193 6 9.258 6 9.3z"/>
+                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                            </svg>&nbsp;&nbsp;
+                            <spring:message
                                 code="archive"/></a>
                     </div>
                 </div>
-                <div class="col-sm-4"></div>
+                <div class="col-sm-4" style="width: 100%;">
+
+                    <table class="table table-hover table-dark" border="1" style="width: 100%;">
+                        <thead>
+                        </thead>
+                        <tr class="table-success">
+                            <td><h2><spring:message code="successful.count.orders"/></h2></td>
+                            <td><h1 class="display-3">${successfulOfOrders}</h1></td>
+                        </tr>
+                        <tr class="table-warning">
+                            <td><h2><spring:message code="active.count.orders"/></h2></td>
+                            <td><h1 class="display-3">${activeOrders}</h1></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="col-sm-3">
@@ -192,8 +231,6 @@
 </svg>
     <spring:message code="phone"/></span>
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -229,10 +229,6 @@ public class Order {
         this.status = status;
     }
 
-    public List<OrderItem> getOrders_items() {
-        return orderItems;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

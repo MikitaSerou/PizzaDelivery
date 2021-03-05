@@ -6,9 +6,16 @@ package org.study.PizzaDelivery;
 
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.study.PizzaDelivery.config.DataServiceConfig;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.study.PizzaDelivery.config.ApplicationConfig;
+import org.study.PizzaDelivery.model.Order;
+import org.study.PizzaDelivery.model.User;
 import org.study.PizzaDelivery.repository.*;
 import org.study.PizzaDelivery.service.*;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 
 public class Test {
@@ -22,7 +29,7 @@ public class Test {
 
 
         AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(DataServiceConfig.class);
+                new AnnotationConfigApplicationContext(ApplicationConfig.class);
 //        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //        System.out.println(encoder.encode("admin@123"));
 
@@ -44,7 +51,24 @@ BasketRepository baskr = context.getBean("basketRepository", BasketRepository.cl
         BasketService baskS = context.getBean("basketService", BasketService.class);
         BasketItemRepository bir  = context.getBean("basketItemRepository", BasketItemRepository.class);
         BasketItemService bis = context.getBean("basketItemService", BasketItemService.class);
-        System.out.println(is.findById((short) 1));
+
+        ResourceBundle i18nBundle = ResourceBundle.getBundle("i18n/message", new Locale("ru"));
+
+User user = us.findByName("Mageridon");
+Order order = os.findLastOrderOfUserByUserId(user.getId());
+
+
+
+        StringBuilder ingredientsDescription = new StringBuilder("Продукт: ");
+       order.getOrderItems().forEach(i -> {
+           ingredientsDescription.append("<p>" + i.getProduct().getName() +
+                    " " + i.getProduct().getBase().getName().toLowerCase() +
+                    " (" + i18nBundle.getString("price").toLowerCase() + ": " + i.getPrice() +
+                    "." + i18nBundle.getString("currency") +") "+
+                    " " + i18nBundle.getString(order.getTypeOfPayment().toString()) + ")</p><br/>");
+        });
+
+        System.out.println(ingredientsDescription.toString());
 
         /*        Category c = cr.findById((short) 2);
         c.setPrice(15.0);

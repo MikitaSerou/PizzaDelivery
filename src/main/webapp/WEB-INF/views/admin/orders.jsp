@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,10 @@
     <title><spring:message code="activeOrders.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
+    <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/userSearch.js" />"></script>
 </head>
 
@@ -159,13 +164,20 @@
                         <button type="submit" class="btn btn-warning">ID: ${order.user.id}<br/>
                                 ${order.user.username}</button></a></td>
                         <td><c:forEach items="${order.orderItems}"
-                                       var="item">${item.product.name} (${item.price})</c:forEach><br/></td>
-                        <td>${order.price}</td>
+                                       var="item">${item.product.name} (
+                            <fmt:formatNumber type="number" maxFractionDigits="2" value="${item.price}"/>)
+                        </c:forEach><br/></td>
+                        <td>
+                            <fmt:formatNumber type="number" maxFractionDigits="2" value="${order.price}"/></td>
                         <td><spring:message code="${order.typeOfPayment.toString()}"/></td>
 
                         <td>${order.phoneNumber}</td>
                         <td>${order.comment}</td>
-                        <td>${order.time}</td>
+                        <td>
+                            <fmt:parseDate value="${ order.time }" pattern="yyyy-MM-dd'T'HH:mm"
+                                           var="parsedDateTime" type="both" />
+                            <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${ parsedDateTime}" />
+                                </td>
                         <td><spring:message code="${order.status.toString()}"/></td>
                         <td>
                             <form action="${pageContext.request.contextPath}/admin/orders" method="post">
@@ -221,8 +233,6 @@
 </svg>
     <spring:message code="phone"/></span>
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 </body>
 </html>

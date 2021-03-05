@@ -5,7 +5,8 @@ public enum IngredientType {
     MEAT("Meat"),
     VEGETABLE("Vegetable"),
     SEAFOOD("Seafood"),
-    SAUCE("Sauce");
+    SAUCE("Sauce"),
+    UNSTOCK("Unstock");
 
     private final String str;
 

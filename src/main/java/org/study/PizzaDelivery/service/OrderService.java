@@ -24,11 +24,21 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     private BasketService basketService;
 
     @Autowired
     private OrderItemService orderItemService;
 
+
+    @Transactional
+    public Long getCount() {
+        logger.info("Call method: getCount()");
+
+        return orderRepository.count();
+    }
 
     @Transactional
     public Order findById(Long orderId) {
@@ -51,13 +61,18 @@ public class OrderService {
         return orderRepository.findAllByUserId(userId);
     }
 
-    @Transactional
-    public List<Order> findNotPaidOrders() {
-        logger.info("Call method: findNotPaidOrders()");
+    public Order findLastOrderOfUserByUserId(Long userId) {
+        logger.info("Call method: findLastOrderOfUserByUserId(userId: " + userId + ")");
 
-        return orderRepository.findAllByStatus(Status.NOT_PAID);
+        return orderRepository.findLastOrderOfUserByUserId(userId);
     }
 
+    @Transactional
+    public List<Order> findOrdersByStatus(Status status) {
+        logger.info("Call method: findOrdersByStatus(status: "+ status +")");
+
+        return orderRepository.findAllByStatus(status);
+    }
 
     public void addOrder(User user, String phoneNumber, String comment, TypeOfPayment typeOfPayment) {
         logger.info("Call method: addOrder(user: " + user +
@@ -134,5 +149,16 @@ public class OrderService {
         orderRepository.save(order.get());
 
         return true;
+    }
+
+    public void safeDeleteOrder(Order order) {
+        logger.info("Call method: safeDeleteOrder(order: " + order + ")");
+
+        if (order.getStatus() == Status.NOT_PAID) {
+            order.setStatus(Status.CANCELED);
+        }
+
+        order.setUser(userService.findByName("Удаленный"));
+        orderRepository.save(order);
     }
 }

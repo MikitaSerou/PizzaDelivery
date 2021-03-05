@@ -6,8 +6,6 @@
 
 
 <!DOCTYPE html>
-
-
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,7 +13,6 @@
     <title><spring:message code="category.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
-
     <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             type="text/javascript"></script>
@@ -149,6 +146,12 @@
                             </div>
                         </div>
                     </form>
+                    <c:if test="${param.categoryError != null}">
+                        <div class="alert alert-dismissible alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong><spring:message code="add.category.error"/></strong>
+                        </div>
+                    </c:if>
                 </div>
             </sec:authorize>
 
@@ -197,7 +200,6 @@
                                 </form>
                             </sec:authorize>
                         </div>
-
                     </div>
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
 

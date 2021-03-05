@@ -165,7 +165,8 @@
                                     <c:if test="${!ingredientType.toString().equals('Sauce')}">
                                         <td><h2 id="ingredientName" align="center"
                                                 style="font-size: 20px">
-                                                <span><img class="rounded" src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
+                                                <span><img class="rounded" src='<spring:url
+                                                value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
                                                             width="50px" height="50px"/></span><br/>
                                             <spring:message code="${ingredientType.toString()}"/></h2></td>
                                     </c:if>
@@ -180,7 +181,8 @@
                                                     <c:if test="${ingredient.getType().equals(ingredientType)}">
                                                         <div class="alert alert-dismissible alert-light" style="width: 100%; padding: 2px;">
                                                             <div class="custom-control custom-switch">
-                                                                <c:if test="${product.ingredients.contains(ingredient)}">
+                                                                <c:if test="${product.ingredients.contains(ingredient)
+                                                                && !ingredientType.toString().equals('Unstock')}">
                                                                     <input type="checkbox" class="custom-control-input"
                                                                            id="${ingredient.id}"
                                                                            name="ingredientsIds" value="${ingredient.id}"
@@ -188,10 +190,20 @@
                                                                     <label class="custom-control-label"
                                                                            for="${ingredient.id}">${ingredient.name}</label
                                                                 </c:if>
-                                                                <c:if test="${!product.ingredients.contains(ingredient)}">
+                                                                <c:if test="${!product.ingredients.contains(ingredient)
+                                                                && !ingredientType.toString().equals('Unstock')}">
                                                                     <input type="checkbox" class="custom-control-input"
                                                                            id="${ingredient.id}"
                                                                            name="ingredientsIds" value="${ingredient.id}">
+                                                                    <label class="custom-control-label"
+                                                                           for="${ingredient.id}">
+                                                                            ${ingredient.name}</label>
+                                                                </c:if>
+                                                                <c:if test="${ingredientType.toString().equals('Unstock')}">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="${ingredient.id}"
+                                                                           name="ingredientsIds" value="${ingredient.id}"
+                                                                           disabled="">
                                                                     <label class="custom-control-label"
                                                                            for="${ingredient.id}">
                                                                             ${ingredient.name}</label>
