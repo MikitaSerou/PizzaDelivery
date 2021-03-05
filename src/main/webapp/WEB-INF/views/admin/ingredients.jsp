@@ -158,7 +158,6 @@
             <th><spring:message code="ingredient.type"/></th>
             <td><spring:message code="action"/></td>
             </thead>
-            <%--ADD FORM--%>
             <tr class="bg-success">
                 <form action="${pageContext.request.contextPath}/admin/ingredients" method="post">
                     <td><h4><spring:message code="add.button"/></h4></td>
@@ -191,15 +190,12 @@
             <c:forEach items="${ingredients}" var="ingredient">
                 <tr class="bg-default">
                     <td id="${ingredient.id}"><h3>${ingredient.id}</h3></td>
-                    <td><h3>${ingredient.name}</h3></td>
+                    <td><h3><span><img class="rounded" src='<spring:url
+                        value="/resources/images/ingredients/${ingredient.type.toString().toLowerCase()}.png"/>'
+                                       width="50px" height="50px"/></span>${ingredient.name}</h3></td>
                     <td><h3>${ingredient.price}</h3></td>
                     <td><h3><spring:message code="${ingredient.type.toString()}"/></h3></td>
                     <td>
-                        <form action="${pageContext.request.contextPath}/admin/ingredients" method="post">
-                            <input type="hidden" name="ingredientId" value="${ingredient.id}"/>
-                            <input type="hidden" name="action" value="delete"/>
-                            <button type="submit" class="btn btn-danger"><spring:message code="delete.button"/> </button>
-                        </form>
                     </td>
                 </tr>
                 <tr class="bg-secondary">
@@ -233,7 +229,7 @@
 
                             <select class="form-control" name="ingredientType" path="ingredientType">
                                 <option></option>
-                                <c:forEach items="${types}" var="ingredientType"><%--.toString()--%>
+                                <c:forEach items="${types}" var="ingredientType">
                                     <option name="ingredientType" value=${ingredientType} text="${ingredientType}">
                                         <spring:message code="${ingredientType.toString()}"/></option>
                                 </c:forEach>

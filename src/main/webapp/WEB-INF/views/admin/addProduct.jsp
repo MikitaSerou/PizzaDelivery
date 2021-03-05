@@ -128,7 +128,12 @@
 
                 <div class="card-body">
 
-
+                    <c:if test="${param.addProductError != null}">
+                        <div class="alert alert-dismissible alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong><spring:message code="add.product.error"/></strong>
+                        </div>
+                    </c:if>
                     <form action="${pageContext.request.contextPath}/admin/${categoryName}/addProduct"
                           method="post">
                         <div class="form-group" style="width: 50%">
@@ -153,7 +158,8 @@
                         <table class="table" style="width: 100%; border-radius: 10px;">
                             <tr>
                                 <c:forEach var="ingredientType" items="${ingredientTypes}">
-                                    <c:if test="${!ingredientType.toString().equals('Sauce')}">
+                                    <c:if test="${!ingredientType.toString().equals('Sauce')
+                                    && !ingredientType.toString().equals('Unstock')}">
                                         <td>
                                             <h2 id="ingredientName" align="center"
                                                 style="font-size: 20px"><span><img class="rounded"
@@ -169,21 +175,28 @@
                                         <td>
                                             <c:forEach var="ingredient" items="${ingredients}">
                                                 <%--<div class="form-group">--%>
-                                                <c:if test="${ingredient.getType().equals(ingredientType)}">
+                                                <c:if test="${ingredient.getType().equals(ingredientType)
+                                                && !ingredientType.toString().equals('Unstock')}">
                                                     <div class="alert alert-dismissible alert-light"
                                                          style="width: 100%; padding: 2px;">
                                                         <div class="custom-control custom-switch">
                                                             <input type="checkbox" class="custom-control-input"
                                                                    id="${ingredient.id}"
                                                                    name="ingredientsIds" value="${ingredient.id}">
-
-
                                                             <label class="custom-control-label"
                                                                    for="${ingredient.id}">
                                                                     ${ingredient.name}
                                                             </label>
+                                                            <c:if test="${ingredientType.toString().equals('Unstock')}">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                       id="${ingredient.id}"
+                                                                       name="ingredientsIds" value="${ingredient.id}"
+                                                                       disabled="">
+                                                                <label class="custom-control-label"
+                                                                       for="${ingredient.id}">
+                                                                        ${ingredient.name}</label>
+                                                            </c:if>
                                                         </div>
-                                                            <%-- <span style="align-content: end; width:100%; right:0;">&nbsp;(${ingredient.price}.<spring:message code="currency"/>)</span>--%>
 
                                                     </div>
 

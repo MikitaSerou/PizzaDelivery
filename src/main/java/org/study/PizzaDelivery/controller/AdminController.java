@@ -40,8 +40,8 @@ public class AdminController {
     @GetMapping
     public String cabinet(Model model) {
         logger.info("GET request /admin");
-            model.addAttribute("countOfOrders", orderService.getCount());
-            model.addAttribute("activeOrders", orderService.findNotPaidOrders().size());
+        model.addAttribute("countOfOrders", orderService.getCount());
+        model.addAttribute("activeOrders", orderService.findNotPaidOrders().size());
         return "admin/adminOffice";
     }
 
@@ -141,6 +141,13 @@ public class AdminController {
                 ", description: " + description +
                 ", ingredientsIds: " + Arrays.toString(ingredientsIds) + "]");
 
+        if (productName.equals("")) {
+            logger.error("Empty product name");
+            model.addAttribute("addProductError", "add.product.error");
+           return "redirect:/admin/" + categoryName + "/addProduct";
+
+        }
+
         productService.addNewProductToCategory(productName, categoryService.findByName(categoryName), description, ingredientsIds);
 
         return "redirect:/category";
@@ -166,10 +173,10 @@ public class AdminController {
 
     @PostMapping(value = "/edit/{productName}")
     public String editProduct(@PathVariable("productName") String productName,
-                                  @RequestParam(defaultValue = "") String newName,
-                                  @RequestParam(defaultValue = "") String description,
-                                  @RequestParam(defaultValue = "") short[] ingredientsIds,
-                                  Model model) {
+                              @RequestParam(defaultValue = "") String newName,
+                              @RequestParam(defaultValue = "") String description,
+                              @RequestParam(defaultValue = "") short[] ingredientsIds,
+                              Model model) {
         logger.info("POST request admin/edit/" + productName +
                 "[productName: " + productName +
                 ", newName: " + newName +

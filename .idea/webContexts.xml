@@ -7,6 +7,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminOffice.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/orders.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/userOrders.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category/categories.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category/categories.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/category" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user/basket.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user" />

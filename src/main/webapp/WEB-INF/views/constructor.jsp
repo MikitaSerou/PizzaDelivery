@@ -126,7 +126,8 @@
                             <select id="base" class="form-control" name="baseId" path="baseId"
                                     style="max-width: 50%">
                                 <c:forEach items="${bases}" var="base">
-                                    <option name="baseId" value=${base.id} data-price="${base.priceMultiplier*category.price}">${base.name}
+                                    <option name="baseId" value=${base.id}
+                                            data-price="${base.priceMultiplier*category.price}">${base.name}
                                         (${base.priceMultiplier*category.price} <spring:message
                                                 code="currency"/>)
                                     </option>
@@ -152,7 +153,8 @@
                         <table class="table" style="width: 100%; border-radius: 10px;">
                             <tr>
                                 <c:forEach var="ingredientType" items="${ingredientTypes}">
-                                    <c:if test="${!ingredientType.toString().equals('Sauce')}">
+                                    <c:if test="${!ingredientType.toString().equals('Sauce')  &&
+                                    !ingredientType.toString().equals('Unstock')}">
                                         <td><h2 id="ingredientName" align="center"
                                                 style="font-size: 20px">
                                                 <span><img class="rounded" src='<spring:url value="/resources/images/ingredients/${ingredientType.toString().toLowerCase()}.png"/>'
@@ -164,7 +166,8 @@
                             </tr>
                             <tr id="boxes">
                                 <c:forEach var="ingredientType" items="${ingredientTypes}">
-                                    <c:if test="${!ingredientType.toString().equals('Sauce')}">
+                                    <c:if test="${!ingredientType.toString().equals('Sauce') &&
+                                    !ingredientType.toString().equals('Unstock')}">
                                         <td>
                                             <c:forEach var="ingredient" items="${ingredients}">
                                                 <div class="form-group">

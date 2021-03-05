@@ -102,7 +102,12 @@ public class CategoryController {
             categoryService.deleteCategory(categoryId);
         }
         if (action.equals("add")) {
-            categoryService.addCategory(categoryName, categoryPrice);
+            if (categoryName.equals("") || categoryPrice == null) {
+                logger.error("Not all parameters are specified");
+                model.addAttribute("categoryError", "add.category.error");
+            } else {
+                categoryService.addCategory(categoryName, categoryPrice);
+            }
         }
         if (action.equals("edit")) {
             categoryService.editCategory(categoryId, categoryName, categoryPrice);

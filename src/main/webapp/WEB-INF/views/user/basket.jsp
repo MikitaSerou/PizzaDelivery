@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -144,7 +145,8 @@
 
                         </div>
                         <div class="col">
-                            <h1 align="right"><spring:message code="basket.sum"/>: ${basketSum}</h1>
+                            <h1 align="right"><spring:message code="basket.sum"/>:
+                                <fmt:formatNumber type="number" maxFractionDigits="2" value="${basketSum}"/></h1>
                             <br/>
                             <br/>
                             <br/><br/>
@@ -159,7 +161,6 @@
                                 </a>
                                 <form action="${pageContext.request.contextPath}/user/basket"
                                       method="post">
-                                        <%--    <input type="hidden" name="userName" value="${user.username}"/>--%>
                                     <input type="hidden" name="basketId" value="${basket.id}"/>
                                     <input type="hidden" name="action" value="clear"/>
                                     <button type="submit" class="btn btn-danger btn-lg">
@@ -181,7 +182,8 @@
                         <c:forEach items="${basket.basketItems}" var="item">
                             <tr class="table-secondary" id="basketTable">
                                 <td width="10%">${item.product.name} ${item.product.base.name}</td>
-                                <td width="10%">${item.price}</td>
+                                <td width="10%">
+                                    <fmt:formatNumber type="number" maxFractionDigits="2" value="${item.price}"/></td>
                                 <td width="35%">${item.product.description}</td>
                                 <td width="38%">${item.description}</td>
                                 <td width="7%">

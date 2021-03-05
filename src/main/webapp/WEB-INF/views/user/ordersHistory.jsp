@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -155,11 +156,16 @@
                         <td>
 
                             <c:forEach items="${order.orderItems}"
-                                       var="item">${item.product.name} (${item.price})<br/></c:forEach>
+                                       var="item">${item.product.name} (
+                                <fmt:formatNumber type="number" maxFractionDigits="2" value="${item.price}"/>)<br/>
+                            </c:forEach>
                         </td>
-                        <td>${order.price}</td>
+                        <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${order.price}"/></td>
                         <td>${order.comment}</td>
-                        <td>${order.time}</td>
+                        <td>
+                            <fmt:parseDate value="${order.time}" pattern="yyyy-MM-dd'T'HH:mm"
+                                           var="parsedDateTime" type="both" />
+                            <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${parsedDateTime}" /></td>
                         <td><spring:message code="${order.status.toString()}"/></td>
                         </tr>
                     </c:forEach>
