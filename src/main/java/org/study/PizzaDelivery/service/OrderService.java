@@ -68,12 +68,11 @@ public class OrderService {
     }
 
     @Transactional
-    public List<Order> findNotPaidOrders() {
-        logger.info("Call method: findNotPaidOrders()");
+    public List<Order> findOrdersByStatus(Status status) {
+        logger.info("Call method: findOrdersByStatus(status: "+ status +")");
 
-        return orderRepository.findAllByStatus(Status.NOT_PAID);
+        return orderRepository.findAllByStatus(status);
     }
-
 
     public void addOrder(User user, String phoneNumber, String comment, TypeOfPayment typeOfPayment) {
         logger.info("Call method: addOrder(user: " + user +

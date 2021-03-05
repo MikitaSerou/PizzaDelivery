@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.study.PizzaDelivery.enums.IngredientType;
+import org.study.PizzaDelivery.enums.Status;
 import org.study.PizzaDelivery.model.Category;
 import org.study.PizzaDelivery.service.*;
 
@@ -40,8 +41,9 @@ public class AdminController {
     @GetMapping
     public String cabinet(Model model) {
         logger.info("GET request /admin");
-        model.addAttribute("countOfOrders", orderService.getCount());
-        model.addAttribute("activeOrders", orderService.findNotPaidOrders().size());
+        model.addAttribute("successfulOfOrders", orderService.findOrdersByStatus(Status.PAID).size());
+        model.addAttribute("activeOrders", orderService.findOrdersByStatus(Status.NOT_PAID).size());
+
         return "admin/adminOffice";
     }
 
@@ -193,7 +195,8 @@ public class AdminController {
     public String activeOrdersList(Model model) {
         logger.info("GET request admin/orders");
 
-        model.addAttribute("activeOrders", orderService.findNotPaidOrders());
+
+        model.addAttribute("activeOrders", orderService.findOrdersByStatus(Status.NOT_PAID));
 
         return "admin/orders";
     }
