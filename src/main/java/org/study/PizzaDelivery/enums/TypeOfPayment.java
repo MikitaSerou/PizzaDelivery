@@ -1,8 +1,8 @@
 package org.study.PizzaDelivery.enums;
 
 public enum TypeOfPayment {
-    CASH("Cash"),
     CARD("Card"),
+    CASH("Cash"),
     ONLINE("Online");
 
     private final String str;

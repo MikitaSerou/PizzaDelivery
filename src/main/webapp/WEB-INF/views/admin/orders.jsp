@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
     <title><spring:message code="activeOrders.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
@@ -63,7 +63,8 @@
         <div class="dropdown">
             <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton2"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src='/resources/images/<spring:message code="img.lang.now"/>.png' width="28" height="20"/><spring:message code="lang.now"/>
+                <img src='/resources/images/<spring:message code="img.lang.now"/>.png' width="28"
+                     height="20"/><spring:message code="lang.now"/>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
@@ -87,24 +88,28 @@
                 </svg>
                 <spring:message code="promotions.title"/></a></button>
         </div>
-            <form class="form-inline my-2 my-lg-0" style="position:absolute; right:0;">
-                <input id="inputsearchquery" class="form-control mr-sm-2" type="number"
-                       placeholder='<spring:message code="user.search.by.id"/>'>
-                <button class="btn btn-secondary my-2 my-sm-0" onclick="mysearch()"><spring:message code="search"/></button>
-            </form>
+        <form class="form-inline my-2 my-lg-0" style="position:absolute; right:0;">
+            <input id="inputsearchquery" class="form-control mr-sm-2" type="number"
+                   placeholder='<spring:message code="user.search.by.id"/>'>
+            <button class="btn btn-secondary my-2 my-sm-0" onclick="mysearch()"><spring:message code="search"/></button>
+        </form>
     </nav>
 </div>
-<div class="container"  style="min-height: 80%">
+<div class="container" style="min-height: 80%">
     <div class="row">
         <div class="col-sm-9">
             <h1 class="display-2" align="left" margin="right">
                 <span id="pageHeader">&nbsp;<spring:message code="activeOrders.table"/>&nbsp;</span>
             </h1>
-            <a href="/admin"><button type="button" class="btn btn-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
-                </svg>
-                <spring:message code="back.button"/></button></a>
+            <a href="/admin">
+                <button type="button" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-arrow-left-square" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+                    </svg>
+                    <spring:message code="back.button"/></button>
+            </a>
             <br/>
             <br/>
             <br/>
@@ -159,38 +164,44 @@
             </thead>
             <c:forEach items="${activeOrders}" var="order">
                 <tr>
-                        <td>${order.id}</td>
+                    <td>${order.id}</td>
                     <td><a href="/admin/users/${order.user.id}">
                         <button type="submit" class="btn btn-warning">ID: ${order.user.id}<br/>
-                                ${order.user.username}</button></a></td>
-                        <td><c:forEach items="${order.orderItems}"
-                                       var="item">${item.product.name} (
-                            <fmt:formatNumber type="number" maxFractionDigits="2" value="${item.price}"/>)
-                        </c:forEach><br/></td>
-                        <td>
-                            <fmt:formatNumber type="number" maxFractionDigits="2" value="${order.price}"/></td>
-                        <td><spring:message code="${order.typeOfPayment.toString()}"/></td>
+                                ${order.user.username}</button>
+                    </a></td>
+                    <td><c:forEach items="${order.orderItems}"
+                                   var="item">
+                        <p style="font-size: 12px;">${item.product.name}&nbsp;
+                            <c:if test="${!item.comment.equals('')}">
+                                [${item.comment}]&nbsp;</c:if>
+                            - <fmt:formatNumber type="number" maxFractionDigits="2" value="${item.price}"/>
+                            .<spring:message code="currency"/></p>
+                    </c:forEach></td>
 
-                        <td>${order.phoneNumber}</td>
-                        <td>${order.comment}</td>
-                        <td>
-                            <fmt:parseDate value="${ order.time }" pattern="yyyy-MM-dd'T'HH:mm"
-                                           var="parsedDateTime" type="both" />
-                            <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${ parsedDateTime}" />
-                                </td>
-                        <td><spring:message code="${order.status.toString()}"/></td>
-                        <td>
-                            <form action="${pageContext.request.contextPath}/admin/orders" method="post">
+                    <td>
+                        <fmt:formatNumber type="number" maxFractionDigits="2" value="${order.price}"/></td>
+                    <td><spring:message code="${order.typeOfPayment.toString()}"/></td>
+
+                    <td>${order.phoneNumber}</td>
+                    <td>${order.comment}</td>
+                    <td>
+                        <fmt:parseDate value="${ order.time }" pattern="yyyy-MM-dd'T'HH:mm"
+                                       var="parsedDateTime" type="both"/>
+                        <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${ parsedDateTime}"/>
+                    </td>
+                    <td><spring:message code="${order.status.toString()}"/></td>
+                    <td>
+                        <form action="${pageContext.request.contextPath}/admin/orders" method="post">
                             <input type="hidden" name="orderId" value="${order.id}"/>
                             <input type="hidden" name="action" value="paidUp"/>
                             <button type="submit" class="btn btn-success"><spring:message code="paid.up"/></button>
-                            </form>
-                                <form action="${pageContext.request.contextPath}/admin/orders" method="post">
-                                <input type="hidden" name="orderId" value="${order.id}"/>
+                        </form>
+                        <form action="${pageContext.request.contextPath}/admin/orders" method="post">
+                            <input type="hidden" name="orderId" value="${order.id}"/>
                             <input type="hidden" name="action" value="cancel"/>
                             <button type="submit" class="btn btn-danger"><spring:message code="cancel"/></button>
-                                </form>
-                        </td>
+                        </form>
+                    </td>
                     </form>
                 </tr>
             </c:forEach>

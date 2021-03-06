@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
     <title><spring:message code="basket.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
@@ -16,6 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<c:url value="/resources/js/dropdownMenuScript.js" />"></script>
 </head>
 
 <body id="bodyDefault">
@@ -211,20 +212,21 @@
                                 <div class="form-group">
                                     <label for="formGroupExampleInput"><spring:message
                                             code="phoneNumber"/>:</label>
-                                    <input type="text" class="form-control" name="phoneNumber"
+                                    <input type="text" class="form-control" name="orderPhoneNumber"
                                            id="formGroupExampleInput" value="${user.phoneNumber}"
-                                           placeholder="<spring:message code="phoneNumber"/>" path="phoneNumber">
+                                           placeholder="<spring:message code="phoneNumber"/>" path="orderPhoneNumber">
                                     <span class="error"><spring:message code="${phoneError}"/></span>
                                     <br/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput2"><spring:message
+                                    <label for="dropdown"><spring:message
                                             code="typeOfPaymentChoose"/>:</label>
-                                    <select id="formGroupExampleInput2" class="form-control" name="typeOfPayment"
+                                    <select id="dropdown" class="form-control" name="typeOfPayment"
                                             path="typeOfPayment">
                                         <c:forEach items="${typesOfPayment}" var="type">
                                             <option name="typeOfPayment"
-                                                    value=${type} text="${type}"><spring:message code="${type.toString()}"/></option>
+                                                    value=${type} text="${type}"><spring:message
+                                                    code="${type.toString()}"/></option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -236,14 +238,41 @@
                                           style=" height: 105%; width: 100%"></textarea>
                                 </div>
                             </td>
+                            <input type="hidden" name="action" value="submit"/>
                             <td width="10%">
-                                <input type="hidden" name="action" value="submit"/>
-                                <button type="submit" formmethod="post" class="btn btn-success">
-                                    <h2 class="align-items-md-center" size="70"
-                                        style="margin-right: auto; margin-left: auto; padding-top: 15px; padding-bottom: 15px;">
-                                        <spring:message
-                                                code="submit.button"/></h2>
-                                </button>
+                                <div id="divCASH" class="box">
+                                    <div class="form-group">
+                                        <label for="change"><spring:message
+                                                code="change"/>:</label>
+                                        <input type="number" min="${basketSum}" class="form-control" name="change"
+                                               id="change">
+                                    </div>
+                                    <button type="submit" formmethod="post" class="btn btn-success">
+                                        <h2 class="align-items-md-center" size="70"
+                                            style="margin-right: auto; margin-left: auto; padding-top: 15px; padding-bottom: 15px;">
+                                            <spring:message
+                                                    code="submit.button"/></h2>
+                                    </button>
+                                </div>
+                                <div id="divONLINE" class="box">
+
+                                    <input type="hidden" name="basketSum" value="${basketSum}"/>
+                                    <button type="submit" formmethod="post" class="btn btn-success">
+                                        <h2 class="align-items-md-center" size="70"
+                                            style="margin-right: auto; margin-left: auto; padding-top: 15px; padding-bottom: 15px;">
+                                            <spring:message code="online.payment"/></h2>
+                                    </button>
+
+                                </div>
+                                <div id="divCARD" class="box">
+                                    <button type="submit" formmethod="post" class="btn btn-success">
+                                        <h2 class="align-items-md-center" size="70"
+                                            style="margin-right: auto; margin-left: auto; padding-top: 15px; padding-bottom: 15px;">
+                                            <spring:message
+                                                    code="submit.button"/></h2>
+                                    </button>
+                                </div>
+                                <input type='hidden' value='testing' id='HiddenInput' enableviewstate="true"/>
                             </td>
                         </table>
                     </form>

@@ -74,7 +74,7 @@ public class OrderService {
         return orderRepository.findAllByStatus(status);
     }
 
-    public void addOrder(User user, String phoneNumber, String comment, TypeOfPayment typeOfPayment) {
+    public Order addOrder(User user, String phoneNumber, String comment, TypeOfPayment typeOfPayment) {
         logger.info("Call method: addOrder(user: " + user +
                 ", phoneNumber: " + phoneNumber +
                 ", comment: " + comment +
@@ -85,8 +85,9 @@ public class OrderService {
         logger.info("Save new Order: " + order);
         orderRepository.save(order);
         orderItemService.addOrderItemsFromBasket(basket, order);
-
         basketService.clearBasket(basket);
+
+        return order;
     }
 
 

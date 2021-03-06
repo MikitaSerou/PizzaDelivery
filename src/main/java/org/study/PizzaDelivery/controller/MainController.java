@@ -36,6 +36,9 @@ public class MainController {
     @Autowired
     private BaseService baseService;
 
+    @Autowired
+    private OrderService orderService;
+
 
     @GetMapping("/")
     public String mainPage(HttpSession session) {
@@ -88,5 +91,24 @@ public class MainController {
         basketService.addCustomProductToBasket(user, baseId, sauceId, ingredientsIds);
 
         return "redirect:/category";
+    }
+
+    @GetMapping("/onlinePayment")
+    public String onlinePayment(Model model) {
+        logger.info("GET request /onlinePayment");
+        if(model.getAttribute("orderId") ==null){
+
+        }
+
+        return "onlinePayment";
+    }
+
+    @PostMapping("/onlinePayment")
+    public String onlinePaymentSuccessful(@ModelAttribute("orderId") Long orderId) {
+        logger.info("POST request /onlinePayment [orderId: " + orderId + "]");
+
+        orderService.paidUpOrder(orderId);
+
+        return "redirect:/user";
     }
 }

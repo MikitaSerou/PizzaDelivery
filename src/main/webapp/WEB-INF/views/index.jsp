@@ -19,7 +19,7 @@
     <script src="<c:url value="/resources/js/userSearch.js" />"></script>
 </head>
 
-<body id="bodyDefault"><%-- class="container-fluid"--%>
+<body id="bodyDefault">
 
 <div class="sticky-top">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" style="height:10%">

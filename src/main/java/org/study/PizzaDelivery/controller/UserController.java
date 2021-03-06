@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.study.PizzaDelivery.enums.TypeOfPayment;
 import org.study.PizzaDelivery.model.Basket;
+import org.study.PizzaDelivery.model.Order;
 import org.study.PizzaDelivery.model.User;
 import org.study.PizzaDelivery.service.BasketItemService;
 import org.study.PizzaDelivery.service.BasketService;
@@ -69,16 +70,18 @@ public class UserController {
                                  @RequestParam(defaultValue = "") Long itemId,
                                  @RequestParam(defaultValue = "") String action,
                                  @RequestParam(defaultValue = "") String comment,
-                                 @RequestParam(defaultValue = "") String phoneNumber,
+                                 @RequestParam(defaultValue = "") String orderPhoneNumber,
+                                 @RequestParam(defaultValue = "") Double change,
                                  @RequestParam(defaultValue = "") TypeOfPayment typeOfPayment,
                                  Model model) {
         logger.info("POST request /user/basket" +
                 "[user: " + user +
                 ", itemId: " + itemId +
-                ", phoneNumber: " + phoneNumber +
+                ", orderPhoneNumber: " + orderPhoneNumber +
                 ", comment: " + comment +
                 ", typeOfPayment: " + typeOfPayment +
-                ", action: " + action + "]");
+                ", action: " + action +
+                ", change:" + change + "]");
 
         if (action.equals("deleteItem")) {
             basketItemService.deleteItem(itemId);
@@ -87,18 +90,28 @@ public class UserController {
             basketService.clearBasket(basketService.findActiveByUserID(user.getId()));
         }
         if (action.equals("submit")) {
-            if (phoneNumber.equals("") ||
-                    !Pattern.matches(formatter.getPhoneRegEx(), phoneNumber)) {
+            if (orderPhoneNumber.equals("") ||
+                    !Pattern.matches(formatter.getPhoneRegEx(), orderPhoneNumber)) {
                 logger.error("Errors in form. Phone number not specified.");
                 model.addAttribute("phoneError", "user.phoneNumber.empty");
                 return this.basket(user, model);
             }
-            orderService.addOrder(user, phoneNumber, comment, typeOfPayment);
+            if(change!=null){
+               comment = formatter.commentWithChangeFormatter(comment, change);
+            }
+
+            Order notPaidOrder =orderService.addOrder(user, orderPhoneNumber, comment, typeOfPayment);
             emailService.sendOrderInfoMessage(user, orderService.findLastOrderOfUserByUserId(user.getId()));
+
+            if (typeOfPayment.equals(TypeOfPayment.ONLINE)){
+                model.addAttribute("orderId", notPaidOrder.getId());
+                model.addAttribute("orderSum", notPaidOrder.getPrice());
+                return "onlinePayment";
+            }
+
             return "redirect:/user";
         }
 
         return "redirect:/user/basket";
     }
-
 }
