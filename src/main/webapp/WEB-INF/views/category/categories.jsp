@@ -89,18 +89,15 @@
             <form class="form-inline my-2 my-lg-0" style="position:absolute; right:0;">
                 <input id="inputsearchquery" class="form-control mr-sm-2" type="number"
                        placeholder='<spring:message code="user.search.by.id"/>'>
-                <button class="btn btn-secondary my-2 my-sm-0" onclick="mysearch()"><spring:message code="search"/></button>
+                <button class="btn btn-secondary my-2 my-sm-0" onclick="mysearch()"><spring:message
+                        code="search"/></button>
             </form>
         </sec:authorize>
     </nav>
 </div>
-
-
 <div class="container" style="min-height: 80%">
-
     <div class="row">
         <div class="col-sm-9">
-
             <h1 class="display-2" align="left" margin="right">
                 <span id="pageHeader">&nbsp;<spring:message code="category.title"/>&nbsp;</span>
             </h1>
@@ -121,7 +118,6 @@
             <br/>
             <br/>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
-
                 <div class="alert alert-success"><h1 class="display-4"><spring:message code="add.category"/></h1>
                     <form action="${pageContext.request.contextPath}/category" method="post">
                         <div class="row">
@@ -151,37 +147,33 @@
 
 
             <sec:authorize access="hasRole('ROLE_ADMIN')">
-            <div class="alert alert-warning">
-                <form action="${pageContext.request.contextPath}/category" method="post">
-                    <h1 class="display-4">${customCategory.name}</h1>
-                    <input type="hidden" class="form-control" name="categoryId" path="categoryId"
-                           value="${customCategory.id}">
-                    <div class="row">
-                        <div class="col">
-                            <label class="form-check-label" for="customPrice">
-                                    <spring:message code="price"/>
-                            <input id="customPrice" type="number" min="1" step="0.1" class="form-control" name="categoryPrice"
-                                   path="categoryPrice"
-                                   placeholder="${customCategory.price}">
+                <div class="alert alert-warning">
+                    <form action="${pageContext.request.contextPath}/category" method="post">
+                        <h1 class="display-4">${customCategory.name}</h1>
+                        <input type="hidden" class="form-control" name="categoryId" path="categoryId"
+                               value="${customCategory.id}">
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-check-label" for="customPrice">
+                                        <spring:message code="price"/>
+                                    <input id="customPrice" type="number" min="1" step="0.1" class="form-control"
+                                           name="categoryPrice"
+                                           path="categoryPrice"
+                                           placeholder="${customCategory.price}">
+                            </div>
+                            <div class="col">
+                                <input type="hidden" name="action" value="edit"/>
+                                <button type="submit" class="btn btn-light"><spring:message
+                                        code="edit.button"/></button>
+                            </div>
                         </div>
-                        <div class="col">
-                            <input type="hidden" name="action" value="edit"/>
-                            <button type="submit" class="btn btn-light"><spring:message
-                                    code="edit.button"/></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
             </sec:authorize>
-
-
-
             <c:forEach var="category" items="${categories}">
                 <div class="alert alert-warning">
-
                     <div class="row">
                         <div class="col"><h1 class="display-4" id="categoryName">${category.name}</h1></div>
-
                         <div class="col">
                             <sec:authorize access="hasRole('ROLE_ADMIN')">
                                 <form action="${pageContext.request.contextPath}/category" method="post">
@@ -227,6 +219,13 @@
 
                                 <div class="card text-white bg-primary mb-4" style="width: 100%; min-width: 250px;">
                                     <div style="margin-left: auto; margin-right: auto;">
+
+                                        <sec:authorize access="!hasRole('ROLE_ADMIN')">
+                                            <c:if test="${top3Names.contains(product.name)}">
+                                            <img src='<spring:url value="/resources/images/top.png" />'
+                                                 width="100px"
+                                                 height="100px" style="position:absolute; right:0; top: 0;"/></c:if>
+                                        </sec:authorize>
                                         <sec:authorize access="hasRole('ROLE_USER')">
                                         <a href="/category/${category.name}/${product.name}"></sec:authorize>
                                             <sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -240,15 +239,13 @@
                                                     </h2>
                                                 </sec:authorize>
                                                 <img src='<spring:url value="/resources/images/products/${product.name.toLowerCase()}.png" />'
-                                                     width="250px" height="250px" class="rounded" alt="${product.name}"/>
-                                           <%--     <img  src='<spring:url value="/resources/images/${product.id}.png" />'
-                                                     width="250px"
-                                                     height="250px"/>--%>
+                                                     width="250px" height="250px" class="rounded"
+                                                     alt="${product.name}"/>
                                             </a>
                                     </div>
                                     <form action="${pageContext.request.contextPath}/category/${category.name}/${product.name}"
                                           method="post">
-                                    <%--    <input type="hidden" name="action" value="addToBasket">--%>
+
                                         <div class="card-body" style=" min-height: 240px;">
                                             <h3 class="card-title">
                                                     <span id="pizzaName" style="margin-right: auto; margin-left: auto;">

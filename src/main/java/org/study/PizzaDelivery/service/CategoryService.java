@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.model.Category;
+import org.study.PizzaDelivery.model.Product;
 import org.study.PizzaDelivery.repository.CategoryRepository;
 
 import java.util.List;
@@ -82,10 +83,10 @@ public class CategoryService {
     @Modifying
     public void deleteCategory(Short categoryId) {
         logger.info("Call method: deleteCategory(categoryId: " + categoryId + ")");
-        List<String> distinctNamesOfCategoryProducts = productService.findAllDistinctNamesByCategoryId(categoryId);
 
-        for (String n : distinctNamesOfCategoryProducts) {
-            productService.archiveAllVariablesOfProductByName(n);
+        productService.findAllByCategoryId(categoryId);
+        for (Product product : productService.findAllByCategoryId(categoryId)){
+            productService.archiveProduct(product);
         }
 
         Optional<Category> categoryForDelete = categoryRepository.findById(categoryId);

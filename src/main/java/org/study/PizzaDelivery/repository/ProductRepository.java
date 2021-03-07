@@ -13,12 +13,9 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
 
-    List<Product> findAllByCategoryName(String categoryName);
-
     Product findById(long id);
 
-    List<Product> findAllById(long id);
-
+    @Transactional
     List<Product> findAllByCategoryId(short categoryId);
 
     Product findDistinctTopByName(String name);
@@ -32,9 +29,12 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
     List<Product> findAllByName(String name);
 
     @Transactional
-    @Query(value = "SELECT DISTINCT PRODUCT.name from PUBLIC.PRODUCT where PRODUCT.CATEGORY_id = ?1",
+    @Query(value = "SELECT  * FROM PRODUCT WHERE ID IN" +
+            "(SELECT PRODUCT_ID FROM ORDER_ITEM GROUP BY PRODUCT_ID order by (count(PRODUCT_ID), PRICE) desc limit 3)" +
+            " AND PRODUCT.CATEGORY_ID IN (SELECT CATEGORY_ID FROM CATEGORY " +
+            "WHERE CATEGORY.NAME !='Архив' AND CATEGORY.NAME !='Своя' );",
             nativeQuery = true)
-    List<String> findDistinctNamesByCategoryId(short categoryId);
+    List<Product> findTop3();
 
     @Transactional
     List<Product> findAllByBase(Base base);
