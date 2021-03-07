@@ -244,7 +244,7 @@
                                     <div class="form-group">
                                         <label for="change"><spring:message
                                                 code="change"/>:</label>
-                                        <input type="number" min="${basketSum}" class="form-control" name="change"
+                                        <input type="number" class="form-control" name="change"
                                                id="change">
                                     </div>
                                     <button type="submit" formmethod="post" class="btn btn-success">

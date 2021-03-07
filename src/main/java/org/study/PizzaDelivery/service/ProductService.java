@@ -33,11 +33,28 @@ public class ProductService {
     @Autowired
     private IngredientService ingredientService;
 
+
     @Transactional
     public Product findDistinctTopByName(String productName) {
         logger.info("Call method: findDistinctTopByName(productName: " + productName + ")");
 
         return productRepository.findDistinctTopByName(productName);
+    }
+
+    @Transactional
+    public List<Product> selectTop3Products() {
+        logger.info("Call method: selectTop3Products()");
+
+        return productRepository.findTop3();
+    }
+
+    @Transactional
+    public List<String> selectTop3ProductsNames() {
+        logger.info("Call method: selectTop3ProductsNames()");
+        List<String> top3Names = new ArrayList<>();
+        selectTop3Products().forEach(p-> top3Names.add(p.getName()));
+
+       return top3Names;
     }
 
     @Transactional
@@ -58,7 +75,7 @@ public class ProductService {
 
         if (!name.equals("") && category != null) {
 
-            ArrayList<Ingredient> ingredients = new ArrayList<>();
+            List<Ingredient> ingredients = new ArrayList<>();
             for (short ingredientId : ingredientsId) {
                 logger.info("Find ingredient by id: " + ingredientId);
                 ingredients.add(ingredientService.findById(ingredientId));
@@ -93,10 +110,10 @@ public class ProductService {
         if (!newName.equals("")) {
 
             for (Product product : products) {
-                logger.info("Edit product with id: " +product.getId());
+                logger.info("Edit product with id: " + product.getId());
                 product.setName(newName);
 
-                ArrayList<Ingredient> ingredients = new ArrayList<>();
+                List<Ingredient> ingredients = new ArrayList<>();
                 for (short ingredientId : ingredientsId) {
                     logger.info("Find ingredient by id: " + ingredientId);
                     ingredients.add(ingredientService.findById(ingredientId));
@@ -116,6 +133,20 @@ public class ProductService {
     }
 
     @Transactional
+    public Iterable<Product> findAll() {
+        logger.info("Call method: findAll()");
+
+        return productRepository.findAll();
+    }
+
+    @Transactional
+    public List<Product> findAllByCategoryId(Short categoryId) {
+        logger.info("Call method: findAllByCategoryId(categoryId: " + categoryId + ")");
+
+        return productRepository.findAllByCategoryId(categoryId);
+    }
+
+    @Transactional
     public List<Product> findAllByBase(Base base) {
         logger.info("Call method: findAllByBase(base: " + base + ")");
 
@@ -123,17 +154,12 @@ public class ProductService {
     }
 
     @Transactional
-    public List<String> findAllDistinctNamesByCategoryId(Short categoryId) {
-        logger.info("Call method: findAllDistinctNamesByCategoryId(categoryId: " + categoryId + ")");
+    public void archiveProduct(Product product) {
+        logger.info("Call method: archiveProduct(product: " + product + ")");
 
-        return productRepository.findDistinctNamesByCategoryId(categoryId);
-    }
-
-    @Transactional
-    public Iterable<Product> findAll() {
-        logger.info("Call method: findAll()");
-
-        return productRepository.findAll();
+                product.setCategory(categoryService.findByName("Архив"));
+                logger.info("Add the product: " + product + " to the archive category");
+                productRepository.save(product);
     }
 
     @Transactional
@@ -144,9 +170,7 @@ public class ProductService {
 
             List<Product> products = productRepository.findAllByName(productName);
             for (Product product : products) {
-                product.setCategory(categoryService.findByName("Архив"));
-                logger.info("Add the product: " + product + " to the archive category");
-                productRepository.save(product);
+              archiveProduct(product);
             }
         }
     }

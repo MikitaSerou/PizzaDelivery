@@ -89,6 +89,8 @@ html {
     border: solid black 1px;
     width: 100%;
     font-size: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .quote{
@@ -129,13 +131,15 @@ html {
 #myFooter {
     border-top: solid 1px gray;
     top: 100px;
+    color: white;
     padding-top: 15px;
     padding-bottom: 15px;
     margin-right: 50px;
     margin-left: 50px;
+    margin-bottom: 50px;
     position: relative;
     text-align: center;
-    height: 25px;
+    height: 50px;
 }
 
 ::-webkit-scrollbar {

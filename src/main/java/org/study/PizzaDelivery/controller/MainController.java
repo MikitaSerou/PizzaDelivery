@@ -39,10 +39,15 @@ public class MainController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private ProductService productService;
+
 
     @GetMapping("/")
-    public String mainPage(HttpSession session) {
+    public String mainPage(HttpSession session, Model model) {
         logger.info("GET request /");
+
+        model.addAttribute("topProducts", productService.selectTop3Products());
 
         logger.info("User in HttpSession: " + session.getAttribute("user"));
         if (session.getAttribute("user") == null) {
