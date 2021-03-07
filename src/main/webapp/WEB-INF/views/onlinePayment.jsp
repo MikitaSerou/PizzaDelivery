@@ -84,7 +84,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <input type="submit" formmethod="post" value="<spring:message code="online.payment"/>
-                             ${orderSum}" class="btn btn-pay placeicon"> </div>
+                             ${orderSum}.<spring:message code="currency"/>" class="btn btn-pay placeicon"> </div>
                     </div>
                 </form>
             </div>
