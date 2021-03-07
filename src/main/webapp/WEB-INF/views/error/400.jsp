@@ -43,16 +43,16 @@
         <div class="col-sm-6" style="backdrop-filter: blur(7px); border-radius: 30px">
 
             <br/>
-                <div class="row justify-content-md-center">
-                    <div class="alert alert-dismissible alert-danger">
-                        <h1 align="center">404</h1>
-                        <h2 align="center">${ex}</h2>
-                    </div>
-                    <img src='<spring:url value="https://gifki.info/uploads/posts/2017-06/1498693660_2955-sho-opyat.gif"/>'
-                         width="384px"
-                         height="344px" class="rounded" alt="kek">
-                    <br/>
+            <div class="row justify-content-md-center">
+                <div class="alert alert-dismissible alert-danger">
+                    <h1 align="center">400</h1>
+                    <h2 align="center">${ex}</h2>
                 </div>
+                <img src='<spring:url value="https://gifki.info/uploads/posts/2017-06/1498693660_2955-sho-opyat.gif"/>'
+                     width="384px"
+                     height="344px" class="rounded" alt="kek">
+                <br/>
+            </div>
             <br/>
         </div>
         <div class="col-sm"></div>

@@ -58,12 +58,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .setCachePeriod(31556926);
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/promotions").setViewName("promotions");
-
-    }
-
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource =

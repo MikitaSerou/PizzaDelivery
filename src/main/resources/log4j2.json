@@ -1,33 +1,33 @@
 {
-    "Configuration": {
-        "Appenders": {
-            "Console": {
-                "PatternLayout": {
-                    "pattern": "%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n"
-                },
-                "name": "Console",
-                "target": "SYSTEM_OUT"
-            },
-            "File": {
-                "PatternLayout": {
-                    "pattern": "%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n"
-                },
-                "name": "File",
-                "fileName": "/home/nikita/IdeaProjects/Git/PizzaDelivery/log/projectAppLog.log"
-            }
+  "Configuration": {
+    "Appenders": {
+      "Console": {
+        "PatternLayout": {
+          "pattern": "%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n"
         },
-        "Loggers": {
-            "Root": {
-                "AppenderRef": [
-                    {
-                        "ref": "Console"
-                    },
-                    {
-                        "ref": "File"
-                    }
-                ],
-                "level": "info"
-            }
-        }
+        "name": "Console",
+        "target": "SYSTEM_OUT"
+      },
+      "File": {
+        "PatternLayout": {
+          "pattern": "%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n"
+        },
+        "name": "File",
+        "fileName": "/home/nikita/IdeaProjects/PizzaDelivery/log/projectAppLog.log"
+      }
+    },
+    "Loggers": {
+      "Root": {
+        "AppenderRef": [
+          {
+            "ref": "Console"
+          },
+          {
+            "ref": "File"
+          }
+        ],
+        "level": "info"
+      }
     }
+  }
 }
