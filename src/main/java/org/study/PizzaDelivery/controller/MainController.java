@@ -47,7 +47,7 @@ public class MainController {
     public String mainPage(HttpSession session, Model model) {
         logger.info("GET request /");
 
-        model.addAttribute("topProducts", productService.selectTop3Products());
+        model.addAttribute("topProducts", productService.findTop3Products().values());
 
         logger.info("User in HttpSession: " + session.getAttribute("user"));
         if (session.getAttribute("user") == null) {

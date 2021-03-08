@@ -144,10 +144,10 @@
                         </ol>
                         <div class="carousel-inner">
                             <c:forEach items="${topProducts}" var="product">
-                            <c:if test="${topProducts.get(0).equals(product)}">
+                            <c:if test="${topProducts.stream().findFirst().get().equals(product)}">
                             <div class="carousel-item active" style="width: 100%">
                                 </c:if>
-                                <c:if test="${!topProducts.get(0).equals(product)}">
+                                <c:if test="${!topProducts.stream().findFirst().get().equals(product)}">
                                 <div class="carousel-item" style="width: 100%">
                                     </c:if>
                                     <a href="/category/${product.category.name}/${product.name}">

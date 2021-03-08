@@ -41,7 +41,7 @@ public class CategoryController {
         model.addAttribute("categories", categoryService.getAllStandardCategories());
         model.addAttribute("bases", baseService.findAll());
         model.addAttribute("cheapestProducts", productService.findAllByBase(baseService.findCheapest()));
-        model.addAttribute("top3Names", productService.selectTop3ProductsNames());
+        model.addAttribute("top3Names", productService.findTop3Products().keySet());
 
         return "category/categories";
     }

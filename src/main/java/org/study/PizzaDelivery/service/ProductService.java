@@ -12,9 +12,11 @@ import org.study.PizzaDelivery.model.Ingredient;
 import org.study.PizzaDelivery.model.Product;
 import org.study.PizzaDelivery.repository.ProductRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.math.BigInteger;
+import java.util.*;
 
 @Service
 public class ProductService {
@@ -33,28 +35,15 @@ public class ProductService {
     @Autowired
     private IngredientService ingredientService;
 
+    @PersistenceContext
+    EntityManager entityManager;
+
 
     @Transactional
     public Product findDistinctTopByName(String productName) {
         logger.info("Call method: findDistinctTopByName(productName: " + productName + ")");
 
         return productRepository.findDistinctTopByName(productName);
-    }
-
-    @Transactional
-    public List<Product> selectTop3Products() {
-        logger.info("Call method: selectTop3Products()");
-
-        return productRepository.findTop3();
-    }
-
-    @Transactional
-    public List<String> selectTop3ProductsNames() {
-        logger.info("Call method: selectTop3ProductsNames()");
-        List<String> top3Names = new ArrayList<>();
-        selectTop3Products().forEach(p-> top3Names.add(p.getName()));
-
-       return top3Names;
     }
 
     @Transactional
@@ -157,9 +146,9 @@ public class ProductService {
     public void archiveProduct(Product product) {
         logger.info("Call method: archiveProduct(product: " + product + ")");
 
-                product.setCategory(categoryService.findByName("Архив"));
-                logger.info("Add the product: " + product + " to the archive category");
-                productRepository.save(product);
+        product.setCategory(categoryService.findByName("Архив"));
+        logger.info("Add the product: " + product + " to the archive category");
+        productRepository.save(product);
     }
 
     @Transactional
@@ -170,8 +159,28 @@ public class ProductService {
 
             List<Product> products = productRepository.findAllByName(productName);
             for (Product product : products) {
-              archiveProduct(product);
+                archiveProduct(product);
             }
         }
+    }
+
+    public Map<String, Product> findTop3Products() {
+        logger.info("Call method: selectTop3Products()");
+        Query query = entityManager.createNativeQuery("SELECT PRODUCT_id FROM (Select * From ORDER_ITEM " +
+                "WHERE PRODUCT_ID in (select id from PRODUCT  WHERE PRODUCT.CATEGORY_ID > '2')) by " +
+                "GROUP BY PRODUCT_id order by count(PRODUCT_id) desc");
+
+        List<BigInteger> topId =  query.getResultList();
+
+
+        Map<String, Product> topProducts = new HashMap<>();
+        for (BigInteger id : topId) {
+            Product product = productRepository.findById(id.longValue());
+            if (!topProducts.containsKey(product.getName()) && topProducts.size() != 3) {
+                topProducts.put(product.getName(), product);
+            }
+        }
+
+        return topProducts;
     }
 }
