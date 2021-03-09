@@ -60,7 +60,7 @@ public class BasketItemService {
         }
 
         for (short ingredientId : ingredientsIds) {
-            ingredientsDescription.append(", " + ingredientService.findById(ingredientId).getName());
+            ingredientsDescription.append(", ").append(ingredientService.findById(ingredientId).getName());
             customProductPrice += ingredientService.findById(ingredientId).getPrice();
         }
 

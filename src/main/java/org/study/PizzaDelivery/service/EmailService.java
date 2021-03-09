@@ -21,6 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 @Service
@@ -39,9 +40,10 @@ public class EmailService {
         logger.info("Call method: sendRegistrationSuccessfulMail(user:" + user + ")");
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                ResourceBundle i18nBundle = ResourceBundle.getBundle("i18n/message", LocaleContextHolder.getLocaleContext().getLocale());
+                ResourceBundle i18nBundle = ResourceBundle.getBundle("i18n/message", Objects.requireNonNull(
+                        Objects.requireNonNull(LocaleContextHolder.getLocaleContext()).getLocale()));
                 mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getMail()));
-                mimeMessage.setFrom(new InternetAddress(env.getProperty("email.sender")));
+                mimeMessage.setFrom(new InternetAddress(Objects.requireNonNull(env.getProperty("email.sender"))));
                 mimeMessage.setSubject(i18nBundle.getString("mail.successful.registration"));
 
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -58,7 +60,6 @@ public class EmailService {
                 FileSystemResource res = new FileSystemResource(
                         new File(getClass().getResource("/").getPath() + "/email/logoBlack.png"));
                 helper.addInline("logo", res);
-
             }
         };
 
@@ -77,22 +78,30 @@ public class EmailService {
 
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 ResourceBundle i18nBundle = ResourceBundle.getBundle("i18n/message",
-                        LocaleContextHolder.getLocaleContext().getLocale());
+                        Objects.requireNonNull(Objects.requireNonNull(
+                                LocaleContextHolder.getLocaleContext()).getLocale()));
 
                 mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getMail()));
-                mimeMessage.setFrom(new InternetAddress(env.getProperty("email.sender")));
+                mimeMessage.setFrom(new InternetAddress(Objects.requireNonNull(env.getProperty("email.sender"))));
                 mimeMessage.setSubject(i18nBundle.getString("mail.subject.order"));
 
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
                 StringBuilder items = new StringBuilder();
-                order.getOrderItems().forEach(i -> {
-                    items.append("<p><i>" + i.getProduct().getName() +
-                            " " + i.getProduct().getBase().getName().toLowerCase() +
-                            " [" + i.getComment() + "]" +
-                            " - " + i18nBundle.getString("price").toLowerCase() + ": " + i.getPrice() +
-                            "." + i18nBundle.getString("currency") + ";</i></p>");
-                });
+                order.getOrderItems().forEach(i -> items.append("<p><i>")
+                        .append(i.getProduct().getName())
+                        .append(" ")
+                        .append(i.getProduct().getBase().getName().toLowerCase())
+                        .append(" [")
+                        .append(i.getComment())
+                        .append("]")
+                        .append(" - ")
+                        .append(i18nBundle.getString("price").toLowerCase())
+                        .append(": ")
+                        .append(i.getPrice())
+                        .append(".")
+                        .append(i18nBundle.getString("currency"))
+                        .append(";</i></p>"));
 
                 helper.setText("<html><body><img src='cid:logo'>" +
                         "<h1>" + i18nBundle.getString("mail.order.thanks") + " " + user.getUsername() + "!</h1>" +

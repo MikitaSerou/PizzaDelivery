@@ -47,9 +47,7 @@ public class OrderService {
 
         order.ifPresentOrElse(
                 logger::info,
-                () -> {
-                    logger.error("Order with this id: " + orderId + " is not exist.");
-                });
+                () -> logger.error("Order with this id: " + orderId + " is not exist."));
 
         return order.get();
     }
@@ -91,65 +89,53 @@ public class OrderService {
     }
 
 
-    public boolean cancelOrder(Long orderId) {
+    public void cancelOrder(Long orderId) {
         logger.info("Call method: cancelOrder(orderId: " + orderId + ")");
         Optional<Order> order = orderRepository.findById(orderId);
 
         order.ifPresentOrElse(
                 logger::info,
-                () -> {
-                    logger.error("Order with this id: " + orderId + " is not exist.");
-                });
+                () -> logger.error("Order with this id: " + orderId + " is not exist."));
 
         if (order.get().getStatus() == Status.CANCELED) {
-            return false;
+            return;
         }
 
         order.get().setStatus(Status.CANCELED);
         orderRepository.save(order.get());
-
-        return true;
     }
 
 
-    public boolean paidUpOrder(Long orderId) {
+    public void paidUpOrder(Long orderId) {
         logger.info("Call method: paidUpOrder(orderId: " + orderId + ")");
         Optional<Order> order = orderRepository.findById(orderId);
 
         order.ifPresentOrElse(
                 logger::info,
-                () -> {
-                    logger.error("Order with this id: " + orderId + " is not exist.");
-                });
+                () -> logger.error("Order with this id: " + orderId + " is not exist."));
 
         if (order.get().getStatus() == Status.PAID) {
-            return false;
+            return;
         }
 
         order.get().setStatus(Status.PAID);
         orderRepository.save(order.get());
-
-        return true;
     }
 
-    public boolean setOrderNotPaidStatus(Long orderId) {
+    public void setOrderNotPaidStatus(Long orderId) {
         logger.info("Call method: setOrderNotPaidStatus(orderId: " + orderId + ")");
         Optional<Order> order = orderRepository.findById(orderId);
 
         order.ifPresentOrElse(
                 logger::info,
-                () -> {
-                    logger.error("Order with this id: " + orderId + " is not exist.");
-                });
+                () -> logger.error("Order with this id: " + orderId + " is not exist."));
 
         if (order.get().getStatus() == Status.NOT_PAID) {
-            return false;
+            return;
         }
 
         order.get().setStatus(Status.NOT_PAID);
         orderRepository.save(order.get());
-
-        return true;
     }
 
     public void safeDeleteOrder(Order order) {

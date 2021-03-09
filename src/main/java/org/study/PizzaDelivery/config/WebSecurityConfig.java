@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Objects;
+
 @Configuration
 @EnableWebSecurity
 @PropertySource({"classpath:application.properties"})
@@ -71,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
         //Default admin in memory
-        auth.inMemoryAuthentication().withUser(env.getProperty("admin.login"))
+        auth.inMemoryAuthentication().withUser(Objects.requireNonNull(env.getProperty("admin.login")))
                 .password(passwordEncoder().encode(env.getProperty("admin.password"))).roles("ADMIN")
                 .and().withUser("Nikita").password(passwordEncoder().encode("Fesuso78")).roles("USER");
     }

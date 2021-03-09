@@ -25,5 +25,4 @@ $(document).ready(function () {
         var total = Number(sauce) + Number(ingredientsSum) + Number(basePrice);
         $("#result").text(total);
     });
-
 });

@@ -107,7 +107,7 @@ public class MainController {
     public String onlinePayment(Model model) {
         logger.info("GET request /onlinePayment");
         if (model.getAttribute("orderId") == null) {
-
+            return "error/404";
         }
 
         return "onlinePayment";

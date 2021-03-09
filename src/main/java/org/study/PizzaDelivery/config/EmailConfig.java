@@ -1,5 +1,6 @@
 package org.study.PizzaDelivery.config;
 
+import java.util.Objects;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,7 @@ public class EmailConfig {
     private Environment env;
 
     @Bean
-    public JavaMailSender getJavaMailSender()
-    {
+    public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(25);
@@ -40,11 +40,10 @@ public class EmailConfig {
 
 
     @Bean
-    public SimpleMailMessage emailTemplate()
-    {
+    public SimpleMailMessage emailTemplate() {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(env.getProperty("email.admin"));
-        message.setFrom(env.getProperty("email.sender"));
+        message.setTo(Objects.requireNonNull(env.getProperty("email.admin")));
+        message.setFrom(Objects.requireNonNull(env.getProperty("email.sender")));
         message.setText("New Order");
         return message;
     }

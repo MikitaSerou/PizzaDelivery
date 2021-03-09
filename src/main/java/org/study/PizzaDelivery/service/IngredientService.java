@@ -28,9 +28,7 @@ public class IngredientService {
 
         ingredient.ifPresentOrElse(
                 logger::info,
-                () -> {
-                    logger.error("Ingredient with this id: " + ingredientId + " is not exist.");
-                });
+                () -> logger.error("Ingredient with this id: " + ingredientId + " is not exist."));
 
         return ingredientRepository.findById(ingredientId).get();
     }
@@ -72,9 +70,7 @@ public class IngredientService {
                         ingredientForUpdate.get().setType(ingredientType);
                     }
                 },
-                () -> {
-                    logger.error("Ingredient with this id: " + ingredientId + " is not exist.");
-                });
+                () -> logger.error("Ingredient with this id: " + ingredientId + " is not exist."));
 
         ingredientRepository.save(ingredientForUpdate.get());
     }

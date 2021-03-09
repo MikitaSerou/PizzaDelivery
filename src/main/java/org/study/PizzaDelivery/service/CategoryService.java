@@ -74,9 +74,7 @@ public class CategoryService {
                     }
                     categoryRepository.save(categoryForUpdate.get());
                 },
-                () -> {
-                    logger.error("Category with this id: " + categoryId + " is not exist.");
-                });
+                () -> logger.error("Category with this id: " + categoryId + " is not exist."));
     }
 
     @Transactional
@@ -85,7 +83,7 @@ public class CategoryService {
         logger.info("Call method: deleteCategory(categoryId: " + categoryId + ")");
 
         productService.findAllByCategoryId(categoryId);
-        for (Product product : productService.findAllByCategoryId(categoryId)){
+        for (Product product : productService.findAllByCategoryId(categoryId)) {
             productService.archiveProduct(product);
         }
 
@@ -95,8 +93,6 @@ public class CategoryService {
                     logger.info(categoryForDelete);
                     categoryRepository.delete(categoryForDelete.get());
                 },
-                () -> {
-                    logger.error("Category with this id: " + categoryId + " is not exist.");
-                });
+                () -> logger.error("Category with this id: " + categoryId + " is not exist."));
     }
 }

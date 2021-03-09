@@ -18,7 +18,7 @@ public class AdviceController {
     @ExceptionHandler(value = {NoHandlerFoundException.class})
     public String Handler404(Exception ex, Model model) {
         logger.error("NoHandlerFoundException " + ex.getMessage());
-        model.addAttribute("ex",ex.getClass().getSimpleName());
+        model.addAttribute("ex", ex.getClass().getSimpleName());
 
         return "error/404";
     }
@@ -26,7 +26,7 @@ public class AdviceController {
     @ExceptionHandler(ConversionNotSupportedException.class)
     public String Handler500(Exception ex, Model model) {
         logger.error("ConversionNotSupportedException " + ex.getMessage());
-        model.addAttribute("ex",ex.getClass().getSimpleName());
+        model.addAttribute("ex", ex.getClass().getSimpleName());
 
         return "error/500";
     }
@@ -34,7 +34,7 @@ public class AdviceController {
     @ExceptionHandler(value = {TypeMismatchException.class})
     public String Handler400(Exception ex, Model model) {
         logger.error("TypeMismatchException " + ex.getMessage());
-        model.addAttribute("ex",ex.getClass().getSimpleName());
+        model.addAttribute("ex", ex.getClass().getSimpleName());
 
         return "error/400";
     }

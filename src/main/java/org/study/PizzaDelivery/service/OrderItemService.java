@@ -18,9 +18,6 @@ public class OrderItemService {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
-    @Autowired
-    private OrderService orderService;
-
 
     public void addOrderItemsFromBasket(Basket basket, Order order) {
         logger.info("Call method: addOrderItemsFromBasket(ingredientName: " + basket +

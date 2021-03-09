@@ -18,6 +18,5 @@ public interface CategoryRepository extends CrudRepository<Category, Short> {
 
     @Query(value = " SELECT * FROM CATEGORY WHERE NAME !='Своя' AND NAME !='Архив' Order by CATEGORY_PRICE",
             nativeQuery = true)
-
     List<Category> findAllStandard();
 }

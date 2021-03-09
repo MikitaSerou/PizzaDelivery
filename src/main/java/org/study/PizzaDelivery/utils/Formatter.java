@@ -3,6 +3,7 @@ package org.study.PizzaDelivery.utils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 @Component
@@ -17,7 +18,7 @@ public class Formatter {
 
     public String commentWithChangeFormatter(String comment, Double change) {
         ResourceBundle i18nBundle = ResourceBundle.getBundle("i18n/message",
-                LocaleContextHolder.getLocaleContext().getLocale());
+                Objects.requireNonNull(Objects.requireNonNull(LocaleContextHolder.getLocaleContext()).getLocale()));
 
         return comment + " (" + i18nBundle.getString("change.amount") + " " + change +
                 "." + i18nBundle.getString("currency") + ").";

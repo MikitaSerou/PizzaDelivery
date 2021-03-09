@@ -15,12 +15,10 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
 
     @Query(value = "SELECT * FROM ORDERS Where USER_ID = ?1  Order by TIME DESC",
             nativeQuery = true)
-
     List<Order> findAllByUserId(long userId);
 
     @Query(value = "SELECT * FROM ORDERS WHERE user_id = ?1 AND  id=(SELECT max(id) FROM ORDERS)",
             nativeQuery = true)
-
     Order findLastOrderOfUserByUserId(long userId);
 
     Order findById(long aLong);

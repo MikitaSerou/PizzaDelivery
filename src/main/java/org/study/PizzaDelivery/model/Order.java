@@ -5,7 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.study.PizzaDelivery.enums.Status;
 import org.study.PizzaDelivery.enums.TypeOfPayment;
-import org.study.PizzaDelivery.utils.Formatter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

@@ -1,7 +1,6 @@
 package org.study.PizzaDelivery.model;
 
 
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -26,11 +25,6 @@ public class Base {
 
     public Base() {
 
-    }
-
-    public Base(String name, double price) {
-        this.name = name;
-        this.priceMultiplier = price;
     }
 
     public short getId() {

@@ -3,7 +3,6 @@ package org.study.PizzaDelivery.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -96,14 +95,14 @@ public class UserController {
                 model.addAttribute("phoneError", "user.phoneNumber.empty");
                 return this.basket(user, model);
             }
-            if(change!=null){
-               comment = formatter.commentWithChangeFormatter(comment, change);
+            if (change != null) {
+                comment = formatter.commentWithChangeFormatter(comment, change);
             }
 
-            Order notPaidOrder =orderService.addOrder(user, orderPhoneNumber, comment, typeOfPayment);
+            Order notPaidOrder = orderService.addOrder(user, orderPhoneNumber, comment, typeOfPayment);
             emailService.sendOrderInfoMessage(user, orderService.findLastOrderOfUserByUserId(user.getId()));
 
-            if (typeOfPayment.equals(TypeOfPayment.ONLINE)){
+            if (typeOfPayment.equals(TypeOfPayment.ONLINE)) {
                 model.addAttribute("orderId", notPaidOrder.getId());
                 model.addAttribute("orderSum", notPaidOrder.getPrice());
                 return "onlinePayment";

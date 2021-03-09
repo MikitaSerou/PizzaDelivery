@@ -27,7 +27,7 @@ public class User implements UserDetails {
 
     @Column(name = "user_name", nullable = false)
     @NotEmpty(message = "{user.username.empty}")
-    @Size(min = 3, max =30, message = "{user.username.size}")
+    @Size(min = 3, max = 30, message = "{user.username.size}")
     private String username;
 
     @Column(name = "user_password", nullable = false)
@@ -42,8 +42,8 @@ public class User implements UserDetails {
 
     @Column(name = "phone_number")
     @NotEmpty(message = "{user.phoneNumber.empty}")
-    @Pattern(regexp="^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$",
-            message="{user.phoneNumber.pattern}")
+    @Pattern(regexp = "^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$",
+            message = "{user.phoneNumber.pattern}")
     private String phoneNumber;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

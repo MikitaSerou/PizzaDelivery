@@ -170,7 +170,7 @@ public class ProductService {
                 "WHERE PRODUCT_ID in (select id from PRODUCT  WHERE PRODUCT.CATEGORY_ID > '2')) by " +
                 "GROUP BY PRODUCT_id order by count(PRODUCT_id) desc");
 
-        List<BigInteger> topId =  query.getResultList();
+        List<BigInteger> topId = query.getResultList();
 
 
         Map<String, Product> topProducts = new HashMap<>();

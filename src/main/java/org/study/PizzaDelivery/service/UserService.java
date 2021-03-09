@@ -12,14 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.study.PizzaDelivery.model.Basket;
 import org.study.PizzaDelivery.model.Role;
 import org.study.PizzaDelivery.model.User;
-import org.study.PizzaDelivery.repository.RoleRepository;
 import org.study.PizzaDelivery.repository.UserRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.*;
 
 @Service
@@ -95,21 +91,17 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public boolean deleteUser(Long userId) {
+    public void deleteUser(Long userId) {
         logger.info("Call method: deleteUser(userId: " + userId + ")");
 
         if (userRepository.findById(userId).isPresent()) {
             logger.info("Deleting user with ID: " + userId);
-            orderService.findOrdersByUserId(userId).forEach(o -> {
-                orderService.safeDeleteOrder(o);
-            });
+            orderService.findOrdersByUserId(userId).forEach(o -> orderService.safeDeleteOrder(o));
             userRepository.deleteById(userId);
-            return true;
         } else {
             logger.error("user with ID: " + userId + " is not exist.");
         }
 
-        return false;
     }
 
 }

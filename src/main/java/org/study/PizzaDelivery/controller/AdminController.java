@@ -57,8 +57,7 @@ public class AdminController {
     }
 
     @PostMapping
-    public String deleteUser(@RequestParam(defaultValue = "") Long userId,
-                             @RequestParam(defaultValue = "") String action) {
+    public String deleteUser(@RequestParam(defaultValue = "") Long userId) {
         logger.info("POST request /admin " +
                 "[userId: " + userId + "]");
 
@@ -146,7 +145,7 @@ public class AdminController {
         if (productName.equals("")) {
             logger.error("Empty product name");
             model.addAttribute("addProductError", "add.product.error");
-           return "redirect:/admin/" + categoryName + "/addProduct";
+            return "redirect:/admin/" + categoryName + "/addProduct";
 
         }
 

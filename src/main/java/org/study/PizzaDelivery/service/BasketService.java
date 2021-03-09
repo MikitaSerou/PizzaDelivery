@@ -50,9 +50,7 @@ public class BasketService {
         Optional<Basket> basket = basketRepository.findById(basketId);
         basket.ifPresentOrElse(
                 logger::info,
-                () -> {
-                    logger.error("Basket with this id: " + basketId + " is not exist.");
-                });
+                () -> logger.error("Basket with this id: " + basketId + " is not exist."));
 
         return basket.get();
     }
