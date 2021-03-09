@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.model.*;
 import org.study.PizzaDelivery.repository.BasketItemRepository;
 
-import java.text.DecimalFormat;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +22,6 @@ public class BasketItemService {
 
     @Autowired
     private IngredientService ingredientService;
-
 
     @Transactional
     public List<BasketItem> getAllFromBasketByBasketId(Long basketId) {
@@ -70,11 +69,10 @@ public class BasketItemService {
         basketItemRepository.save(new BasketItem(basket, product, customProductPrice, ingredientsDescription.toString()));
     }
 
+    @Transactional
     public void deleteItem(Long itemId) {
         logger.info("Call method: deleteItem(itemId:" + itemId + ")");
 
         basketItemRepository.deleteByItemId(itemId);
     }
-
-
 }
