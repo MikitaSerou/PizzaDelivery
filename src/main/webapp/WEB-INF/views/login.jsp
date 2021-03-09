@@ -96,7 +96,7 @@
                     <strong><spring:message code="message.badCredentials"/></strong>
                 </div>
             </c:if>
-            <form:form name="f" method="post" action="/login" class="field" modelAttribute="loginForm">
+            <form:form name="f" method="post" action="${pageContext.request.contextPath}/login" class="field" modelAttribute="loginForm">
                 <div class="form-group">
                     <label for="formGroupExampleInput"><spring:message code="username" var="username"/></label>
                     <form:input type="text" name="username" class="form-control" id="formGroupExampleInput"
