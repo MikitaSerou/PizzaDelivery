@@ -3,6 +3,7 @@ package org.study.PizzaDelivery.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +43,9 @@ public class MainController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private Environment env;
+
 
     @GetMapping("/")
     public String mainPage(HttpSession session, Model model) {
@@ -51,10 +55,11 @@ public class MainController {
 
         logger.info("User in HttpSession: " + session.getAttribute("user"));
         if (session.getAttribute("user") == null) {
-            if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) {
+            if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")
+                    && !SecurityContextHolder.getContext().getAuthentication().getName().equals(env.getProperty("admin.login"))) {
                 logger.info("Initialize user object in HttpSession");
                 String name = SecurityContextHolder.getContext().getAuthentication().getName();
-                User user = userService.findByName(name);
+                User user = (User) userService.loadUserByUsername(name);
                 session.setAttribute("user", user);
                 if (session.getAttribute("user") != null) {
                     logger.info("Set User in session: " + user.toString());
@@ -101,7 +106,7 @@ public class MainController {
     @GetMapping("/onlinePayment")
     public String onlinePayment(Model model) {
         logger.info("GET request /onlinePayment");
-        if(model.getAttribute("orderId") ==null){
+        if (model.getAttribute("orderId") == null) {
 
         }
 

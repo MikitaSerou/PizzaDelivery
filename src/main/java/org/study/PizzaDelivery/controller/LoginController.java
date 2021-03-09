@@ -18,10 +18,13 @@ import javax.validation.Valid;
 public class LoginController {
 
     private static final Logger logger = LogManager.getLogger(LoginController.class);
+
+
     @GetMapping
     public String getPage(Model model) {
         logger.info("GET request /login");
         model.addAttribute("loginForm", new User());
+
         return "login";
     }
 

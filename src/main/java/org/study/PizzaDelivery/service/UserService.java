@@ -27,9 +27,6 @@ public class UserService implements UserDetailsService {
 
     private static final Logger logger = LogManager.getLogger(UserService.class);
 
-    @PersistenceContext
-    private EntityManager em;
-
     @Autowired
     private UserRepository userRepository;
 
@@ -43,20 +40,15 @@ public class UserService implements UserDetailsService {
     private OrderService orderService;
 
 
-    public User findByName(String userName) {
-        logger.info("Call method: findByName(userName: " + userName + ")");
-
-        return userRepository.findByUsername(userName);
-    }
-
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         logger.info("Call method: loadUserByUsername(userName: " + userName + ")");
         User user = userRepository.findByUsername(userName);
-        if (user == null) {
 
+        if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
+
         return user;
     }
 

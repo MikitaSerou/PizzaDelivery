@@ -69,7 +69,7 @@ public class OrderService {
 
     @Transactional
     public List<Order> findOrdersByStatus(Status status) {
-        logger.info("Call method: findOrdersByStatus(status: "+ status +")");
+        logger.info("Call method: findOrdersByStatus(status: " + status + ")");
 
         return orderRepository.findAllByStatus(status);
     }
@@ -159,7 +159,7 @@ public class OrderService {
             order.setStatus(Status.CANCELED);
         }
 
-        order.setUser(userService.findByName("Удаленный"));
+        order.setUser((User) userService.loadUserByUsername("Удаленный"));
         orderRepository.save(order);
     }
 }
