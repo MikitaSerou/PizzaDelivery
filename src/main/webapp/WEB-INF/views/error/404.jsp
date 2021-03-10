@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="shortcut icon" type="image/x-icon"
           href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
-    <title><spring:message code="login.title"/></title>
+    <title>404</title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
     <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
