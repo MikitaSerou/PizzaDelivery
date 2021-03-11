@@ -19,6 +19,7 @@ import org.study.PizzaDelivery.model.User;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 
 import java.io.File;
 import java.util.Objects;
@@ -34,6 +35,9 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired
+    ServletContext context;
 
 
     public void sendRegistrationSuccessfulMail(User user) {
@@ -58,7 +62,8 @@ public class EmailService {
 
 
                 FileSystemResource res = new FileSystemResource(
-                        new File(getClass().getResource("/").getPath() + "/email/logoBlack.png"));
+                        new File(context.getRealPath("") /*+ File.separator*/ //TODO Проверить
+                                + "resources/images/logo/logoBlack.png" ));
                 helper.addInline("logo", res);
             }
         };
@@ -119,7 +124,8 @@ public class EmailService {
                         "</body></html>", true);
 
                 FileSystemResource res = new FileSystemResource(
-                        new File(getClass().getResource("/").getPath() + "/email/logoBlack.png"));
+                        new File(context.getRealPath("") /*+ File.separator*/ //TODO Проверить
+                                + "resources/images/logo/logoBlack.png" ));
                 helper.addInline("logo", res);
             }
         };

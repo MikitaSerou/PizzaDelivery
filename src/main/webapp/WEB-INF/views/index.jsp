@@ -171,6 +171,9 @@
                         <img src='<spring:url value="https://istudy.by/upload/filemanager/d6a0ffd0f0/slider/rbljvayta-w1.jpg"/>'
                              width="100%" class="rounded" alt="kek">
                     </div>
+
+                    <img src='<spring:url value="/resources/images/usersPicture/SUAKA BLUAT.jpg"/>'
+                         width="100%" class="rounded" alt="kek">
                     <br>
                     <p><spring:message code="p5"/></p>
                     <p class="formLable" style="font-style: italic; color: white;">

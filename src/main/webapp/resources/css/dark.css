@@ -649,7 +649,7 @@ pre code {
 
 .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
     width: 100%;
-/*min-height: 0%;* TODO/
+/*min-height: 0%;*
  */
     /*height: 90%;*/
     padding-bottom: 0;
@@ -4339,7 +4339,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
-    height:10%;/*TODO*/
+    height:10%;
 }
 
 .nav-link {
