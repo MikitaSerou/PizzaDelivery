@@ -19,6 +19,18 @@ html {
     background-color: #f04124;
     border-radius: 4px;
 }
+.hover {
+    align-content: center;
+    text-align: center;
+    width: 100%;
+    height: 45px;
+    position: absolute;
+    top: -30px;
+    font-style: normal;
+    z-index: 2;
+    display: none;
+    margin: 0;
+}
 #productCard{
     background-color: #007bff;
     border-radius: 10px;

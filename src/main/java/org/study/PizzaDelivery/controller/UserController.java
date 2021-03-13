@@ -18,6 +18,7 @@ import org.study.PizzaDelivery.service.BasketItemService;
 import org.study.PizzaDelivery.service.BasketService;
 import org.study.PizzaDelivery.service.EmailService;
 import org.study.PizzaDelivery.service.OrderService;
+import org.study.PizzaDelivery.utils.FileChecker;
 import org.study.PizzaDelivery.utils.Formatter;
 
 import javax.servlet.ServletContext;
@@ -25,6 +26,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 @Controller
@@ -139,12 +141,12 @@ public class UserController {
             throws IOException {
 
         // Save file on system
-        if (!file.getOriginalFilename().isEmpty()) {
+        if (!Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
             BufferedOutputStream outputStream = new BufferedOutputStream(
                     new FileOutputStream(
                             new File(context.getRealPath("") + File.separator
                                     + "resources/images/usersPicture" + File.separator,
-                                   "SUAKA BLUAT.jpg")));
+                                   file.getOriginalFilename())));
             outputStream.write(file.getBytes());
             outputStream.flush();
             outputStream.close();

@@ -86,7 +86,7 @@
     <h2>Spring MVC - File Upload Example With Progress Bar</h2>
     <hr>
     <!-- File Upload From -->
-    <form action="fileUpload" method="post" enctype="multipart/form-data">
+    <form action="${pageContext.request.contextPath}/user/editUser" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label>Select File</label>
             <input class="form-control" type="file" name="file">
