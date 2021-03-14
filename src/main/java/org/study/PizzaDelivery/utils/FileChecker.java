@@ -1,30 +1,53 @@
 package org.study.PizzaDelivery.utils;
 
+import com.google.common.io.Files;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import org.study.PizzaDelivery.service.BaseService;
 
 import java.io.File;
 import java.util.Objects;
 
+@Component
 public class FileChecker {
 
+    private static final Logger logger = LogManager.getLogger(FileChecker.class);
 
-    public static String getFileExtension(MultipartFile file) {
-        String fileName = file.getName();
-        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
-            return fileName.substring(fileName.lastIndexOf(".") + 1);
-        } else {
-            return "";
+
+    public String getFileExtension(MultipartFile file) {
+        logger.info("Call method: getFileExtension(file:" + file + ")");
+        logger.info("FileExtension: " + Files.getFileExtension(Objects.requireNonNull(file.getOriginalFilename())));
+
+        return Files.getFileExtension(Objects.requireNonNull(file.getOriginalFilename()));
+    }
+
+    public boolean pngExtensionCheck(MultipartFile file) {
+        logger.info("Call method: pngExtensionCheck(file:" + file + ")");
+
+        boolean isPng = false;
+        if (!Objects.requireNonNull(file.getOriginalFilename()).isEmpty() &&
+                getFileExtension(file).equals("png")){
+            isPng = true;
         }
+
+        logger.info("Return: " + isPng);
+
+        return isPng;
     }
 
-    public static boolean pngExtensionCheck(MultipartFile file) {
+    public boolean jpgExtensionCheck(MultipartFile file) {
+        logger.info("Call method: jpgExtensionCheck(file:" + file + ")");
 
-        return !Objects.requireNonNull(file.getOriginalFilename()).isEmpty() && getFileExtension(file).equals("png");
-    }
+        boolean isJpg = false;
+        if (!Objects.requireNonNull(file.getOriginalFilename()).isEmpty() &&
+                (getFileExtension(file).equals("jpg") || getFileExtension(file).equals("jpeg"))){
+            isJpg = true;
+        }
 
-    public static boolean jpgExtensionCheck(MultipartFile file) {
+        logger.info("Return: " + isJpg);
 
-        return !Objects.requireNonNull(file.getOriginalFilename()).isEmpty() &&
-                getFileExtension(file).equals("jpg") && getFileExtension(file).equals("jpeg");
+        return isJpg;
     }
 }

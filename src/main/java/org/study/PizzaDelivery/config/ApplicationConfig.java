@@ -68,7 +68,6 @@ public class ApplicationConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));

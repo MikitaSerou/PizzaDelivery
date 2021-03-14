@@ -54,6 +54,9 @@ public class UserController {
     @Autowired
     ServletContext context;
 
+    @Autowired
+    FileChecker fileChecker;
+
 
     @GetMapping
     public String account(@ModelAttribute User user, Model model) {
@@ -127,21 +130,16 @@ public class UserController {
         return "redirect:/user/basket";
     }
 
-
-
-
     @GetMapping("/editUser")
     public String fileUploadForm(Model model) {
         return "user/editUser";
     }
 
-    // Handling file upload request
     @PostMapping("/editUser")
-    public ResponseEntity fileUpload(@RequestParam("file") MultipartFile file)
+    public ResponseEntity uploadUserPhoto(@RequestParam("file") MultipartFile file)
             throws IOException {
 
-        // Save file on system
-        if (!Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
+        if (fileChecker.jpgExtensionCheck(file) || fileChecker.pngExtensionCheck(file)) {
             BufferedOutputStream outputStream = new BufferedOutputStream(
                     new FileOutputStream(
                             new File(context.getRealPath("") + File.separator
