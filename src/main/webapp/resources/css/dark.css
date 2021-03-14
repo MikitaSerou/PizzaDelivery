@@ -6,13 +6,6 @@
     width: 220px;
     height: 60px;
 }
-html {
-    height: 100%;
-    min-height: 100%;
-    overflow: auto;
-    width: 100%;
-    min-width: 100%;
-}
 .error {
     color: white;
     font-weight: bold;
@@ -56,20 +49,17 @@ html {
     /* Местоположение фоновой картинки */
     background-image: url(../images/background/mainBack4.jpeg);
     /* Фоновое изображение выровнено по центру в горизонтальной и вертикальной плоскостях */
-    /* Фон не повторяется */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
+    /* Фон повторяется */
     min-height: 100%;
-    height: 100%;
+    background-size: cover;
+    background-repeat: repeat;
+    background-attachment: scroll;
     margin: 0;
     width: 100%;
     object-fit: contain;
-    backdrop-filter: blur(7px);
-    padding-bottom: 25px;
-    padding: 0;
-    overflow: auto;
-    min-width: 100%;
+    height: 100%;
+
+    padding-bottom: 50px;
 }
 #pageHeader{
     background-color: rgba(39,43,48,0.9);
@@ -133,12 +123,11 @@ html {
     color: white;
     padding-top: 15px;
     padding-bottom: 15px;
-    margin-right: 50px;
-    margin-left: 50px;
     margin-bottom: 50px;
     position: relative;
     text-align: center;
     height: 50px;
+    background-color: #272b30;
 }
 ::-webkit-scrollbar {
     width: 10px;
@@ -155,6 +144,18 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 :root {
     --blue: #007bff;
