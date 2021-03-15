@@ -136,21 +136,31 @@ public class UserController {
     }
 
     @PostMapping("/editUser")
-    public ResponseEntity uploadUserPhoto(@RequestParam("file") MultipartFile file)
+    public ResponseEntity uploadUserPhoto(
+            @RequestParam("file") MultipartFile file)
             throws IOException {
 
+        System.err.println(file.getName());
+        System.err.println(file.getOriginalFilename());
+        System.err.println(file.getContentType());
+        System.err.println(file.getSize());
+
         if (fileChecker.jpgExtensionCheck(file) || fileChecker.pngExtensionCheck(file)) {
+            System.err.println("Save: " + file);
+            File fileForSave =  new File(context.getRealPath("") + File.separator
+                    + "resources/images/usersPicture" + File.separator
+                     + "KEKO.png");
+            System.err.println("File for save: " + fileForSave);
             BufferedOutputStream outputStream = new BufferedOutputStream(
-                    new FileOutputStream(
-                            new File(context.getRealPath("") + File.separator
-                                    + "resources/images/usersPicture" + File.separator,
-                                   file.getOriginalFilename())));
+                    new FileOutputStream(fileForSave));
             outputStream.write(file.getBytes());
+            System.err.println("write: " + file.getBytes());
             outputStream.flush();
+            System.err.println("flush");
             outputStream.close();
+            System.err.println("close");
         }else{
             return new ResponseEntity<>("Invalid file.", HttpStatus.BAD_REQUEST);
-
         }
 
         return new ResponseEntity<>("File Uploaded Successfully.",HttpStatus.OK);
