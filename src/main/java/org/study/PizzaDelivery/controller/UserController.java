@@ -14,19 +14,10 @@ import org.study.PizzaDelivery.enums.TypeOfPayment;
 import org.study.PizzaDelivery.model.Basket;
 import org.study.PizzaDelivery.model.Order;
 import org.study.PizzaDelivery.model.User;
-import org.study.PizzaDelivery.service.BasketItemService;
-import org.study.PizzaDelivery.service.BasketService;
-import org.study.PizzaDelivery.service.EmailService;
-import org.study.PizzaDelivery.service.OrderService;
-import org.study.PizzaDelivery.utils.FileChecker;
+import org.study.PizzaDelivery.service.*;
 import org.study.PizzaDelivery.utils.Formatter;
 
-import javax.servlet.ServletContext;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 @Controller
@@ -52,10 +43,7 @@ public class UserController {
     private EmailService emailService;
 
     @Autowired
-    ServletContext context;
-
-    @Autowired
-    FileChecker fileChecker;
+    private FileService fileService;
 
 
     @GetMapping
@@ -132,27 +120,16 @@ public class UserController {
 
     @GetMapping("/editUser")
     public String fileUploadForm(Model model) {
+
         return "user/editUser";
     }
 
-    @PostMapping("/editUser")
-    public ResponseEntity uploadUserPhoto(@RequestParam("file") MultipartFile file)
-            throws IOException {
+    @PostMapping("/editUser/uploadFile")
+    public ResponseEntity uploadUserPhoto(@RequestParam("file") MultipartFile file,
+                                          @ModelAttribute User user) throws IOException {
+        logger.info("POST request /user/editUser" +
+                "[file: " + file + "]");
 
-        if (fileChecker.jpgExtensionCheck(file) || fileChecker.pngExtensionCheck(file)) {
-            BufferedOutputStream outputStream = new BufferedOutputStream(
-                    new FileOutputStream(
-                            new File(context.getRealPath("") + File.separator
-                                    + "resources/images/usersPicture" + File.separator,
-                                   file.getOriginalFilename())));
-            outputStream.write(file.getBytes());
-            outputStream.flush();
-            outputStream.close();
-        }else{
-            return new ResponseEntity<>("Invalid file.", HttpStatus.BAD_REQUEST);
-
-        }
-
-        return new ResponseEntity<>("File Uploaded Successfully.",HttpStatus.OK);
+        return fileService.userAvatarUploading(file, user);
     }
 }

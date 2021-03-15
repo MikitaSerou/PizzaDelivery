@@ -18,9 +18,12 @@
             type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <script src="<c:url value="/resources/js/userSearch.js" />"></script>
     <script src="<c:url value="/resources/js/scroll-startstop.events.jquery.js" />" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/scrollButtons.js"/>"></script>
+    <script src="<c:url value="/resources/js/fileUploading.js"/>"></script>
+
 </head>
 <body id="bodyDefault">
 <div class="sticky-top">
@@ -93,7 +96,7 @@
     </nav>
 </div>
 
-<div id="content"  class="container" style="min-height: 80%">
+<div id="content" class="container" style="min-height: 80%">
     <div class="row">
         <div class="col-sm-9">
             <h1 class="display-2">
@@ -116,21 +119,22 @@
                             <strong><spring:message code="add.product.error"/></strong>
                         </div>
                     </c:if>
-                    <form action="${pageContext.request.contextPath}/admin/${categoryName}/addProduct"
+                    <form id="addProductForm" name="addProductForm"
+                          action="${pageContext.request.contextPath}/admin/${categoryName}/addProduct"
                           method="post">
                         <div class="form-group" style="width: 50%">
-                            <label for="formInput1" class="formLable">
+                            <label for="inputProductName" class="formLable">
                                 <span style="font-size: 30px;"><spring:message code="p.name"/></span></label>
-                            <input type="text" class="form-control" name="productName" id="formInput1"
+                            <input type="text" class="form-control" name="productName" id="inputProductName"
                                    placeholder="<spring:message code="p.name"/>">
                         </div>
                         <div class="form-group">
-                            <label class="formLable" for="formInput2"><span style="font-size: 30px;">
+                            <label class="formLable" for="formInput1"><span style="font-size: 30px;">
                                 <span><img class="rounded"
                                            src='<spring:url value="/resources/images/ingredients/sauce.png"/>'
                                            width="50px" height="50px" alt="sauce"/></span>
                                 <spring:message code="choose.sauce"/></span></label>
-                            <select class="form-control" id="formInput2" name="ingredientsIds"
+                            <select class="form-control" id="formInput1" name="ingredientsIds"
                                     style="max-width: 50%">
                                 <c:forEach items="${sauces}" var="sauce">
                                     <option name="ingredientsIds" value=${sauce.id}>${sauce.name}</option>
@@ -190,19 +194,61 @@
                                 </c:forEach>
                             </tr>
                         </table>
+
+
                         <div class="form-group">
                             <label class="formLable" for="formInput4">
                                 <span style="font-size: 30px; max-width: 100%">
                                     <spring:message code="description"/></span></label>
                             <textarea id="formInput4" name="description"
-                                      placeholder="<spring:message code="description"/>" maxlength="255" rows="6"
+                                      placeholder="<spring:message code="description"/>" maxlength="255"
+                                      rows="6"
                                       style=" /*height: 105%;*/ width: 100%"></textarea>
                         </div>
                         <br/>
-                        <button formmethod="post" type="submit" class="btn btn-success"
+                        <button id="addProductButton" formmethod="post" type="submit" form="addProductForm"
+                                class="btn btn-success"
                         ><span style="font-size: 30px"><spring:message
                                 code="add.button"/></span></button>
                     </form>
+                    <div style="height: 280px; width: 280px; position: absolute; right:0; top: 0;">
+                        <form id="fileUploadForm" name="fileUploadForm"
+                              action="${pageContext.request.contextPath}/admin/uploadFile"
+                              method="post" enctype="multipart/form-data">
+                            <label for="uploadingUrl"></label>
+                            <input id="uploadingUrl" hidden name="url"
+                                   value="${pageContext.request.contextPath}/admin/uploadFile">
+                            <input hidden id="productNameToFile" name="productName" value="">
+                            <input hidden name="categoryName" value="${categoryName}">
+
+                            <label>Select File</label>
+                            <input class="form-control" type="file" name="file">
+
+                            <div class="form-group">
+                                <button id="fileUploadButton" class="btn btn-primary" form="fileUploadForm"
+                                        type="submit">Upload
+                                </button>
+                            </div>
+                        </form>
+                        <div class="progress">
+                            <div id="progressBar"
+                                 class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+                                 role="progressbar"
+                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%; color: white; font-size: 14px;">0%
+                            </div>
+                        </div>
+                        <div id="alertMsg" style="color: red;font-size: 18px;"></div>
+                        <script type="text/javascript">
+
+                            $(document).ready(function () {
+                                $("#inputProductName").keyup(function () {
+                                    var name = $(this).val();
+                                    $("#productNameToFile").val(name);
+                                }).keyup();
+                            });
+                        </script>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -245,12 +291,20 @@
     </div>
 </div>
 
-<div style="display:none;" class="nav_up" id="nav_up"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#CCC" class="bi bi-chevron-up" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
-</svg></div>
-<div style="display:none;" class="nav_down" id="nav_down"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#CCC" class="bi bi-chevron-down" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-</svg></div>
+<div style="display:none;" class="nav_up" id="nav_up">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#CCC" class="bi bi-chevron-up"
+         viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+              d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+    </svg>
+</div>
+<div style="display:none;" class="nav_down" id="nav_down">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#CCC" class="bi bi-chevron-down"
+         viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+    </svg>
+</div>
 
 <div id="myFooter">
     <span><spring:message code="name.full"/></span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
