@@ -58,8 +58,6 @@
     width: 100%;
     object-fit: contain;
     height: 100%;
-
-    padding-bottom: 50px;
 }
 #pageHeader{
     background-color: rgba(39,43,48,0.9);
@@ -123,10 +121,9 @@
     color: white;
     padding-top: 15px;
     padding-bottom: 15px;
-    margin-bottom: 50px;
     position: relative;
     text-align: center;
-    height: 50px;
+    height: 53px;
     background-color: #272b30;
 }
 ::-webkit-scrollbar {
