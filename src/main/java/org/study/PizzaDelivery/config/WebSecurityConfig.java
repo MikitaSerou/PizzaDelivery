@@ -74,8 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
         //Default admin in memory
         auth.inMemoryAuthentication().withUser(Objects.requireNonNull(env.getProperty("admin.login")))
-                .password(passwordEncoder().encode(env.getProperty("admin.password"))).roles("ADMIN")
-                .and().withUser("Nikita").password(passwordEncoder().encode("Fesuso78")).roles("USER");
+                .password(passwordEncoder().encode(env.getProperty("admin.password"))).roles("ADMIN");
     }
 }
 
