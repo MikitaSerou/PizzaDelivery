@@ -1,4 +1,6 @@
 $(function() {
+    $('#mainFormButton').prop('disabled',true);
+
     $('button#fileUploadButton[type=submit]').click(function(e) {
         e.preventDefault();
         //Disable submit button
@@ -36,13 +38,25 @@ $(function() {
 
         // Called on success of file upload
         ajaxReq.done(function(msg) {
+            $('#alertMsg').css({'background-color':'green'});
             $('#alertMsg').text(msg);
+
+            $('#progressBar').removeClass('progress-bar progress-bar-striped bg-danger progress-bar-animated');
+            $('#progressBar').addClass('progress-bar progress-bar-striped bg-success progress-bar-animated');
+            $('#fileUploadButton').removeClass('btn btn-outline-success');
+            $('#fileUploadButton').addClass('btn btn-outline-secondary');
+
             $('input[type=file]').val('');
             $('button#fileUploadButton[type=submit]').prop('disabled',false);
+            $('#mainFormButton').prop('disabled',false);
         });
 
         // Called on failure of file upload
         ajaxReq.fail(function(jqXHR) {
+            $('#progressBar').removeClass('progress-bar progress-bar-striped bg-success progress-bar-animated');
+            $('#progressBar').addClass('progress-bar progress-bar-striped bg-danger progress-bar-animated');
+            $('#progressBar').text('faled');
+            $('#alertMsg').css({'background-color':'#ec4844'});
             $('#alertMsg').text(jqXHR.responseText);
             $('button#fileUploadButton[type=submit]').prop('disabled',false);
         });

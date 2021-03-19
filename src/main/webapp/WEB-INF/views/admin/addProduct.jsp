@@ -12,18 +12,17 @@
     <title>${category.name}&nbsp;<spring:message code="add.product"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="<spring:url value="/resources/css/scrollButtons.css"/>" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="<spring:url value="/resources/css/scrollButtons.css"/>"
+          media="screen"/>
     <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
     <script src="<c:url value="/resources/js/userSearch.js" />"></script>
-    <script src="<c:url value="/resources/js/scroll-startstop.events.jquery.js" />" type="text/javascript"></script>
+    <script src="<c:url value="/resources/js/scroll-startstop.events.jquery.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/scrollButtons.js"/>"></script>
     <script src="<c:url value="/resources/js/fileUploading.js"/>"></script>
-
 </head>
 <body id="bodyDefault">
 <div class="sticky-top">
@@ -205,41 +204,42 @@
                                       rows="6"
                                       style=" /*height: 105%;*/ width: 100%"></textarea>
                         </div>
-                        <br/>
                         <button id="addProductButton" formmethod="post" type="submit" form="addProductForm"
-                                class="btn btn-success"
+                                class="btn btn-success" style="position:absolute; left: 0; bottom: 0; width: 100%;"
                         ><span style="font-size: 30px"><spring:message
                                 code="add.button"/></span></button>
                     </form>
-                    <div style="height: 280px; width: 280px; position: absolute; right:0; top: 0;">
+                    <div>
                         <form id="fileUploadForm" name="fileUploadForm"
                               action="${pageContext.request.contextPath}/admin/uploadFile"
                               method="post" enctype="multipart/form-data">
-                            <label for="uploadingUrl"></label>
                             <input id="uploadingUrl" hidden name="url"
                                    value="${pageContext.request.contextPath}/admin/uploadFile">
                             <input hidden id="productNameToFile" name="productName" value="">
-                            <input hidden name="categoryName" value="${categoryName}">
 
-                            <label>Select File</label>
-                            <input class="form-control" type="file" name="file">
-
-                            <div class="form-group">
-                                <button id="fileUploadButton" class="btn btn-primary" form="fileUploadForm"
-                                        type="submit">Upload
+                            <label for="fileInput" class="formLable"><span style="font-size: 30px;">
+                                <spring:message code="upload.file"/></span>
+                            </label>
+                            <br/>
+                            <div class="progress">
+                                <div id="progressBar"
+                                     class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+                                     role="progressbar"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                     style="width: 0%; color: white; font-size: 14px;">0%
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="input-group">
+                                <input id="fileInput" type="file" class="form-control" name="file" aria-label="ZAP">
+                                <button id="fileUploadButton" form="fileUploadForm"
+                                        class="btn btn-outline-success" type="submit" id="inputGroupFileAddon04">
+                                    <spring:message code="file.upload.button"/>
                                 </button>
                             </div>
                         </form>
-                        <div class="progress">
-                            <div id="progressBar"
-                                 class="progress-bar progress-bar-striped bg-success progress-bar-animated"
-                                 role="progressbar"
-                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%; color: white; font-size: 14px;">0%
-                            </div>
-                        </div>
-                        <div id="alertMsg" style="color: red;font-size: 18px;"></div>
+                        <div id="alertMsg" class="error"></div>
                         <script type="text/javascript">
-
                             $(document).ready(function () {
                                 $("#inputProductName").keyup(function () {
                                     var name = $(this).val();
@@ -248,7 +248,10 @@
                             });
                         </script>
                     </div>
-
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
                 </div>
             </div>
         </div>

@@ -3,21 +3,20 @@ package org.study.PizzaDelivery.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.study.PizzaDelivery.enums.TypeOfPayment;
 import org.study.PizzaDelivery.model.Basket;
 import org.study.PizzaDelivery.model.Order;
 import org.study.PizzaDelivery.model.User;
-import org.study.PizzaDelivery.service.*;
-import org.study.PizzaDelivery.utils.Formatter;
+import org.study.PizzaDelivery.service.BasketItemService;
+import org.study.PizzaDelivery.service.BasketService;
+import org.study.PizzaDelivery.service.EmailService;
+import org.study.PizzaDelivery.service.OrderService;
+import org.study.PizzaDelivery.utils.FormatterUtil;
 
-import java.io.IOException;
 import java.util.regex.Pattern;
 
 @Controller
@@ -37,13 +36,10 @@ public class UserController {
     private BasketItemService basketItemService;
 
     @Autowired
-    private Formatter formatter;
+    private FormatterUtil formatterUtil;
 
     @Autowired
     private EmailService emailService;
-
-    @Autowired
-    private FileService fileService;
 
 
     @GetMapping
@@ -94,13 +90,13 @@ public class UserController {
         }
         if (action.equals("submit")) {
             if (orderPhoneNumber.equals("") ||
-                    !Pattern.matches(formatter.getPhoneRegEx(), orderPhoneNumber)) {
+                    !Pattern.matches(formatterUtil.getPhoneRegEx(), orderPhoneNumber)) {
                 logger.error("Errors in form. Phone number not specified.");
                 model.addAttribute("phoneError", "user.phoneNumber.empty");
                 return this.basket(user, model);
             }
             if (change != null) {
-                comment = formatter.commentWithChangeFormatter(comment, change);
+                comment = formatterUtil.commentWithChangeFormatter(comment, change);
             }
 
             Order notPaidOrder = orderService.addOrder(user, orderPhoneNumber, comment, typeOfPayment);
@@ -116,20 +112,5 @@ public class UserController {
         }
 
         return "redirect:/user/basket";
-    }
-
-    @GetMapping("/editUser")
-    public String fileUploadForm(Model model) {
-
-        return "user/editUser";
-    }
-
-    @PostMapping("/editUser/uploadFile")
-    public ResponseEntity uploadUserPhoto(@RequestParam("file") MultipartFile file,
-                                          @ModelAttribute User user) throws IOException {
-        logger.info("POST request /user/editUser" +
-                "[file: " + file + "]");
-
-        return fileService.userAvatarUploading(file, user);
     }
 }

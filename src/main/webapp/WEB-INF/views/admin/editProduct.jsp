@@ -22,6 +22,7 @@
     <script src="<c:url value="/resources/js/userSearch.js" />"></script>
     <script src="<c:url value="/resources/js/scroll-startstop.events.jquery.js" />" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/scrollButtons.js"/>"></script>
+    <script src="<c:url value="/resources/js/fileUploading.js"/>"></script>
 </head>
 <body id="bodyDefault">
 <div class="sticky-top">
@@ -110,12 +111,14 @@
             <br/>
             <div class="card text-white bg-primary mb-3" style="width: 100%;">
                 <div class="card-body">
+                    <img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/products/${product.name.toLowerCase()}.png"
+                         alt="${product.name}" height="250" width="250" style="position:absolute; right:10px; top:10px;">
                     <form action="${pageContext.request.contextPath}/admin/edit/${productName}"
                           method="post">
                         <div class="form-group" style="width: 50%">
-                            <label for="formInput1" class="formLable"><span style="font-size: 30px;">
+                            <label for="inputProductName" class="formLable"><span style="font-size: 30px;">
                                 <spring:message code="p.name"/></span></label>
-                            <input type="text" class="form-control" name="newName" id="formInput1"
+                            <input type="text" class="form-control" name="newName" id="inputProductName"
                                    placeholder='<spring:message code="p.name"/>' value="${product.name}">
                         </div>
                         <div class="form-group">
@@ -213,10 +216,55 @@
                         </div>
                         <br/>
                         <button formmethod="post" type="submit" class="btn btn-success"
-                        ><span style="font-size: 30px;"><spring:message code="edit.button"/></span></button>
+                                style="position:absolute; left: 0; bottom: 0; width: 100%;">
+                            <span style="font-size: 30px;"><spring:message code="edit.button"/></span></button>
                     </form>
                 </div>
+                <form id="fileUploadForm" name="fileUploadForm"
+                      action="${pageContext.request.contextPath}/admin/uploadFile"
+                      method="post" enctype="multipart/form-data">
+                    <input id="uploadingUrl" hidden name="url"
+                           value="${pageContext.request.contextPath}/admin/uploadFile">
+                    <input hidden id="productNameToFile" name="productName" value="">
+
+
+                    <label for="fileInput" class="formLable"><span style="font-size: 30px;">
+                                <spring:message code="upload.file"/></span>
+                    </label>
+                    <br/>
+                    <div class="progress">
+                        <div id="progressBar"
+                             class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+                             role="progressbar"
+                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                             style="width: 0%; color: white; font-size: 14px;">0%
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="input-group">
+                        <input id="fileInput" type="file" class="form-control" name="file" aria-label="ZAP">
+                        <button id="fileUploadButton" form="fileUploadForm"
+                                class="btn btn-outline-success" type="submit" id="inputGroupFileAddon04">
+                            <spring:message code="file.upload.button"/>
+                        </button>
+                    </div>
+                </form>
+                <div id="alertMsg" class="error"></div>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#inputProductName").keyup(function () {
+                            var name = $(this).val();
+                            $("#productNameToFile").val(name);
+                        }).keyup();
+                    });
+                </script>
             </div>
+
         </div>
 
         <div class="col-sm-3">

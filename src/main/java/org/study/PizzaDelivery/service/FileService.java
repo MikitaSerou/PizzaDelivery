@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.study.PizzaDelivery.model.User;
 import org.study.PizzaDelivery.utils.FileChecker;
 
 import javax.servlet.ServletContext;
@@ -27,31 +26,6 @@ public class FileService {
     @Autowired
     ServletContext context;
 
-    public ResponseEntity userAvatarUploading(MultipartFile file, User user) throws IOException {
-        logger.info("Call method: userAvatarUploading(file: " + file + ", user: " + user + ")");
-
-        if (fileChecker.jpgExtensionCheck(file) || fileChecker.pngExtensionCheck(file)) {
-            BufferedOutputStream outputStream = new BufferedOutputStream(
-                    new FileOutputStream(context.getRealPath("") + File.separator
-                            + "resources/images/usersPicture" + File.separator +
-                            user.getId() + ".png"));
-
-            outputStream.write(file.getBytes());
-            logger.info("Create new file: " + "resources/images/usersPicture" + File.separator +
-                    user.getId() + ".png" + ")");
-
-            outputStream.flush();
-            outputStream.close();
-        } else {
-            logger.error("Invalid file " + file.getOriginalFilename() + " (only png/jps/jpeg).");
-            return new ResponseEntity<>("Invalid file (.png, .jpg, .jpeg only).", HttpStatus.BAD_REQUEST);
-        }
-
-        logger.info("Uploaded file: " + "resources/images/usersPicture" + File.separator +
-                user.getId() + ".png" + ")");
-
-        return new ResponseEntity<>("File Uploaded Successfully.", HttpStatus.OK);
-    }
 
     public ResponseEntity productPhotoUploading(MultipartFile file, String productName) throws IOException {
         logger.info("Call method: productPhotoUploading(file: " + file + ", productName: " + productName + ")");
@@ -60,7 +34,7 @@ public class FileService {
             return new ResponseEntity<>("Choose product name before upload image.", HttpStatus.BAD_REQUEST);
         }
 
-        if (fileChecker.pngExtensionCheck(file)) {
+        if (fileChecker.pngExtensionCheck(file) || fileChecker.jpgExtensionCheck(file)) {
             BufferedOutputStream outputStream = new BufferedOutputStream(
                     new FileOutputStream(context.getRealPath("") + File.separator
                             + "resources/images/products" + File.separator +
@@ -70,8 +44,8 @@ public class FileService {
             logger.info("Create new file: " + "resources/images/products" + File.separator +
                     productName.toLowerCase() + ".png" + ")");
 
-            outputStream.flush();
-            outputStream.close();
+                outputStream.flush();
+                outputStream.close();
         } else {
             logger.error("Invalid file " + file.getOriginalFilename() + " (only png).");
             return new ResponseEntity<>("Invalid file (.png only).", HttpStatus.BAD_REQUEST);
