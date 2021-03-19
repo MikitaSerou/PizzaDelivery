@@ -106,7 +106,7 @@ public class EmailService {
                     "</body></html>", true);
 
             FileSystemResource res = new FileSystemResource(
-                    new File(context.getRealPath("") /*+ File.separator*/ //TODO Проверить
+                    new File(context.getRealPath("")
                             + "resources/images/logo/logoBlack.png" ));
             helper.addInline("logo", res);
         };
