@@ -45,6 +45,7 @@ public class EmailConfig {
         message.setTo(Objects.requireNonNull(env.getProperty("email.admin")));
         message.setFrom(Objects.requireNonNull(env.getProperty("email.sender")));
         message.setText("New Order");
+
         return message;
     }
 }

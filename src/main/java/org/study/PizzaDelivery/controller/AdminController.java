@@ -3,14 +3,17 @@ package org.study.PizzaDelivery.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.study.PizzaDelivery.enums.IngredientType;
 import org.study.PizzaDelivery.enums.Status;
 import org.study.PizzaDelivery.model.Category;
 import org.study.PizzaDelivery.service.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 @Controller
@@ -36,6 +39,9 @@ public class AdminController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private FileService fileService;
 
 
     @GetMapping
@@ -154,6 +160,16 @@ public class AdminController {
         return "redirect:/category";
     }
 
+    @PostMapping("/uploadFile")
+    public ResponseEntity uploadProductImage(@RequestParam("file") MultipartFile file,
+                                             @RequestParam String productName) throws IOException {
+        logger.info("POST request admin/uploadFile" +
+                "[file: " + file +
+                ", productName"+productName +"]");
+
+        return fileService.productPhotoUploading(file, productName);
+    }
+
 
     @GetMapping("/edit/{productName}")
     public String editProductPage(@PathVariable("productName") String productName, Model model) {
@@ -188,7 +204,6 @@ public class AdminController {
 
         return "redirect:/category";
     }
-
 
     @GetMapping("/orders")
     public String activeOrdersList(Model model) {

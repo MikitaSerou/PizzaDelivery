@@ -90,7 +90,6 @@
         <div class="col-sm-6" style="backdrop-filter: blur(7px); border-radius: 30px">
             <h1 align="center"><spring:message code="signUp.entrance.page"/></h1>
             <br/>
-            <br/>
             <form:form action="${pageContext.request.contextPath}/registration" method="post" modelAttribute="registrationForm">
                 <div class="form-group">
                     <label for="formGroupExampleInput1"><spring:message code="username"/></label>

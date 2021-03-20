@@ -12,11 +12,16 @@
     <title><spring:message code="category.title"/></title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="<spring:url value="/resources/css/scrollButtons.css"/>" media="screen"/>
     <script src="http://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="<c:url value="/resources/js/userSearch.js" />"></script>
+    <script src="<c:url value="/resources/js/animatePopups.js" />"></script>
+    <script src="<c:url value="/resources/js/scroll-startstop.events.jquery.js" />" type="text/javascript"></script>
+    <script src="<c:url value="/resources/js/scrollButtons.js"/>"></script>
 </head>
 <body id="bodyDefault">
 <div class="sticky-top">
@@ -97,7 +102,7 @@
         </sec:authorize>
     </nav>
 </div>
-<div class="container" style="min-height: 80%">
+<div id="content" class="container" style="min-height: 80%">
     <div class="row">
         <div class="col-sm-9">
             <h1 class="display-2">
@@ -205,22 +210,24 @@
                         </form>
                     </sec:authorize>
                 </div>
-                <div class="row row-cols-1 row-cols-md-3">
+                <div class="row row-cols-1 row-cols-md-3" id="menu">
                     <c:forEach var="product" items="${cheapestProducts}">
                         <c:if test="${product.category.equals(category)}">
                             <div class="col mb-4">
                                 <div class="card text-white bg-primary mb-4" style="width: 100%; min-width: 250px;">
-                                    <div style="margin-left: auto; margin-right: auto;">
+                                    <div class="menu" style="margin-left: auto; margin-right: auto;">
                                         <sec:authorize access="!hasRole('ROLE_ADMIN')">
                                             <c:if test="${top3Names.contains(product.name)}">
                                                 <img src='<spring:url value="/resources/images/top.png"/>'
                                                      width="100px" height="100px" alt="top product"
                                                      style="position:absolute; right:0; top: 0;"/></c:if>
                                         </sec:authorize>
-                                        <sec:authorize access="hasRole('ROLE_USER')">
-                                        <a href="${pageContext.request.contextPath}/category/${category.name}/${product.name}"></sec:authorize>
+                                        <sec:authorize access="!hasRole('ROLE_ADMIN')">
+                                        <a id="productPage"
+                                           href="${pageContext.request.contextPath}/category/${category.name}/${product.name}"></sec:authorize>
                                             <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                            <a href="${pageContext.request.contextPath}/admin/edit/${product.name}"></sec:authorize>
+                                            <a href="${pageContext.request.contextPath}/admin/edit/${product.name}">
+                                                </sec:authorize>
                                                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                                                     <h2 align="center"
                                                         style="position: absolute; top: 140px; bottom: 140px; left: 70px;">
@@ -234,6 +241,12 @@
                                                      width="250px" height="250px" class="rounded"
                                                      alt="${product.name}"/>
                                             </a>
+                                            <sec:authorize access="!hasRole('ROLE_ADMIN')">
+                                            <div class="hover">
+                                                <div class="alert alert-dismissible alert-info" style="width: 100%">
+                                                    <strong>${product.description}</strong>
+                                                </div>
+                                            </div></sec:authorize>
                                     </div>
                                     <form action="${pageContext.request.contextPath}/category/${category.name}/${product.name}"
                                           method="post">
@@ -461,6 +474,13 @@
         </div>
     </div>
 </div>
+
+<div style="display:none;" class="nav_up" id="nav_up"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#CCC" class="bi bi-chevron-up" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+</svg></div>
+<div style="display:none;" class="nav_down" id="nav_down"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#CCC" class="bi bi-chevron-down" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg></div>
 
 <div id="myFooter">
     <span><spring:message code="name.full"/></span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>

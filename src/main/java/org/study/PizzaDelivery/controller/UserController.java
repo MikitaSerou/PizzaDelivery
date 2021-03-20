@@ -15,7 +15,7 @@ import org.study.PizzaDelivery.service.BasketItemService;
 import org.study.PizzaDelivery.service.BasketService;
 import org.study.PizzaDelivery.service.EmailService;
 import org.study.PizzaDelivery.service.OrderService;
-import org.study.PizzaDelivery.utils.Formatter;
+import org.study.PizzaDelivery.utils.FormatterUtil;
 
 import java.util.regex.Pattern;
 
@@ -36,7 +36,7 @@ public class UserController {
     private BasketItemService basketItemService;
 
     @Autowired
-    private Formatter formatter;
+    private FormatterUtil formatterUtil;
 
     @Autowired
     private EmailService emailService;
@@ -90,13 +90,13 @@ public class UserController {
         }
         if (action.equals("submit")) {
             if (orderPhoneNumber.equals("") ||
-                    !Pattern.matches(formatter.getPhoneRegEx(), orderPhoneNumber)) {
+                    !Pattern.matches(formatterUtil.getPhoneRegEx(), orderPhoneNumber)) {
                 logger.error("Errors in form. Phone number not specified.");
                 model.addAttribute("phoneError", "user.phoneNumber.empty");
                 return this.basket(user, model);
             }
             if (change != null) {
-                comment = formatter.commentWithChangeFormatter(comment, change);
+                comment = formatterUtil.commentWithChangeFormatter(comment, change);
             }
 
             Order notPaidOrder = orderService.addOrder(user, orderPhoneNumber, comment, typeOfPayment);
