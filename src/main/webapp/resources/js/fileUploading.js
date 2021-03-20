@@ -1,5 +1,5 @@
 $(function() {
-    $('#mainFormButton').prop('disabled',true);
+    $('#addProductButton').prop('disabled',true);
 
     $('button#fileUploadButton[type=submit]').click(function(e) {
         e.preventDefault();
@@ -48,7 +48,7 @@ $(function() {
 
             $('input[type=file]').val('');
             $('button#fileUploadButton[type=submit]').prop('disabled',false);
-            $('#mainFormButton').prop('disabled',false);
+            $('#addProductButton').prop('disabled',false);
         });
 
         // Called on failure of file upload

@@ -193,8 +193,6 @@
                                 </c:forEach>
                             </tr>
                         </table>
-
-
                         <div class="form-group">
                             <label class="formLable" for="formInput4">
                                 <span style="font-size: 30px; max-width: 100%">
@@ -202,7 +200,7 @@
                             <textarea id="formInput4" name="description"
                                       placeholder="<spring:message code="description"/>" maxlength="255"
                                       rows="6"
-                                      style=" /*height: 105%;*/ width: 100%"></textarea>
+                                      style=" width: 100%"></textarea>
                         </div>
                         <button id="addProductButton" formmethod="post" type="submit" form="addProductForm"
                                 class="btn btn-success" style="position:absolute; left: 0; bottom: 0; width: 100%;"
