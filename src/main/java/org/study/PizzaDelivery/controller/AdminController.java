@@ -111,7 +111,7 @@ public class AdminController {
         logger.info("GET request admin/archive/");
 
         Category archiveCategory = categoryService.findByName("Архив");
-        model.addAttribute("category", categoryService.findOne(archiveCategory.getId()));
+        model.addAttribute("category", categoryService.findById(archiveCategory.getId()));
         model.addAttribute("products", archiveCategory.getProducts());
 
         return "admin/archive";

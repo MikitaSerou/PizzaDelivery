@@ -1,0 +1,9 @@
+           File directory  = new File(context.getRealPath("") + File.separator
+                    + "resources/images/products");
+            String fileNameToFind = productName.toLowerCase() + ".png";
+            File foundFile = FileUtils
+                    .listFiles(directory, null, true)
+                    .stream()
+                    .filter(f -> f.getName().equals(fileNameToFind))
+                    .findFirst()
+                    .orElse(null);

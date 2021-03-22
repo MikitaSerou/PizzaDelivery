@@ -26,7 +26,7 @@ public class CategoryService {
 
 
     @Transactional
-    public Category findOne(short id) {
+    public Category findById(short id) {
         logger.info("Call method: findOne(id: " + id + ")");
 
         return categoryRepository.findById(id);
