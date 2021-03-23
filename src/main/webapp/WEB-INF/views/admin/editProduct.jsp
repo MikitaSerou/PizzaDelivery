@@ -223,7 +223,6 @@
                                 style="position:absolute; left: 0; bottom: 0; width: 100%;">
                             <span style="font-size: 30px;"><spring:message code="edit.button"/></span></button>
                     </form>
-                </div>
                 <div>
                     <form id="fileUploadForm" name="fileUploadForm"
                           action="${pageContext.request.contextPath}/admin/uploadFile"
