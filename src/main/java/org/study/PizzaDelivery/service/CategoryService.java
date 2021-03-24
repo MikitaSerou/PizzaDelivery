@@ -11,6 +11,7 @@ import org.study.PizzaDelivery.model.Product;
 import org.study.PizzaDelivery.repository.CategoryRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -67,10 +68,10 @@ public class CategoryService {
                 c -> {
                     logger.info(categoryForUpdate);
                     if (!categoryName.equals("")) {
-                        categoryForUpdate.get().setName(categoryName);
+                        Objects.requireNonNull(categoryForUpdate.orElse(null)).setName(categoryName);
                     }
                     if (categoryPrice != null) {
-                        categoryForUpdate.get().setPrice(categoryPrice);
+                        Objects.requireNonNull(categoryForUpdate.orElse(null)).setPrice(categoryPrice);
                     }
                     categoryRepository.save(categoryForUpdate.get());
                 },
@@ -91,7 +92,8 @@ public class CategoryService {
         categoryForDelete.ifPresentOrElse(
                 c -> {
                     logger.info(categoryForDelete);
-                    categoryRepository.delete(categoryForDelete.get());
+                    assert categoryForDelete.orElse(null) != null;
+                    categoryRepository.delete(categoryForDelete.orElse(null));
                 },
                 () -> logger.error("Category with this id: " + categoryId + " is not exist."));
     }

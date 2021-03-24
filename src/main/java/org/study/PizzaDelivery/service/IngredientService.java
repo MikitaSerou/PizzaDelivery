@@ -10,6 +10,7 @@ import org.study.PizzaDelivery.model.Ingredient;
 import org.study.PizzaDelivery.repository.IngredientRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -30,7 +31,7 @@ public class IngredientService {
                 logger::info,
                 () -> logger.error("Ingredient with this id: " + ingredientId + " is not exist."));
 
-        return ingredientRepository.findById(ingredientId).get();
+        return ingredientRepository.findById(ingredientId).orElse(null);
     }
 
     @Transactional
@@ -61,18 +62,20 @@ public class IngredientService {
                 i -> {
                     logger.info(ingredientForUpdate);
                     if (ingredientName != null) {
-                        ingredientForUpdate.get().setName(ingredientName);
+                        Objects.requireNonNull(ingredientForUpdate.orElse(null)).setName(ingredientName);
                     }
                     if (ingredientPrice != null) {
-                        ingredientForUpdate.get().setPrice(ingredientPrice);
+                        Objects.requireNonNull(ingredientForUpdate.orElse(null)).setPrice(ingredientPrice);
                     }
                     if (ingredientType != null) {
-                        ingredientForUpdate.get().setType(ingredientType);
+                        Objects.requireNonNull(ingredientForUpdate.orElse(null)).setType(ingredientType);
                     }
                 },
                 () -> logger.error("Ingredient with this id: " + ingredientId + " is not exist."));
 
-        ingredientRepository.save(ingredientForUpdate.get());
+        if (ingredientForUpdate.orElse(null) != null) {
+            ingredientRepository.save(ingredientForUpdate.orElse(null));
+        }
     }
 
     public void deleteIngredient(Short ingredientId) {

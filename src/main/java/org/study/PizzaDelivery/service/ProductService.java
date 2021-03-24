@@ -172,7 +172,6 @@ public class ProductService {
 
         List<BigInteger> topId = query.getResultList();
 
-
         Map<String, Product> topProducts = new HashMap<>();
         for (BigInteger id : topId) {
             Product product = productRepository.findById(id.longValue());

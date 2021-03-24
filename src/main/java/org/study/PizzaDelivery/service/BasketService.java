@@ -52,7 +52,7 @@ public class BasketService {
                 logger::info,
                 () -> logger.error("Basket with this id: " + basketId + " is not exist."));
 
-        return basket.get();
+        return basket.orElse(null);
     }
 
     public Double calculatePrice(Long basketId) {

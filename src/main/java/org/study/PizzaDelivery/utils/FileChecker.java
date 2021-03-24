@@ -26,7 +26,7 @@ public class FileChecker {
 
         boolean isPng = false;
         if (!Objects.requireNonNull(file.getOriginalFilename()).isEmpty() &&
-                file.getContentType().equals("image/png")){
+                file.getContentType().equals("image/png")) {
             isPng = true;
         }
 
@@ -40,7 +40,7 @@ public class FileChecker {
 
         boolean isJpg = false;
         if (!Objects.requireNonNull(file.getOriginalFilename()).isEmpty() &&
-                (file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/jpg"))){
+                (file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/jpg"))) {
             isJpg = true;
         }
 

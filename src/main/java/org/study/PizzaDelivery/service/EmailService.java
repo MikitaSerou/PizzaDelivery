@@ -63,7 +63,7 @@ public class EmailService {
 
                 FileSystemResource res = new FileSystemResource(
                         new File(context.getRealPath("")
-                                + "resources/images/logo/logoBlack.png" ));
+                                + "resources/images/logo/logoBlack.png"));
                 helper.addInline("logo", res);
             }
         };
@@ -107,7 +107,7 @@ public class EmailService {
 
             FileSystemResource res = new FileSystemResource(
                     new File(context.getRealPath("")
-                            + "resources/images/logo/logoBlack.png" ));
+                            + "resources/images/logo/logoBlack.png"));
             helper.addInline("logo", res);
         };
 

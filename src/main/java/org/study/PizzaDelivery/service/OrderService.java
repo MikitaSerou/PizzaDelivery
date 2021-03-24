@@ -13,6 +13,7 @@ import org.study.PizzaDelivery.repository.OrderRepository;
 
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -49,7 +50,7 @@ public class OrderService {
                 logger::info,
                 () -> logger.error("Order with this id: " + orderId + " is not exist."));
 
-        return order.get();
+        return order.orElse(null);
     }
 
     @Transactional
@@ -97,7 +98,7 @@ public class OrderService {
                 logger::info,
                 () -> logger.error("Order with this id: " + orderId + " is not exist."));
 
-        if (order.get().getStatus() == Status.CANCELED) {
+        if (Objects.requireNonNull(order.orElse(null)).getStatus() == Status.CANCELED) {
             return;
         }
 
@@ -114,7 +115,7 @@ public class OrderService {
                 logger::info,
                 () -> logger.error("Order with this id: " + orderId + " is not exist."));
 
-        if (order.get().getStatus() == Status.PAID) {
+        if (Objects.requireNonNull(order.orElse(null)).getStatus() == Status.PAID) {
             return;
         }
 
@@ -130,7 +131,7 @@ public class OrderService {
                 logger::info,
                 () -> logger.error("Order with this id: " + orderId + " is not exist."));
 
-        if (order.get().getStatus() == Status.NOT_PAID) {
+        if (Objects.requireNonNull(order.orElse(null)).getStatus() == Status.NOT_PAID) {
             return;
         }
 

@@ -25,6 +25,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    RoleService roleService;
+
     @Autowired(required = false)
     private PasswordEncoder bCryptPasswordEncoder;
 
@@ -72,8 +75,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setRoles(Collections.singleton(
-                new Role(1L, "ROLE_USER")));
+        user.setRoles(Collections.singleton(roleService.findByName("ROLE_USER")));
         logger.info("Set role...");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         logger.info("Encrypt password...");

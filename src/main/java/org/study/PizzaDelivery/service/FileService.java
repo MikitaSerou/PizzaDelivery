@@ -44,8 +44,8 @@ public class FileService {
             logger.info("Create new file: " + "resources/images/products" + File.separator +
                     productName.toLowerCase() + ".png" + ")");
 
-                outputStream.flush();
-                outputStream.close();
+            outputStream.flush();
+            outputStream.close();
         } else {
             logger.error("Invalid file " + file.getOriginalFilename() + " (only png).");
             return new ResponseEntity<>("Invalid file (.png only).", HttpStatus.BAD_REQUEST);

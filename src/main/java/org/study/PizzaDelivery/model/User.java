@@ -49,9 +49,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Basket> baskets;
 
-    @Transient
+
     @NotEmpty(message = "{user.passwordConfirm.empty}")
     @Size(min = 8, message = "{user.passwordConfirm.size}")
+    @Transient
     private String passwordConfirm;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -213,6 +214,8 @@ public class User implements UserDetails {
                 ", username='" + username + '\'' +
                 ", mail='" + mail + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", pass='" + password + '\'' +
+                ", passConf='" + passwordConfirm + '\'' +
                 ", roles=" + roles +
                 '}';
     }

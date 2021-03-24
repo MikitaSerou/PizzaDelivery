@@ -165,7 +165,7 @@ public class AdminController {
                                              @RequestParam String productName) throws IOException {
         logger.info("POST request admin/uploadFile" +
                 "[file: " + file +
-                ", productName"+productName +"]");
+                ", productName" + productName + "]");
 
         return fileService.productPhotoUploading(file, productName);
     }

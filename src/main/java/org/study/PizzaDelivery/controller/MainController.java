@@ -4,6 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +46,9 @@ public class MainController {
     private ProductService productService;
 
     @Autowired
+    private RoleService roleService;
+
+    @Autowired
     private Environment env;
 
 
@@ -55,15 +60,12 @@ public class MainController {
 
         logger.info("User in HttpSession: " + session.getAttribute("user"));
         if (session.getAttribute("user") == null) {
-            if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")
-                    && !SecurityContextHolder.getContext().getAuthentication().getName().equals(env.getProperty("admin.login"))) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (!(authentication instanceof AnonymousAuthenticationToken) &&
+                    !authentication.getPrincipal().getClass().equals(org.springframework.security.core.userdetails.User.class)) {
                 logger.info("Initialize user object in HttpSession");
-                String name = SecurityContextHolder.getContext().getAuthentication().getName();
-                User user = (User) userService.loadUserByUsername(name);
-                session.setAttribute("user", user);
-                if (session.getAttribute("user") != null) {
-                    logger.info("Set User in session: " + user.toString());
-                }
+                session.setAttribute("user", userService.loadUserByUsername(authentication.getName()));
+                logger.info("Set User in session: " + authentication.getName());
             }
         }
 
