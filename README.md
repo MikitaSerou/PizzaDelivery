@@ -3,8 +3,8 @@
 ## **Course project of the TechMeSkills course**
 
 ----------------------------------
-Used technologies:`Spring-MVC`, `Spring Data`, `Spring Security`, `Tomcat`, `H2 database`, `Hibernate Validator`, 
-`Log4j`, `JavaMail`, `FileUpload`, `Views - .jsp`, `CSS`, `Bootstrap`, `Jquery`.
+**Used technologies:`Spring-MVC`, `Spring Data`, `Spring Security`, `Tomcat`, `H2 database`, `Hibernate Validator`, 
+`Log4j`, `JavaMail`, `FileUpload`, `Views - .jsp`, `CSS`, `Bootstrap`, `Jquery`.**
 ----------------------------------
 
 Do not forget to include the url of the embedded database in the file: `src/main/resources/application.properties`.
