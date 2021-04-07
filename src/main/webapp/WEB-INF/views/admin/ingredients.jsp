@@ -195,11 +195,11 @@
                 <tr class="bg-default">
                     <td id="${ingredient.id}"><h3>${ingredient.id}</h3></td>
                     <td><h3><span><img class="rounded" src='<spring:url
-                        value="/resources/images/ingredients/${ingredient.type.toString().toLowerCase()}.png"/>'
-                                       width="50px" height="50px" alt="${ingredient.type.toString()}"/></span>
+                        value="/resources/images/ingredients/${ingredient.ingredientType.toString().toLowerCase()}.png"/>'
+                                       width="50px" height="50px" alt="${ingredient.ingredientType.toString()}"/></span>
                             ${ingredient.name}</h3></td>
                     <td><h3>${ingredient.price}</h3></td>
-                    <td><h3><spring:message code="${ingredient.type.toString()}"/></h3></td>
+                    <td><h3><spring:message code="${ingredient.ingredientType.toString()}"/></h3></td>
                     <td>
                     </td>
                 </tr>

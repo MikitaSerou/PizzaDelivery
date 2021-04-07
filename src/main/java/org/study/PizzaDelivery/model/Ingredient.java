@@ -13,7 +13,7 @@ public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private short id;
+    private Short id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -36,18 +36,17 @@ public class Ingredient {
     public Ingredient() {
     }
 
-    public Ingredient(String name, double price, IngredientType ingredientType) {
+    public Ingredient(String name, Double price, IngredientType ingredientType) {
         this.name = name;
         this.price = price;
         this.ingredientType = ingredientType;
-
     }
 
-    public short getId() {
+    public Short getId() {
         return id;
     }
 
-    public void setId(short id) {
+    public void setId(Short id) {
         this.id = id;
     }
 
@@ -59,19 +58,19 @@ public class Ingredient {
         this.name = name;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public IngredientType getType() {
+    public IngredientType getIngredientType() {
         return ingredientType;
     }
 
-    public void setType(IngredientType ingredientType) {
+    public void setIngredientType(IngredientType ingredientType) {
         this.ingredientType = ingredientType;
     }
 
@@ -87,14 +86,22 @@ public class Ingredient {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Ingredient that = (Ingredient) o;
-        return id == that.id && name.equals(that.name) && price.equals(that.price) &&
-                ingredientType == that.ingredientType;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (price != null ? !price.equals(that.price) : that.price != null) return false;
+        return ingredientType == that.ingredientType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, ingredientType);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (ingredientType != null ? ingredientType.hashCode() : 0);
+        return result;
     }
 
     @Override

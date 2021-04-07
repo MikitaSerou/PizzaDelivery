@@ -20,7 +20,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", nullable = false)
@@ -82,7 +82,7 @@ public class Order {
         this.orderItems = orderItems;
     }
 
-    public Order(User user, String phoneNumber, double price, TypeOfPayment typeOfPayment,
+    public Order(User user, String phoneNumber, Double price, TypeOfPayment typeOfPayment,
                  String comment) {
         this.user = user;
         this.phoneNumber = phoneNumber;
@@ -164,11 +164,11 @@ public class Order {
         this.orderItems = orderItems;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -188,11 +188,11 @@ public class Order {
         this.phoneNumber = phoneNumber;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -228,19 +228,38 @@ public class Order {
         this.status = status;
     }
 
+    public DateTimeFormatter getFORMATTER() {
+        return FORMATTER;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Order order = (Order) o;
-        return id == order.id && user.equals(order.user) && phoneNumber.equals(order.phoneNumber) &&
-                price.equals(order.price) && typeOfPayment == order.typeOfPayment && time.equals(order.time) &&
-                comment.equals(order.comment) && status == order.status;
+
+        if (id != null ? !id.equals(order.id) : order.id != null) return false;
+        if (user != null ? !user.equals(order.user) : order.user != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(order.phoneNumber) : order.phoneNumber != null) return false;
+        if (price != null ? !price.equals(order.price) : order.price != null) return false;
+        if (typeOfPayment != order.typeOfPayment) return false;
+        if (time != null ? !time.equals(order.time) : order.time != null) return false;
+        if (comment != null ? !comment.equals(order.comment) : order.comment != null) return false;
+        return status == order.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, phoneNumber, price, typeOfPayment, time, comment, status);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (typeOfPayment != null ? typeOfPayment.hashCode() : 0);
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (comment != null ? comment.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
     }
 
     @Override

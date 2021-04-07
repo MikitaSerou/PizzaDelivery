@@ -161,7 +161,7 @@
                                         <td>
                                             <c:forEach var="ingredient" items="${ingredients}">
                                                 <div class="form-group">
-                                                    <c:if test="${ingredient.type.equals(ingredientType)}">
+                                                    <c:if test="${ingredient.ingredientType.equals(ingredientType)}">
                                                         <div class="row">
                                                             <div class="col-sm-9" style="width: 90%; padding:0;">
                                                                 <div class="alert alert-dismissible alert-light"

@@ -12,7 +12,7 @@ public class Basket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
@@ -35,7 +35,7 @@ public class Basket {
     public Basket() {
     }
 
-    public Basket(boolean isActive, User user) {
+    public Basket(Boolean isActive, User user) {
         this.isActive = isActive;
         this.user = user;
         this.time = LocalDateTime.parse(LocalDateTime.now().format(FORMATTER), FORMATTER);
@@ -47,20 +47,24 @@ public class Basket {
         this.time = LocalDateTime.parse(LocalDateTime.now().format(FORMATTER), FORMATTER);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public DateTimeFormatter getFORMATTER() {
+        return FORMATTER;
     }
 
     public User getUser() {
@@ -91,13 +95,22 @@ public class Basket {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Basket basket = (Basket) o;
-        return id == basket.id && isActive.equals(basket.isActive) && time.equals(basket.time) && user.equals(basket.user);
+
+        if (id != basket.id) return false;
+        if (isActive != null ? !isActive.equals(basket.isActive) : basket.isActive != null) return false;
+        if (time != null ? !time.equals(basket.time) : basket.time != null) return false;
+        return user != null ? user.equals(basket.user) : basket.user == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, isActive, time, user);
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (isActive != null ? isActive.hashCode() : 0);
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -108,6 +121,4 @@ public class Basket {
                 ", user=" + user.getId() +
                 '}';
     }
-
-
 }

@@ -23,7 +23,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "user_name", nullable = false)
     @NotEmpty(message = "{user.username.empty}")
@@ -88,11 +88,11 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -196,14 +196,29 @@ public class User implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         User user = (User) o;
-        return id == user.id && username.equals(user.username) && password.equals(user.password) &&
-                mail.equals(user.mail) && phoneNumber.equals(user.phoneNumber);
+
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (mail != null ? !mail.equals(user.mail) : user.mail != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
+        if (passwordConfirm != null ? !passwordConfirm.equals(user.passwordConfirm) : user.passwordConfirm != null)
+            return false;
+        return roles != null ? roles.equals(user.roles) : user.roles == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, mail, phoneNumber);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (mail != null ? mail.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (passwordConfirm != null ? passwordConfirm.hashCode() : 0);
+        result = 31 * result + (roles != null ? roles.hashCode() : 0);
+        return result;
     }
 
     @Override

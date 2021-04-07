@@ -9,7 +9,7 @@ public class BasketItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "basket_id", nullable = false)
@@ -29,18 +29,18 @@ public class BasketItem {
     public BasketItem() {
     }
 
-    public BasketItem(Basket basket, Product product, double price, String description) {
+    public BasketItem(Basket basket, Product product, Double price, String description) {
         this.basket = basket;
         this.product = product;
         this.price = price;
         this.description = description;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -68,11 +68,11 @@ public class BasketItem {
         this.description = description;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -88,13 +88,24 @@ public class BasketItem {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         BasketItem that = (BasketItem) o;
-        return id == that.id && basket.equals(that.basket) && product.equals(that.product) && price.equals(that.price) && description.equals(that.description);
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (basket != null ? !basket.equals(that.basket) : that.basket != null) return false;
+        if (product != null ? !product.equals(that.product) : that.product != null) return false;
+        if (price != null ? !price.equals(that.price) : that.price != null) return false;
+        return description != null ? description.equals(that.description) : that.description == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, basket, product, price, description);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (basket != null ? basket.hashCode() : 0);
+        result = 31 * result + (product != null ? product.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -10,7 +10,7 @@ public class Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private short id;
+    private Short id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -24,14 +24,13 @@ public class Base {
 
 
     public Base() {
-
     }
 
-    public short getId() {
+    public Short getId() {
         return id;
     }
 
-    public void setId(short id) {
+    public void setId(Short id) {
         this.id = id;
     }
 
@@ -43,11 +42,11 @@ public class Base {
         this.name = name;
     }
 
-    public double getPriceMultiplier() {
+    public Double getPriceMultiplier() {
         return priceMultiplier;
     }
 
-    public void setPriceMultiplier(double priceMultiplier) {
+    public void setPriceMultiplier(Double priceMultiplier) {
         this.priceMultiplier = priceMultiplier;
     }
 
@@ -63,13 +62,20 @@ public class Base {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Base base = (Base) o;
-        return id == base.id && name.equals(base.name) && priceMultiplier.equals(base.priceMultiplier);
+
+        if (id != base.id) return false;
+        if (name != null ? !name.equals(base.name) : base.name != null) return false;
+        return priceMultiplier != null ? priceMultiplier.equals(base.priceMultiplier) : base.priceMultiplier == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, priceMultiplier);
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (priceMultiplier != null ? priceMultiplier.hashCode() : 0);
+        return result;
     }
 
     @Override

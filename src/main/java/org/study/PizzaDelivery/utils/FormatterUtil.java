@@ -44,7 +44,7 @@ public class FormatterUtil {
                 .append(" ")
                 .append(i.getProduct().getBase().getName().toLowerCase())
                 .append(" [")
-                .append(i.getComment())
+                .append(i.getDescription())
                 .append("]")
                 .append(" - ")
                 .append(i18nBundle.getString("price").toLowerCase())

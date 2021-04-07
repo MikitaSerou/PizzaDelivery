@@ -9,7 +9,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private short id;
+    private Short id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -24,7 +24,7 @@ public class Category {
     public Category() {
     }
 
-    public Category(String name, double price) {
+    public Category(String name, Double price) {
         this.name = name;
         this.price = price;
     }
@@ -37,11 +37,11 @@ public class Category {
         this.products = products;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -49,11 +49,11 @@ public class Category {
         this.name = name;
     }
 
-    public short getId() {
+    public Short getId() {
         return id;
     }
 
-    public void setId(short id) {
+    public void setId(Short id) {
         this.id = id;
     }
 
@@ -69,13 +69,20 @@ public class Category {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Category category = (Category) o;
-        return id == category.id && Double.compare(category.price, price) == 0 && name.equals(category.name);
+
+        if (id != null ? !id.equals(category.id) : category.id != null) return false;
+        if (name != null ? !name.equals(category.name) : category.name != null) return false;
+        return price != null ? price.equals(category.price) : category.price == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        return result;
     }
 
     @Override

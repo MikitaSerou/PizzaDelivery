@@ -163,7 +163,7 @@
                                     <c:if test="${!ingredientType.toString().equals('Sauce')}">
                                         <td>
                                             <c:forEach var="ingredient" items="${ingredients}">
-                                                <c:if test="${ingredient.type.equals(ingredientType)
+                                                <c:if test="${ingredient.ingredientType.equals(ingredientType)
                                                 && !ingredientType.toString().equals('Unstock')}">
                                                     <div class="alert alert-dismissible alert-light"
                                                          style="width: 100%; padding: 2px;">

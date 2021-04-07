@@ -10,7 +10,7 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "order_id", nullable = false)
@@ -37,11 +37,11 @@ public class OrderItem {
         this.description = comment;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,19 +62,19 @@ public class OrderItem {
         this.price = product.getPrice();
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public String getComment() {
+    public String getDescription() {
         return description;
     }
 
-    public void setComment(String comment) {
+    public void setDescription(String comment) {
         this.description = comment;
     }
 
@@ -82,14 +82,24 @@ public class OrderItem {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         OrderItem orderItem = (OrderItem) o;
-        return id == orderItem.id && order.equals(orderItem.order) && product.equals(orderItem.product) &&
-                price.equals(orderItem.price) && description.equals(orderItem.description);
+
+        if (id != null ? !id.equals(orderItem.id) : orderItem.id != null) return false;
+        if (order != null ? !order.equals(orderItem.order) : orderItem.order != null) return false;
+        if (product != null ? !product.equals(orderItem.product) : orderItem.product != null) return false;
+        if (price != null ? !price.equals(orderItem.price) : orderItem.price != null) return false;
+        return description != null ? description.equals(orderItem.description) : orderItem.description == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, order, product, price, description);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (order != null ? order.hashCode() : 0);
+        result = 31 * result + (product != null ? product.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
     }
 
     @Override

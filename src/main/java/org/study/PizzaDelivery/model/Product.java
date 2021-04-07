@@ -14,7 +14,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -131,11 +131,11 @@ public class Product {
         this.basketItems = basketItems;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -155,11 +155,11 @@ public class Product {
         this.category = category;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -191,14 +191,28 @@ public class Product {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Product product = (Product) o;
-        return id == product.id && name.equals(product.name) && category.equals(product.category) &&
-                base.equals(product.base) && price.equals(product.price) && description.equals(product.description);
+
+        if (id != null ? !id.equals(product.id) : product.id != null) return false;
+        if (name != null ? !name.equals(product.name) : product.name != null) return false;
+        if (category != null ? !category.equals(product.category) : product.category != null) return false;
+        if (base != null ? !base.equals(product.base) : product.base != null) return false;
+        if (price != null ? !price.equals(product.price) : product.price != null) return false;
+        if (description != null ? !description.equals(product.description) : product.description != null) return false;
+        return ingredients != null ? ingredients.equals(product.ingredients) : product.ingredients == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category, base, price, description);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (base != null ? base.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (ingredients != null ? ingredients.hashCode() : 0);
+        return result;
     }
 
     @Override

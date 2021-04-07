@@ -147,8 +147,8 @@
 
                             <c:forEach items="${order.orderItems}"
                                        var="item"><p style="font-size: 12px;">${item.product.name}&nbsp;
-                                <c:if test="${!item.comment.equals('')}">
-                                    [${item.comment}]&nbsp;</c:if>
+                                <c:if test="${!item.description.equals('')}">
+                                    [${item.description}]&nbsp;</c:if>
                                 - <fmt:formatNumber type="number" maxFractionDigits="2" value="${item.price}"/>
                                 .<spring:message code="currency"/></p>
                             </c:forEach>
