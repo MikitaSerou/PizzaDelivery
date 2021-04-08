@@ -170,7 +170,15 @@
                         </thead>
                         <c:forEach items="${basket.basketItems}" var="item">
                             <tr class="table-secondary" id="basketTable">
-                                <td width="10%">${item.product.name} ${item.product.base.name}</td>
+                               <td width="10%" align="center">
+                                    <img src='<spring:url
+                                                value="/resources/images/products/${item.product.name.toLowerCase()}.png" />'
+                                         width="110px" height="110px" class="rounded"
+                                         alt="${item.product.name}"/>
+                                   <br/>
+                                    <span class="badge badge-pill badge-danger">
+                                            ${item.product.name} ${item.product.base.name}</span>
+                                        </td>
                                 <td width="10%">
                                     <fmt:formatNumber type="number" maxFractionDigits="2" value="${item.price}"/></td>
                                 <td width="35%">${item.product.description}</td>

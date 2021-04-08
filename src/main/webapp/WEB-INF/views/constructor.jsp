@@ -101,7 +101,7 @@
             <div class="card text-white bg-primary mb-3" style="width: 100%;">
                 <div class="card-body">
                     <h1 class="display-2"><spring:message code="constructor"/></h1>
-                    <img class="rounded" src='<spring:url value="/resources/images/constructor.png"/>'
+                    <img class="rounded" src='<spring:url value="/resources/images/products/база.png"/>'
                          width="250px" height="250px" alt="Constructor"
                          style="position: absolute; right:50px; top:100px;"/>
                     <form action="${pageContext.request.contextPath}/constructor" method="post">

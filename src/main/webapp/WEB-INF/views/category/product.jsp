@@ -152,7 +152,7 @@
                             <br/>
                             <c:forEach items="${bases}" var="base">
                                 <div id="div${base.id}" class="box" style="position: absolute; top: 0; right: 0;">
-                                    <h1 class="btn-warning">
+                                    <h1 class="badge badge-pill badge-warning" style="font-size: 38px">
                                             ${base.priceMultiplier*category.price}.<spring:message code="currency"/>
                                     </h1>
                                 </div>

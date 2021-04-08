@@ -46,7 +46,7 @@ public class BasketItemService {
     }
 
     @Transactional
-    public void addCustomItem(Basket basket, Product product, Short sauceId, short[] ingredientsIds) {
+    public void addCustomItem(Basket basket, Product product, Short sauceId, Short[] ingredientsIds) {
         logger.info("Call method: addCustomItem(basket:" + basket +
                 ", product: " + product +
                 ", sauceId: " + sauceId +
