@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface IngredientRepository extends CrudRepository<Ingredient, Short> {
 
-    List<Ingredient> findAll();
-
     @Query(value = "SELECT * FROM INGREDIENT WHERE INGREDIENT_TYPE=?1",
             nativeQuery = true)
     List<Ingredient> findAllByType(String type);

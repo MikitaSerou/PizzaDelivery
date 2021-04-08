@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class Product {

@@ -10,11 +10,7 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends CrudRepository<Category, Short> {
 
-    Category findById(short id);
-
     Category findByName(String name);
-
-    List<Category> findAll();
 
     @Query(value = " SELECT * FROM CATEGORY WHERE NAME !='Своя' AND NAME !='Архив' Order by CATEGORY_PRICE",
             nativeQuery = true)

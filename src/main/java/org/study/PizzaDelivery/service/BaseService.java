@@ -11,6 +11,7 @@ import org.study.PizzaDelivery.repository.BaseRepository;
 
 import java.util.List;
 
+
 @Service
 public class BaseService {
 
@@ -21,23 +22,10 @@ public class BaseService {
 
 
     @Transactional
-    public Base findById(short id) {
-        logger.info("Call method: findById(id:" + id + ")");
-        Base base = baseRepository.findById(id);
-        if (base != null) {
-            logger.info(base);
-        } else {
-            logger.error("Base with this id: " + id + " is not exist.");
-        }
-
-        return base;
-    }
-
-    @Transactional
     public List<Base> findAll() {
         logger.info("Call method: findAll()");
 
-        return baseRepository.findAll();
+        return (List<Base>) baseRepository.findAll();
     }
 
     @Transactional

@@ -25,12 +25,11 @@ public class IngredientService {
     public Ingredient findById(Short ingredientId) {
         logger.info("Call method: findById(ingredientId: " + ingredientId + ")");
         Optional<Ingredient> ingredient = ingredientRepository.findById(ingredientId);
-
         ingredient.ifPresentOrElse(
                 logger::info,
                 () -> logger.error("Ingredient with this id: " + ingredientId + " is not exist."));
 
-        return ingredientRepository.findById(ingredientId).get();
+        return ingredientRepository.findById(ingredientId).orElse(null);
     }
 
     @Transactional
@@ -61,18 +60,17 @@ public class IngredientService {
                 i -> {
                     logger.info(ingredientForUpdate);
                     if (ingredientName != null) {
-                        ingredientForUpdate.get().setName(ingredientName);
+                        i.setName(ingredientName);
                     }
                     if (ingredientPrice != null) {
-                        ingredientForUpdate.get().setPrice(ingredientPrice);
+                        i.setPrice(ingredientPrice);
                     }
                     if (ingredientType != null) {
-                        ingredientForUpdate.get().setType(ingredientType);
+                        i.setIngredientType(ingredientType);
                     }
+                    ingredientRepository.save(i);
                 },
                 () -> logger.error("Ingredient with this id: " + ingredientId + " is not exist."));
-
-        ingredientRepository.save(ingredientForUpdate.get());
     }
 
     public void deleteIngredient(Short ingredientId) {

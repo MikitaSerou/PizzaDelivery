@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired(required = false)
+    @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
     public List<User> findAll() {
         logger.info("Call method: findAll()");
 
-        return userRepository.findAll();
+        return (List<User>) userRepository.findAll();
     }
 
     public boolean saveUser(User user) {
@@ -100,6 +100,5 @@ public class UserService implements UserDetailsService {
         } else {
             logger.error("user with ID: " + userId + " is not exist.");
         }
-
     }
 }

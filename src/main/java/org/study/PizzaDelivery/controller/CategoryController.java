@@ -71,8 +71,7 @@ public class CategoryController {
                                    @PathVariable("productName") String productName,
                                    @ModelAttribute User user,
                                    @RequestParam(defaultValue = "") String comment,
-                                   @RequestParam(defaultValue = "") Short baseId,
-                                   Model model) {
+                                   @RequestParam(defaultValue = "") Short baseId) {
         logger.info("POST request /category/" + categoryName + "/" + productName +
                 "[categoryName: " + categoryName +
                 ", productName: " + productName +

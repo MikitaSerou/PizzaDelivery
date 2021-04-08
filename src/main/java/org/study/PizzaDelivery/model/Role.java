@@ -5,8 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity

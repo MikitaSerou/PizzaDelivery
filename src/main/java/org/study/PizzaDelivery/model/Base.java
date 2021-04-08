@@ -3,7 +3,6 @@ package org.study.PizzaDelivery.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class Base {
@@ -65,7 +64,7 @@ public class Base {
 
         Base base = (Base) o;
 
-        if (id != base.id) return false;
+        if (!id.equals(base.id)) return false;
         if (name != null ? !name.equals(base.name) : base.name != null) return false;
         return priceMultiplier != null ? priceMultiplier.equals(base.priceMultiplier) : base.priceMultiplier == null;
     }

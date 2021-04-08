@@ -11,9 +11,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
 
-    Product findById(long id);
-
-    List<Product> findAllByCategoryId(short categoryId);
+    List<Product> findAllByCategoryId(Short categoryId);
 
     Product findDistinctTopByName(String name);
 

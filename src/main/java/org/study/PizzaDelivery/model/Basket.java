@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "basket")
@@ -98,7 +97,7 @@ public class Basket {
 
         Basket basket = (Basket) o;
 
-        if (id != basket.id) return false;
+        if (!id.equals(basket.id)) return false;
         if (isActive != null ? !isActive.equals(basket.isActive) : basket.isActive != null) return false;
         if (time != null ? !time.equals(basket.time) : basket.time != null) return false;
         return user != null ? user.equals(basket.user) : basket.user == null;

@@ -86,8 +86,7 @@ public class AdminController {
     @PostMapping("/users/{userId}")
     public String changeOrderStatus(@PathVariable("userId") Long userId,
                                     @RequestParam(defaultValue = "") Long orderId,
-                                    @RequestParam(defaultValue = "") String action,
-                                    Model model) {
+                                    @RequestParam(defaultValue = "") String action) {
         logger.info("POST request admin/users/" + userId +
                 "[userId: " + userId +
                 ", orderId: " + orderId +
@@ -140,7 +139,7 @@ public class AdminController {
     public String addProductPage(@PathVariable("categoryName") String categoryName,
                                  @RequestParam(defaultValue = "") String productName,
                                  @RequestParam(defaultValue = "") String description,
-                                 @RequestParam(defaultValue = "") short[] ingredientsIds,
+                                 @RequestParam(defaultValue = "") Short[] ingredientsIds,
                                  Model model) {
         logger.info("POST request admin/" + categoryName + "/addProduct " +
                 "[categoryName: " + categoryName +
@@ -165,7 +164,7 @@ public class AdminController {
                                              @RequestParam String productName) throws IOException {
         logger.info("POST request admin/uploadFile" +
                 "[file: " + file +
-                ", productName"+productName +"]");
+                ", productName" + productName + "]");
 
         return fileService.productPhotoUploading(file, productName);
     }
@@ -192,8 +191,7 @@ public class AdminController {
     public String editProduct(@PathVariable("productName") String productName,
                               @RequestParam(defaultValue = "") String newName,
                               @RequestParam(defaultValue = "") String description,
-                              @RequestParam(defaultValue = "") short[] ingredientsIds,
-                              Model model) {
+                              @RequestParam(defaultValue = "") Short[] ingredientsIds) {
         logger.info("POST request admin/edit/" + productName +
                 "[productName: " + productName +
                 ", newName: " + newName +
@@ -217,8 +215,7 @@ public class AdminController {
 
     @PostMapping("/orders")
     public String changeOrderStatus(@RequestParam(defaultValue = "") Long orderId,
-                                    @RequestParam(defaultValue = "") String action,
-                                    Model model) {
+                                    @RequestParam(defaultValue = "") String action) {
         logger.info("POST request admin/orders/" +
                 "[orderId: " + orderId +
                 ", action: " + action + "]");
@@ -251,8 +248,7 @@ public class AdminController {
                               @RequestParam(defaultValue = "") String ingredientName,
                               @RequestParam(defaultValue = "") Double ingredientPrice,
                               @RequestParam(defaultValue = "") IngredientType ingredientType,
-                              @RequestParam(defaultValue = "") String action,
-                              Model model) {
+                              @RequestParam(defaultValue = "") String action) {
         logger.info("POST request admin/ingredients/" +
                 "[ingredientId: " + ingredientId +
                 ", ingredientName: " + ingredientName +

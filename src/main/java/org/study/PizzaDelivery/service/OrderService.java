@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.study.PizzaDelivery.enums.Status;
 import org.study.PizzaDelivery.enums.TypeOfPayment;
-import org.study.PizzaDelivery.model.*;
-
+import org.study.PizzaDelivery.model.Basket;
+import org.study.PizzaDelivery.model.Order;
+import org.study.PizzaDelivery.model.User;
 import org.study.PizzaDelivery.repository.OrderRepository;
-
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +24,7 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     private BasketService basketService;
@@ -38,18 +38,6 @@ public class OrderService {
         logger.info("Call method: getCount()");
 
         return orderRepository.count();
-    }
-
-    @Transactional
-    public Order findById(Long orderId) {
-        logger.info("Call method: findById(orderId: " + orderId + ")");
-        Optional<Order> order = orderRepository.findById(orderId);
-
-        order.ifPresentOrElse(
-                logger::info,
-                () -> logger.error("Order with this id: " + orderId + " is not exist."));
-
-        return order.get();
     }
 
     @Transactional
@@ -92,50 +80,47 @@ public class OrderService {
     public void cancelOrder(Long orderId) {
         logger.info("Call method: cancelOrder(orderId: " + orderId + ")");
         Optional<Order> order = orderRepository.findById(orderId);
-
         order.ifPresentOrElse(
-                logger::info,
+                o -> {
+                    logger.info(order);
+                    if (o.getStatus() == Status.CANCELED) {
+                        return;
+                    }
+                    o.setStatus(Status.CANCELED);
+                    orderRepository.save(o);
+                },
                 () -> logger.error("Order with this id: " + orderId + " is not exist."));
-
-        if (order.get().getStatus() == Status.CANCELED) {
-            return;
-        }
-
-        order.get().setStatus(Status.CANCELED);
-        orderRepository.save(order.get());
     }
 
 
     public void paidUpOrder(Long orderId) {
         logger.info("Call method: paidUpOrder(orderId: " + orderId + ")");
         Optional<Order> order = orderRepository.findById(orderId);
-
         order.ifPresentOrElse(
-                logger::info,
+                o -> {
+                    logger.info(order);
+                    if (o.getStatus() == Status.PAID) {
+                        return;
+                    }
+                    o.setStatus(Status.PAID);
+                    orderRepository.save(o);
+                },
                 () -> logger.error("Order with this id: " + orderId + " is not exist."));
-
-        if (order.get().getStatus() == Status.PAID) {
-            return;
-        }
-
-        order.get().setStatus(Status.PAID);
-        orderRepository.save(order.get());
     }
 
     public void setOrderNotPaidStatus(Long orderId) {
         logger.info("Call method: setOrderNotPaidStatus(orderId: " + orderId + ")");
         Optional<Order> order = orderRepository.findById(orderId);
-
         order.ifPresentOrElse(
-                logger::info,
+                o -> {
+                    logger.info(order);
+                    if (o.getStatus() == Status.NOT_PAID) {
+                        return;
+                    }
+                    o.setStatus(Status.NOT_PAID);
+                    orderRepository.save(o);
+                },
                 () -> logger.error("Order with this id: " + orderId + " is not exist."));
-
-        if (order.get().getStatus() == Status.NOT_PAID) {
-            return;
-        }
-
-        order.get().setStatus(Status.NOT_PAID);
-        orderRepository.save(order.get());
     }
 
     public void safeDeleteOrder(Order order) {

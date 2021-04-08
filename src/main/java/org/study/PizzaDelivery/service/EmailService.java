@@ -17,7 +17,6 @@ import org.study.PizzaDelivery.utils.FormatterUtil;
 
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.util.Objects;
@@ -35,37 +34,35 @@ public class EmailService {
     private JavaMailSender mailSender;
 
     @Autowired
-    ServletContext context;
+    private ServletContext context;
 
     @Autowired
-    FormatterUtil formatterUtil;
+    private FormatterUtil formatterUtil;
 
 
     public void sendRegistrationSuccessfulMail(User user) {
         logger.info("Call method: sendRegistrationSuccessfulMail(user:" + user + ")");
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                ResourceBundle i18nBundle = ResourceBundle.getBundle("i18n/message", Objects.requireNonNull(
-                        Objects.requireNonNull(LocaleContextHolder.getLocaleContext()).getLocale()));
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getMail()));
-                mimeMessage.setFrom(new InternetAddress(Objects.requireNonNull(env.getProperty("email.sender"))));
-                mimeMessage.setSubject(i18nBundle.getString("mail.successful.registration"));
+        MimeMessagePreparator preparator = mimeMessage -> {
+            ResourceBundle i18nBundle = ResourceBundle.getBundle("i18n/message", Objects.requireNonNull(
+                    Objects.requireNonNull(LocaleContextHolder.getLocaleContext()).getLocale()));
+            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getMail()));
+            mimeMessage.setFrom(new InternetAddress(Objects.requireNonNull(env.getProperty("email.sender"))));
+            mimeMessage.setSubject(i18nBundle.getString("mail.successful.registration"));
 
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
-                helper.setText("<html><body><img src='cid:logo'>" +
-                        "<h1>" + i18nBundle.getString("mail.greetings") + " " + user.getUsername() + "!</h1>" +
-                        "<p>" + i18nBundle.getString("mail.thanks") + "</p>" +
-                        "<p>" + i18nBundle.getString("mail.id.appropriation") + " " + user.getId() + "</p>" +
-                        "<p>" + i18nBundle.getString("mail.phone") + " " + user.getPhoneNumber() + "</p><br/>" +
-                        "<i>" + i18nBundle.getString("mail.conclusion") + "</i>" +
-                        "</body></html>", true);
+            helper.setText("<html><body><img src='cid:logo'>" +
+                    "<h1>" + i18nBundle.getString("mail.greetings") + " " + user.getUsername() + "!</h1>" +
+                    "<p>" + i18nBundle.getString("mail.thanks") + "</p>" +
+                    "<p>" + i18nBundle.getString("mail.id.appropriation") + " " + user.getId() + "</p>" +
+                    "<p>" + i18nBundle.getString("mail.phone") + " " + user.getPhoneNumber() + "</p><br/>" +
+                    "<i>" + i18nBundle.getString("mail.conclusion") + "</i>" +
+                    "</body></html>", true);
 
-                FileSystemResource res = new FileSystemResource(
-                        new File(context.getRealPath("")
-                                + "resources/images/logo/logoBlack.png" ));
-                helper.addInline("logo", res);
-            }
+            FileSystemResource res = new FileSystemResource(
+                    new File(context.getRealPath("")
+                            + "resources/images/logo/logoBlack.png"));
+            helper.addInline("logo", res);
         };
 
         try {
@@ -107,7 +104,7 @@ public class EmailService {
 
             FileSystemResource res = new FileSystemResource(
                     new File(context.getRealPath("")
-                            + "resources/images/logo/logoBlack.png" ));
+                            + "resources/images/logo/logoBlack.png"));
             helper.addInline("logo", res);
         };
 

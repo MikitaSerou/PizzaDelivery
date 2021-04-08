@@ -23,7 +23,7 @@ public class MainController {
     private static final Logger logger = LogManager.getLogger(MainController.class);
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     private IngredientService ingredientService;
@@ -90,8 +90,7 @@ public class MainController {
     public String editProductPage(@ModelAttribute User user,
                                   @RequestParam(defaultValue = "") Short baseId,
                                   @RequestParam(defaultValue = "0") Short sauceId,
-                                  @RequestParam(defaultValue = "") short[] ingredientsIds,
-                                  Model model) {
+                                  @RequestParam(defaultValue = "") Short[] ingredientsIds) {
         logger.info("POST request /constructor" +
                 "[user: " + user +
                 ", baseId: " + baseId +

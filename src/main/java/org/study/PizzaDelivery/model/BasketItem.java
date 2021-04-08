@@ -1,7 +1,6 @@
 package org.study.PizzaDelivery.model;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "basket_item")

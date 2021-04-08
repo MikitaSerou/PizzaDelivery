@@ -5,11 +5,9 @@ import org.study.PizzaDelivery.enums.IngredientType;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class Ingredient {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

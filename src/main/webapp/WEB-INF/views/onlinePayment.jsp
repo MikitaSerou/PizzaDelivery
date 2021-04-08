@@ -100,8 +100,9 @@
                     <input type="hidden" name="orderId" value="${orderId}">
                     <div class="row justify-content-center">
                         <div class="col-md-12">
-                            <input type="submit" formmethod="post" value="<spring:message code="online.payment"/>
-                             ${orderSum}.<spring:message code="currency"/>" class="btn btn-pay placeicon"></div>
+                            <input type="submit" formmethod="post" value="<spring:message code="online.payment"/>&nbsp;
+<fmt:formatNumber type="number" maxFractionDigits="2" value="${orderSum}"/>.<spring:message code="currency"/>"
+                                   class="btn btn-pay placeicon"></div>
                     </div>
                 </form>
             </div>

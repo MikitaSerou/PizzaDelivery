@@ -1,8 +1,6 @@
 package org.study.PizzaDelivery.model;
 
 import com.sun.istack.NotNull;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.study.PizzaDelivery.enums.Status;
 import org.study.PizzaDelivery.enums.TypeOfPayment;
 
@@ -10,13 +8,10 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "orders")
 public class Order {
-
-    private static final Logger logger = LogManager.getLogger(Order.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,69 +86,6 @@ public class Order {
         this.time = LocalDateTime.parse(LocalDateTime.now().format(FORMATTER), FORMATTER);
         this.comment = comment;
         this.status = Status.NOT_PAID;
-    }
-
-
-    // Builder -->
-    public class Builder {
-
-        private Builder() {
-            logger.info("new Builder");
-        }
-
-        public Order.Builder user(User user) {
-            logger.info("Builder set user: " + user);
-            Order.this.user = user;
-            return this;
-        }
-
-        public Order.Builder totalPrice(Double totalPrice) {
-            logger.info("Builder set totalPrice: " + totalPrice);
-            Order.this.price = totalPrice;
-            return this;
-        }
-
-        public Order.Builder comment(String comment) {
-            logger.info("Builder set comment: " + comment);
-            Order.this.comment = comment;
-            return this;
-        }
-
-        public Order.Builder phone(String phoneNumber) {
-            logger.info("Builder set phoneNumber: " + phoneNumber);
-            Order.this.phoneNumber = phoneNumber;
-            return this;
-        }
-
-        public Order.Builder typeOfPayment(TypeOfPayment typeOfPayment) {
-            logger.info("Builder set typeOfPayment: " + typeOfPayment);
-            Order.this.typeOfPayment = typeOfPayment;
-            return this;
-        }
-
-        public Order.Builder time(LocalDateTime time) {
-            logger.info("Builder set time: " + time);
-            Order.this.time = LocalDateTime.parse(time.format(FORMATTER), FORMATTER);
-            return this;
-        }
-
-        public Order.Builder status(Status status) {
-            logger.info("Builder set status: " + status);
-            Order.this.status = status;
-            return this;
-        }
-
-        public Order build() {
-            logger.info("Builder build: " + Order.this);
-            return Order.this;
-        }
-
-    }
-    // <-- Builder
-
-    public static Order.Builder builder() {
-        logger.info("Order().new Builder()");
-        return new Order().new Builder();
     }
 
     public List<OrderItem> getOrderItems() {

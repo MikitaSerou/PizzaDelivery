@@ -26,10 +26,14 @@ public class CategoryService {
 
 
     @Transactional
-    public Category findOne(short id) {
+    public Category findOne(Short id) {
         logger.info("Call method: findOne(id: " + id + ")");
+        Optional<Category> category = categoryRepository.findById(id);
+        category.ifPresentOrElse(
+                logger::info,
+                () -> logger.error("Category with this id: " + id + " is not exist."));
 
-        return categoryRepository.findById(id);
+        return category.orElse(null);
     }
 
     @Transactional
@@ -67,12 +71,12 @@ public class CategoryService {
                 c -> {
                     logger.info(categoryForUpdate);
                     if (!categoryName.equals("")) {
-                        categoryForUpdate.get().setName(categoryName);
+                        c.setName(categoryName);
                     }
                     if (categoryPrice != null) {
-                        categoryForUpdate.get().setPrice(categoryPrice);
+                        c.setPrice(categoryPrice);
                     }
-                    categoryRepository.save(categoryForUpdate.get());
+                    categoryRepository.save(c);
                 },
                 () -> logger.error("Category with this id: " + categoryId + " is not exist."));
     }
@@ -90,8 +94,8 @@ public class CategoryService {
         Optional<Category> categoryForDelete = categoryRepository.findById(categoryId);
         categoryForDelete.ifPresentOrElse(
                 c -> {
-                    logger.info(categoryForDelete);
-                    categoryRepository.delete(categoryForDelete.get());
+                    logger.info(c);
+                    categoryRepository.delete(c);
                 },
                 () -> logger.error("Category with this id: " + categoryId + " is not exist."));
     }

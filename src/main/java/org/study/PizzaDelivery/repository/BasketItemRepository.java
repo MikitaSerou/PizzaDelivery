@@ -13,7 +13,7 @@ public interface BasketItemRepository extends CrudRepository<BasketItem, Long> {
 
     @Modifying
     @Query(value = "DELETE from BASKET_ITEM where ID = ?1", nativeQuery = true)
-    void deleteByItemId(long id);
+    void deleteByItemId(Long id);
 
     List<BasketItem> findAllByBasketId(Long basketId);
 }

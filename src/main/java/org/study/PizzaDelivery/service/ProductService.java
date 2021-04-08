@@ -36,7 +36,7 @@ public class ProductService {
     private IngredientService ingredientService;
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
 
     @Transactional
@@ -55,7 +55,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void addNewProductToCategory(String name, Category category, String description, short[] ingredientsId) {
+    public void addNewProductToCategory(String name, Category category, String description, Short[] ingredientsId) {
         logger.info("Call method: addNewProductToCategory(name:" + name +
                 ", category:" + category +
                 ", description:" + description +
@@ -89,7 +89,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void editProductFromCategory(String name, String newName, String description, short[] ingredientsId) {
+    public void editProductFromCategory(String name, String newName, String description, Short[] ingredientsId) {
         logger.info("Call method: editProductFromCategory(name:" + name +
                 ", newName:" + newName +
                 ", description:" + description +
@@ -119,13 +119,6 @@ public class ProductService {
         } else {
             logger.error("Name of new product can not be empty");
         }
-    }
-
-    @Transactional
-    public Iterable<Product> findAll() {
-        logger.info("Call method: findAll()");
-
-        return productRepository.findAll();
     }
 
     @Transactional
@@ -175,12 +168,16 @@ public class ProductService {
 
         Map<String, Product> topProducts = new HashMap<>();
         for (BigInteger id : topId) {
-            Product product = productRepository.findById(id.longValue());
-            if (!topProducts.containsKey(product.getName()) && topProducts.size() != 3) {
-                topProducts.put(product.getName(), product);
-            }
+            Optional<Product> product = productRepository.findById(id.longValue());
+            product.ifPresentOrElse(
+                    p -> {
+                        logger.info(p);
+                        if (!topProducts.containsKey(p.getName()) && topProducts.size() != 3) {
+                            topProducts.put(p.getName(), p);
+                        }
+                    },
+                    () -> logger.error("Product with this id: " + id + " is not exist."));
         }
-
         return topProducts;
     }
 }

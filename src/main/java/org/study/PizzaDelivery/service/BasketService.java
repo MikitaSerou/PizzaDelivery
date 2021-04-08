@@ -44,17 +44,6 @@ public class BasketService {
         return activeBasket;
     }
 
-    @Transactional
-    public Basket findById(Long basketId) {
-        logger.info("Call method: findById(basketId:" + basketId + ")");
-        Optional<Basket> basket = basketRepository.findById(basketId);
-        basket.ifPresentOrElse(
-                logger::info,
-                () -> logger.error("Basket with this id: " + basketId + " is not exist."));
-
-        return basket.get();
-    }
-
     public Double calculatePrice(Long basketId) {
         logger.info("Call method: calculatePrice(basketId:" + basketId + ")");
         List<BasketItem> items = basketItemService.getAllFromBasketByBasketId(basketId);
@@ -78,7 +67,7 @@ public class BasketService {
     }
 
     @Transactional
-    public void addCustomProductToBasket(User user, Short baseId, Short sauceId, short[] ingredientsIds) {
+    public void addCustomProductToBasket(User user, Short baseId, Short sauceId, Short[] ingredientsIds) {
         logger.info("Call method: addCustomProductToBasket(user:" + user +
                 ", sauceId: " + sauceId +
                 ", baseId: " + baseId +
