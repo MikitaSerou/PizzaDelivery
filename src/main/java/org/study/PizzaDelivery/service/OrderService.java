@@ -20,18 +20,20 @@ public class OrderService {
 
     private static final Logger logger = LogManager.getLogger(OrderService.class);
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
+
+    private final BasketService basketService;
+
+    private final OrderItemService orderItemService;
+
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private BasketService basketService;
-
-    @Autowired
-    private OrderItemService orderItemService;
-
+    public OrderService(OrderRepository orderRepository, BasketService basketService,
+                        OrderItemService orderItemService) {
+        this.orderRepository = orderRepository;
+        this.basketService = basketService;
+        this.orderItemService = orderItemService;
+    }
 
     @Transactional
     public Long getCount() {
@@ -121,16 +123,5 @@ public class OrderService {
                     orderRepository.save(o);
                 },
                 () -> logger.error("Order with this id: " + orderId + " is not exist."));
-    }
-
-    public void safeDeleteOrder(Order order) {
-        logger.info("Call method: safeDeleteOrder(order: " + order + ")");
-
-        if (order.getStatus() == Status.NOT_PAID) {
-            order.setStatus(Status.CANCELED);
-        }
-
-        order.setUser((User) userService.loadUserByUsername("Удаленный"));
-        orderRepository.save(order);
     }
 }

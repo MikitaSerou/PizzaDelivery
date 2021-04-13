@@ -17,9 +17,13 @@ public class BaseService {
 
     private static final Logger logger = LogManager.getLogger(BaseService.class);
 
-    @Autowired
-    private BaseRepository baseRepository;
+    private final BaseRepository baseRepository;
 
+
+    @Autowired
+    public BaseService(BaseRepository baseRepository) {
+        this.baseRepository = baseRepository;
+    }
 
     @Transactional
     public List<Base> findAll() {

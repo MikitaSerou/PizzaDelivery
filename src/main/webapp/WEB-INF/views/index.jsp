@@ -168,7 +168,7 @@
                     <p><spring:message code="p3"/></p>
                     <p><spring:message code="p4"/></p>
                     <div class="text-center">
-                        <img src='<spring:url value="https://istudy.by/upload/filemanager/d6a0ffd0f0/slider/rbljvayta-w1.jpg"/>'
+                        <img src='<spring:url value="https://www-cdn.intex-press.by/wp-content/uploads/2018/08/5-6.jpg"/>'
                              width="100%" class="rounded" alt="kek">
                     </div>
                     <br>

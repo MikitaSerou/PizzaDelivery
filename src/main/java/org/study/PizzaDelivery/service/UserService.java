@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.study.PizzaDelivery.enums.Status;
+import org.study.PizzaDelivery.model.Basket;
 import org.study.PizzaDelivery.model.Role;
 import org.study.PizzaDelivery.model.User;
 import org.study.PizzaDelivery.repository.UserRepository;
@@ -22,18 +24,16 @@ public class UserService implements UserDetailsService {
 
     private static final Logger logger = LogManager.getLogger(UserService.class);
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final PasswordEncoder bCryptPasswordEncoder;
+
 
     @Autowired
-    private PasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    private BasketService basketService;
-
-    @Autowired
-    private OrderService orderService;
-
+    public UserService(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -53,7 +53,7 @@ public class UserService implements UserDetailsService {
 
         Optional<User> userFromDb = userRepository.findById(userId);
 
-        return userFromDb.orElse(new User());
+        return userFromDb.orElse(null);
     }
 
     @Transactional
@@ -81,24 +81,32 @@ public class UserService implements UserDetailsService {
         logger.info("Set Email: " + user.getMail());
         user.setPhoneNumber(user.getPhoneNumber());
         logger.info("Set Phone Number: " + user.getPhoneNumber());
+        logger.info("Create Basket for User...");
+        user.setBaskets(Collections.singletonList(new Basket(true, user)));
         userRepository.save(user);
         logger.info("Saved user: " + user);
-
-        logger.info("Create Basket for User...");
-        basketService.saveBasket(userRepository.findByUsername(user.getUsername()));
 
         return true;
     }
 
+    @Transactional
     public void deleteUser(Long userId) {
         logger.info("Call method: deleteUser(userId: " + userId + ")");
-
-        if (userRepository.findById(userId).isPresent()) {
-            logger.info("Deleting user with ID: " + userId);
-            orderService.findOrdersByUserId(userId).forEach(o -> orderService.safeDeleteOrder(o));
-            userRepository.deleteById(userId);
-        } else {
-            logger.error("user with ID: " + userId + " is not exist.");
-        }
+        Optional<User> userForDelete = userRepository.findById(userId);
+        userForDelete.ifPresentOrElse(
+                u -> {
+                    logger.info("Deleting user with ID: " + userId);
+                    u.getOrders().forEach(o -> {
+                        logger.info("Safe Delete Order: " + o + ")");
+                        if (o.getStatus() == Status.NOT_PAID) {
+                            o.setStatus(Status.CANCELED);
+                        }
+                        o.setUser((User) loadUserByUsername("Удаленный"));
+                    });
+                    logger.info("Deleting user: " + u);
+                    userRepository.deleteById(userId);
+                },
+                () -> logger.error("User with ID: " + userId + " is not exist.")
+        );
     }
 }

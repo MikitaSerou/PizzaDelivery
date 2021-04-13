@@ -22,30 +22,33 @@ public class MainController {
 
     private static final Logger logger = LogManager.getLogger(MainController.class);
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final IngredientService ingredientService;
+
+    private final BasketService basketService;
+
+    private final CategoryService categoryService;
+
+    private final BaseService baseService;
+
+    private final OrderService orderService;
+
+    private final ProductService productService;
+
+    private final Environment env;
 
     @Autowired
-    private IngredientService ingredientService;
-
-    @Autowired
-    private BasketService basketService;
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private BaseService baseService;
-
-    @Autowired
-    private OrderService orderService;
-
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private Environment env;
-
+    public MainController(UserService userService, IngredientService ingredientService, BasketService basketService, CategoryService categoryService, BaseService baseService, OrderService orderService, ProductService productService, Environment env) {
+        this.userService = userService;
+        this.ingredientService = ingredientService;
+        this.basketService = basketService;
+        this.categoryService = categoryService;
+        this.baseService = baseService;
+        this.orderService = orderService;
+        this.productService = productService;
+        this.env = env;
+    }
 
     @GetMapping("/")
     public String mainPage(HttpSession session, Model model) {

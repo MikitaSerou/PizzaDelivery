@@ -15,20 +15,19 @@ public class BasketService {
 
     private static final Logger logger = LogManager.getLogger(BasketService.class);
 
+    private final BasketRepository basketRepository;
+
+    private final BasketItemService basketItemService;
+
+    private final ProductService productService;
+
+
     @Autowired
-    private BasketRepository basketRepository;
-
-    @Autowired
-    private BasketItemService basketItemService;
-
-    @Autowired
-    private ProductService productService;
-
-
-    public void saveBasket(User user) {
-        logger.info("Call method: saveBasket(user:" + user + ")");
-
-        basketRepository.save(new Basket(true, user));
+    public BasketService(BasketRepository basketRepository, BasketItemService basketItemService,
+                         ProductService productService) {
+        this.basketRepository = basketRepository;
+        this.basketItemService = basketItemService;
+        this.productService = productService;
     }
 
     @Transactional

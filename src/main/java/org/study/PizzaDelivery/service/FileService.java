@@ -20,14 +20,18 @@ public class FileService {
 
     private static final Logger logger = LogManager.getLogger(FileService.class);
 
+    private final FileChecker fileChecker;
+
+    private final ServletContext context;
+
+
     @Autowired
-    private FileChecker fileChecker;
+    public FileService(FileChecker fileChecker, ServletContext context) {
+        this.fileChecker = fileChecker;
+        this.context = context;
+    }
 
-    @Autowired
-    private ServletContext context;
-
-
-    public ResponseEntity productPhotoUploading(MultipartFile file, String productName) throws IOException {
+    public ResponseEntity<String> productPhotoUploading(MultipartFile file, String productName) throws IOException {
         logger.info("Call method: productPhotoUploading(file: " + file + ", productName: " + productName + ")");
 
         if (productName.equals("")) {

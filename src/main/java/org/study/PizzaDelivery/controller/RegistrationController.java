@@ -23,12 +23,15 @@ public class RegistrationController {
 
     private static final Logger logger = LogManager.getLogger(RegistrationController.class);
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final EmailService emailService;
 
     @Autowired
-    private EmailService emailService;
-
+    public RegistrationController(UserService userService, EmailService emailService) {
+        this.userService = userService;
+        this.emailService = emailService;
+    }
 
     @GetMapping
     public String registration(Model model) {

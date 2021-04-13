@@ -35,8 +35,7 @@ import java.util.Locale;
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
-    public WebConfig(ApplicationContext applicationContext) {
-    }
+    private ApplicationContext applicationContext;
 
 
     @Bean

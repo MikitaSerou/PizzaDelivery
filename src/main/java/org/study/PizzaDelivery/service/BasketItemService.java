@@ -17,11 +17,16 @@ public class BasketItemService {
 
     private static final Logger logger = LogManager.getLogger(BasketItemService.class);
 
-    @Autowired
-    private BasketItemRepository basketItemRepository;
+    private final BasketItemRepository basketItemRepository;
+
+    private final IngredientService ingredientService;
+
 
     @Autowired
-    private IngredientService ingredientService;
+    public BasketItemService(BasketItemRepository basketItemRepository, IngredientService ingredientService) {
+        this.basketItemRepository = basketItemRepository;
+        this.ingredientService = ingredientService;
+    }
 
     @Transactional
     public List<BasketItem> getAllFromBasketByBasketId(Long basketId) {

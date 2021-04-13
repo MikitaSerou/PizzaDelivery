@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private Environment env;
 
     @Autowired
-    UserDetailsService userService;
+    private UserDetailsService userService;
 
     @Bean
     PasswordEncoder passwordEncoder() {

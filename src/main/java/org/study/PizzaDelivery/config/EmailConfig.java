@@ -17,7 +17,13 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 public class EmailConfig {
 
     @Autowired
-    private Environment env;
+    private final Environment env;
+
+
+    @Autowired
+    public EmailConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public JavaMailSender getJavaMailSender() {

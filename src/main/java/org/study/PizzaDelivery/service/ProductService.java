@@ -23,21 +23,23 @@ public class ProductService {
 
     private static final Logger logger = LogManager.getLogger(ProductService.class);
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private BaseService baseService;
+    private final BaseService baseService;
 
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
     @PersistenceContext
     private EntityManager entityManager;
 
+
+    @Autowired
+    public ProductService(ProductRepository productRepository, BaseService baseService,
+                          IngredientService ingredientService) {
+        this.productRepository = productRepository;
+        this.baseService = baseService;
+        this.ingredientService = ingredientService;
+    }
 
     @Transactional
     public Product findDistinctTopByName(String productName) {
@@ -138,9 +140,8 @@ public class ProductService {
     @Transactional
     public void archiveProduct(Product product) {
         logger.info("Call method: archiveProduct(product: " + product + ")");
+        product.setCategory(null);
 
-        product.setCategory(categoryService.findByName("Архив"));
-        logger.info("Add the product: " + product + " to the archive category");
         productRepository.save(product);
     }
 
@@ -160,7 +161,7 @@ public class ProductService {
     public Map<String, Product> findTop3Products() {
         logger.info("Call method: selectTop3Products()");
         Query query = entityManager.createNativeQuery("SELECT PRODUCT_id FROM (Select * From ORDER_ITEM " +
-                "WHERE PRODUCT_ID in (select id from PRODUCT  WHERE PRODUCT.CATEGORY_ID > '2')) by " +
+                "WHERE PRODUCT_ID in (select id from PRODUCT  WHERE PRODUCT.CATEGORY_ID > '1')) by " +
                 "GROUP BY PRODUCT_id order by count(PRODUCT_id) desc");
 
         List<BigInteger> topId = query.getResultList();

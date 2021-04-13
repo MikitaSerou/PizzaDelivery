@@ -27,18 +27,22 @@ public class EmailService {
 
     private static final Logger logger = LogManager.getLogger(EmailService.class);
 
-    @Autowired
-    private Environment env;
+    private final Environment env;
+
+    private final JavaMailSender mailSender;
+
+    private final ServletContext context;
+
+    private final FormatterUtil formatterUtil;
+
 
     @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
-    private ServletContext context;
-
-    @Autowired
-    private FormatterUtil formatterUtil;
-
+    public EmailService(Environment env, JavaMailSender mailSender, ServletContext context, FormatterUtil formatterUtil) {
+        this.env = env;
+        this.mailSender = mailSender;
+        this.context = context;
+        this.formatterUtil = formatterUtil;
+    }
 
     public void sendRegistrationSuccessfulMail(User user) {
         logger.info("Call method: sendRegistrationSuccessfulMail(user:" + user + ")");

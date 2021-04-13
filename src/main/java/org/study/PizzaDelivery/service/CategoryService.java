@@ -18,22 +18,15 @@ public class CategoryService {
 
     private static final Logger logger = LogManager.getLogger(CategoryService.class);
 
+    private final CategoryRepository categoryRepository;
+
+    private final ProductService productService;
+
+
     @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
-    private ProductService productService;
-
-
-    @Transactional
-    public Category findOne(Short id) {
-        logger.info("Call method: findOne(id: " + id + ")");
-        Optional<Category> category = categoryRepository.findById(id);
-        category.ifPresentOrElse(
-                logger::info,
-                () -> logger.error("Category with this id: " + id + " is not exist."));
-
-        return category.orElse(null);
+    public CategoryService(CategoryRepository categoryRepository, ProductService productService) {
+        this.categoryRepository = categoryRepository;
+        this.productService = productService;
     }
 
     @Transactional

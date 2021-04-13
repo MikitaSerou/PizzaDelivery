@@ -15,9 +15,13 @@ public class OrderItemService {
 
     private static final Logger logger = LogManager.getLogger(OrderItemService.class);
 
-    @Autowired
-    private OrderItemRepository orderItemRepository;
+    private final OrderItemRepository orderItemRepository;
 
+
+    @Autowired
+    public OrderItemService(OrderItemRepository orderItemRepository) {
+        this.orderItemRepository = orderItemRepository;
+    }
 
     public void addOrderItemsFromBasket(Basket basket, Order order) {
         logger.info("Call method: addOrderItemsFromBasket(ingredientName: " + basket +

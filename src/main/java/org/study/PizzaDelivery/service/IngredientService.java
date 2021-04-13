@@ -17,9 +17,13 @@ public class IngredientService {
 
     private static final Logger logger = LogManager.getLogger(IngredientService.class);
 
-    @Autowired
-    private IngredientRepository ingredientRepository;
+    private final IngredientRepository ingredientRepository;
 
+
+    @Autowired
+    public IngredientService(IngredientRepository ingredientRepository) {
+        this.ingredientRepository = ingredientRepository;
+    }
 
     @Transactional
     public Ingredient findById(Short ingredientId) {

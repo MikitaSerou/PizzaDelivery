@@ -3,14 +3,16 @@ package org.study.PizzaDelivery.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.study.PizzaDelivery.enums.IngredientType;
 import org.study.PizzaDelivery.enums.Status;
-import org.study.PizzaDelivery.model.Category;
+import org.study.PizzaDelivery.model.User;
 import org.study.PizzaDelivery.service.*;
 
 import java.io.IOException;
@@ -22,27 +24,31 @@ public class AdminController {
 
     private static final Logger logger = LogManager.getLogger(AdminController.class);
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final IngredientService ingredientService;
+
+    private final OrderService orderService;
+
+    private final CategoryService categoryService;
+
+    private final BaseService baseService;
+
+    private final ProductService productService;
+
+    private final FileService fileService;
+
 
     @Autowired
-    private IngredientService ingredientService;
-
-    @Autowired
-    private OrderService orderService;
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private BaseService baseService;
-
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private FileService fileService;
-
+    public AdminController(UserService userService, IngredientService ingredientService, OrderService orderService, CategoryService categoryService, BaseService baseService, ProductService productService, FileService fileService) {
+        this.userService = userService;
+        this.ingredientService = ingredientService;
+        this.orderService = orderService;
+        this.categoryService = categoryService;
+        this.baseService = baseService;
+        this.productService = productService;
+        this.fileService = fileService;
+    }
 
     @GetMapping
     public String cabinet(Model model) {
@@ -74,11 +80,15 @@ public class AdminController {
 
 
     @GetMapping("/users/{userId}")
-    public String showUser(@PathVariable("userId") Long userId, Model model) {
+    public String showUser(@PathVariable("userId") Long userId, Model model) throws NoHandlerFoundException {
         logger.info("GET request admin/users/" + userId);
-
-        model.addAttribute("user", userService.findUserById(userId));
-        model.addAttribute("userOrders", orderService.findOrdersByUserId(userId));
+        User user = userService.findUserById(userId);
+        if (user != null) {
+            model.addAttribute("user", userService.findUserById(userId));
+            model.addAttribute("userOrders", orderService.findOrdersByUserId(userId));
+        } else {
+            throw new NoHandlerFoundException("GET", "/users/" + userId, HttpHeaders.EMPTY);
+        }
 
         return "admin/userOrders";
     }
@@ -108,10 +118,7 @@ public class AdminController {
     @GetMapping("/archive")
     public String archive(Model model) {
         logger.info("GET request admin/archive/");
-
-        Category archiveCategory = categoryService.findByName("Архив");
-        model.addAttribute("category", categoryService.findOne(archiveCategory.getId()));
-        model.addAttribute("products", archiveCategory.getProducts());
+        model.addAttribute("products", productService.findAllByCategoryId(null));
 
         return "admin/archive";
     }
@@ -160,8 +167,8 @@ public class AdminController {
     }
 
     @PostMapping("/uploadFile")
-    public ResponseEntity uploadProductImage(@RequestParam("file") MultipartFile file,
-                                             @RequestParam String productName) throws IOException {
+    public ResponseEntity<String> uploadProductImage(@RequestParam("file") MultipartFile file,
+                                                     @RequestParam String productName) throws IOException {
         logger.info("POST request admin/uploadFile" +
                 "[file: " + file +
                 ", productName" + productName + "]");

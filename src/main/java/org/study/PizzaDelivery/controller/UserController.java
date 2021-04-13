@@ -26,21 +26,24 @@ public class UserController {
 
     private static final Logger logger = LogManager.getLogger(UserController.class);
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    private final BasketService basketService;
+
+    private final BasketItemService basketItemService;
+
+    private final FormatterUtil formatterUtil;
+
+    private final EmailService emailService;
 
     @Autowired
-    private BasketService basketService;
-
-    @Autowired
-    private BasketItemService basketItemService;
-
-    @Autowired
-    private FormatterUtil formatterUtil;
-
-    @Autowired
-    private EmailService emailService;
-
+    public UserController(OrderService orderService, BasketService basketService, BasketItemService basketItemService, FormatterUtil formatterUtil, EmailService emailService) {
+        this.orderService = orderService;
+        this.basketService = basketService;
+        this.basketItemService = basketItemService;
+        this.formatterUtil = formatterUtil;
+        this.emailService = emailService;
+    }
 
     @GetMapping
     public String account(@ModelAttribute User user, Model model) {

@@ -17,21 +17,24 @@ public class CategoryController {
 
     private static final Logger logger = LogManager.getLogger(CategoryController.class);
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+
+    private final ProductService productService;
+
+    private final BaseService baseService;
+
+    private final BasketService basketService;
+
+    private final IngredientService ingredientService;
 
     @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private BaseService baseService;
-
-    @Autowired
-    private BasketService basketService;
-
-    @Autowired
-    private IngredientService ingredientService;
-
+    public CategoryController(CategoryService categoryService, ProductService productService, BaseService baseService, BasketService basketService, IngredientService ingredientService) {
+        this.categoryService = categoryService;
+        this.productService = productService;
+        this.baseService = baseService;
+        this.basketService = basketService;
+        this.ingredientService = ingredientService;
+    }
 
     @GetMapping
     public String categoryList(Model model) {

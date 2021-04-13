@@ -70,8 +70,8 @@
                     <img src='<spring:url value="/resources/images/en.png"/>' alt="en"/>
                     <spring:message code="lang.en"/></a>
                 <a class="dropdown-item" href="?lang=ru"><img
-                        src='<spring:url value="/resources/images/ru.png"/>' alt="ru"/
-                    ><spring:message code="lang.ru"/></a>
+                        src='<spring:url value="/resources/images/ru.png"/>' alt="ru">
+                    <spring:message code="lang.ru"/></a>
             </div>
         </div>
         <div class="btn-group btn-group-lg" role="group" aria-label="...">
@@ -182,10 +182,10 @@
 </div>
 
 <div style="display:none;" class="nav_up" id="nav_up"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#CCC" class="bi bi-chevron-up" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+    <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"></path>
 </svg></div>
 <div style="display:none;" class="nav_down" id="nav_down"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#CCC" class="bi bi-chevron-down" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
 </svg></div>
 
 <div id="myFooter">
