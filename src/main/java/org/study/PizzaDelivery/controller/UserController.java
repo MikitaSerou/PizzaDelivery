@@ -37,7 +37,8 @@ public class UserController {
     private final EmailService emailService;
 
     @Autowired
-    public UserController(OrderService orderService, BasketService basketService, BasketItemService basketItemService, FormatterUtil formatterUtil, EmailService emailService) {
+    public UserController(OrderService orderService, BasketService basketService, BasketItemService basketItemService,
+                          FormatterUtil formatterUtil, EmailService emailService) {
         this.orderService = orderService;
         this.basketService = basketService;
         this.basketItemService = basketItemService;

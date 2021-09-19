@@ -1,6 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="shortcut icon" type="image/x-icon"
-          href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
+          href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
     <title>404</title>
     <spring:theme code="stylesheet" var="themeName"/>
     <link href='<spring:url value="/resources/css/${themeName}"/>' rel="stylesheet"/>
@@ -38,16 +38,16 @@
         <div class="col-sm"></div>
         <div class="col-sm-6" style="backdrop-filter: blur(7px); border-radius: 30px">
             <br/>
-                <div class="row justify-content-md-center">
-                    <div class="alert alert-dismissible alert-danger">
-                        <h1 align="center">404</h1>
-                        <h2 align="center">${ex}</h2>
-                    </div>
-                    <img src='<spring:url value="https://gifki.info/uploads/posts/2017-06/1498693660_2955-sho-opyat.gif"/>'
-                         width="384px"
-                         height="344px" class="rounded" alt="kek">
-                    <br/>
+            <div class="row justify-content-md-center">
+                <div class="alert alert-dismissible alert-danger">
+                    <h1 align="center">404</h1>
+                    <h2 align="center">${ex}</h2>
                 </div>
+                <img src='<spring:url value="https://gifki.info/uploads/posts/2017-06/1498693660_2955-sho-opyat.gif"/>'
+                     width="384px"
+                     height="344px" class="rounded" alt="kek">
+                <br/>
+            </div>
             <br/>
         </div>
         <div class="col-sm"></div>

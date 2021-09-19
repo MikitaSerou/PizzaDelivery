@@ -80,7 +80,8 @@
                 </svg>
                 <spring:message code="category.title"/></a></button>
             <sec:authorize access="!hasRole('ROLE_ADMIN')">
-                <button type="button" class="btn btn-secondary"><a href="${pageContext.request.contextPath}/constructor">
+                <button type="button" class="btn btn-secondary"><a
+                        href="${pageContext.request.contextPath}/constructor">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-pie-chart" viewBox="0 0 16 16">
                         <path d="M7.5 1.018a7 7 0 0 0-4.79 11.566L7.5 7.793V1.018zm1 0V7.5h6.482A7.001 7.001 0 0 0 8.5 1.018zM14.982 8.5H8.207l-4.79 4.79A7 7 0 0 0 14.982 8.5zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"></path>
@@ -94,7 +95,7 @@
                 <input type="hidden" id="adminUrl" value="${pageContext.request.contextPath}"/>
                 <label for="inputsearchquery"></label>
                 <input id="inputsearchquery" class="form-control mr-sm-2" type="number"
-                                                             placeholder='<spring:message code="user.search.by.id"/>'>
+                       placeholder='<spring:message code="user.search.by.id"/>'>
                 <button class="btn btn-secondary my-2 my-sm-0" onclick="mysearch()"><spring:message
                         code="search"/></button>
             </form>
@@ -137,7 +138,8 @@
                                 <div class="carousel-item" style="width: 100%">
                                     </c:if>
                                     <a href="${pageContext.request.contextPath}/category/${product.category.name}/${product.name}">
-                                        <img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/products/${product.name.toLowerCase()}.png"
+                                        <img class="img-fluid"
+                                             src="${pageContext.request.contextPath}/resources/images/products/${product.name.toLowerCase()}.png"
                                              alt="${product.name}" height="390" width="390"> </a>
                                     <br/>
                                     <br/>
@@ -189,7 +191,8 @@
                                 <spring:message code="admin"/>
                             </h4>
                             <div class="list-group">
-                                <a href="${pageContext.request.contextPath}/admin" class="list-group-item list-group-item-action">
+                                <a href="${pageContext.request.contextPath}/admin"
+                                   class="list-group-item list-group-item-action">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-tools" viewBox="0 0 16 16">
                                         <path d="M1 0L0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.356 3.356a1 1 0 0 0 1.414 0l1.586-1.586a1 1 0 0 0 0-1.414l-3.356-3.356a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0zm9.646 10.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708zM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11z"></path>
@@ -224,7 +227,8 @@
                                         <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"></path>
                                     </svg>
                                     <spring:message code="userOffice.title"/></a>
-                                <a href="${pageContext.request.contextPath}/user/basket" class="list-group-item list-group-item-action">
+                                <a href="${pageContext.request.contextPath}/user/basket"
+                                   class="list-group-item list-group-item-action">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-cart3" viewBox="0 0 16 16">
                                         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
@@ -275,7 +279,8 @@
                                         </svg>
                                         <spring:message code="login.ref"/>
                                     </button>
-                                    <button type="button" class="btn btn-secondary"><a href="${pageContext.request.contextPath}/registration">
+                                    <button type="button" class="btn btn-secondary"><a
+                                            href="${pageContext.request.contextPath}/registration">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              fill="currentColor"
                                              class="bi bi-person-plus" viewBox="0 0 16 16">

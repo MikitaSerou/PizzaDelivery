@@ -24,7 +24,7 @@ public class FormatterUtil {
     }
 
     public String commentWithChangeFormatter(String comment, Double change) {
-        logger.info("Call method: commentWithChangeFormatter(comment:" + comment +  ", change: "+ change + ")");
+        logger.info("Call method: commentWithChangeFormatter(comment:" + comment + ", change: " + change + ")");
         ResourceBundle i18nBundle = ResourceBundle.getBundle("i18n/message",
                 Objects.requireNonNull(Objects.requireNonNull(LocaleContextHolder.getLocaleContext()).getLocale()));
 
@@ -32,7 +32,7 @@ public class FormatterUtil {
                 "." + i18nBundle.getString("currency") + ").";
     }
 
-    public String getFormattedHtmlTextOfOrderItemsToMail(Order order){
+    public String getFormattedHtmlTextOfOrderItemsToMail(Order order) {
         logger.info("Call method: getFormattedHtmlTextOfOrderItemsToMail(order:" + order + ")");
 
         ResourceBundle i18nBundle = ResourceBundle.getBundle("i18n/message",

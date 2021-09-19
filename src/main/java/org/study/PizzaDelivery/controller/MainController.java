@@ -39,7 +39,9 @@ public class MainController {
     private final Environment env;
 
     @Autowired
-    public MainController(UserService userService, IngredientService ingredientService, BasketService basketService, CategoryService categoryService, BaseService baseService, OrderService orderService, ProductService productService, Environment env) {
+    public MainController(UserService userService, IngredientService ingredientService, BasketService basketService,
+                          CategoryService categoryService, BaseService baseService, OrderService orderService,
+                          ProductService productService, Environment env) {
         this.userService = userService;
         this.ingredientService = ingredientService;
         this.basketService = basketService;
@@ -59,7 +61,8 @@ public class MainController {
         logger.info("User in HttpSession: " + session.getAttribute("user"));
         if (session.getAttribute("user") == null) {
             if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")
-                    && !SecurityContextHolder.getContext().getAuthentication().getName().equals(env.getProperty("admin.login"))) {
+                    && !SecurityContextHolder.getContext().getAuthentication().getName()
+                    .equals(env.getProperty("admin.login"))) {
                 logger.info("Initialize user object in HttpSession");
                 String name = SecurityContextHolder.getContext().getAuthentication().getName();
                 User user = (User) userService.loadUserByUsername(name);

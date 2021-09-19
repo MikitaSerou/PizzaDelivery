@@ -1,18 +1,20 @@
 
-#mainLogo{
+#mainLogo {
     background-image: url(../images/logo/logoWhite.png);
     background-repeat: no-repeat;
     background-position: center center;
     width: 220px;
     height: 60px;
 }
+
 .error {
     color: white;
     font-weight: bold;
     background-color: #ec4844;
     border-radius: 4px;
 }
-.hover{
+
+.hover {
     align-content: center;
     text-align: center;
     width: 100%;
@@ -24,11 +26,13 @@
     display: none;
     margin: 0;
 }
-#productCard{
-    background-color: rgba(39,43,48,0.9);
+
+#productCard {
+    background-color: rgba(39, 43, 48, 0.9);
     border-radius: 10px;
 }
-#loginAndRegBody{
+
+#loginAndRegBody {
     /* Местоположение фоновой картинки */
     background-image: url(../images/background/mainBack2.jpeg);
     background-size: cover;
@@ -45,7 +49,8 @@
     overflow: auto;
     min-width: 100%;
 }
-#bodyDefault{
+
+#bodyDefault {
     /* Местоположение фоновой картинки */
     background-image: url(../images/background/mainBack4.jpeg);
     /* Фоновое изображение выровнено по центру в горизонтальной и вертикальной плоскостях */
@@ -59,21 +64,24 @@
     object-fit: contain;
     height: 100%;
 }
-#pageHeader{
-    background-color: rgba(39,43,48,0.9);
+
+#pageHeader {
+    background-color: rgba(39, 43, 48, 0.9);
     border-radius: 10px;
     font-weight: bolder;
     border: solid black 1px;
     width: 100%;
 }
-#pizzaName{
+
+#pizzaName {
     background-color: #ed5a56;
     border-radius: 10px;
     font-weight: bolder;
     font-size: 30px;
 }
-.mainPageParagraph{
-    background-color: rgba(39,43,48,0.8);
+
+.mainPageParagraph {
+    background-color: rgba(39, 43, 48, 0.8);
     border-radius: 10px;
     font-weight: bolder;
     border: solid black 1px;
@@ -82,21 +90,24 @@
     padding-left: 10px;
     padding-right: 10px;
 }
-.quote{
+
+.quote {
     background-color: #85221c;
     border-radius: 10px;
     border: solid black 1px;
     margin-left: 10px;
     width: 80%;
 }
-#ingredientName{
+
+#ingredientName {
     background-color: #2f6473;
     color: white;
     border-radius: 5px;
     font-weight: bolder;
-    font-size:14px;
+    font-size: 14px;
 }
-.formLable{
+
+.formLable {
     background-color: #ed5a56;
     border-radius: 10px;
     font-weight: bolder;
@@ -105,7 +116,8 @@
     margin-left: auto;
     margin-right: auto;
 }
-.formLableSecondary{
+
+.formLableSecondary {
     background-color: #1f8c22;
     color: white;
     border-radius: 10px;
@@ -115,6 +127,7 @@
     margin-left: auto;
     margin-right: auto;
 }
+
 #myFooter {
     border-top: solid 1px gray;
     top: 100px;
@@ -126,34 +139,40 @@
     height: 53px;
     background-color: #272b30;
 }
+
 ::-webkit-scrollbar {
     width: 10px;
     background: gray;
     border-radius: 5px;
     opacity: 0.8;
 }
+
 ::-webkit-scrollbar-thumb {
     background-color: brown;
     border-radius: 5px;
     opacity: 0.8;
 }
+
 .loginForm {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 html, body {
     width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
 }
+
 html, body {
     width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
 }
+
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -659,8 +678,8 @@ pre code {
 
 .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
     width: 100%;
-/*min-height: 0%;*
- */
+    /*min-height: 0%;*
+     */
     /*height: 90%;*/
     padding-bottom: 0;
     padding-right: 15px;
@@ -4349,7 +4368,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
-    height:10%;
+    height: 10%;
 }
 
 .nav-link {

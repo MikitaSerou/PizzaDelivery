@@ -40,7 +40,9 @@ public class AdminController {
 
 
     @Autowired
-    public AdminController(UserService userService, IngredientService ingredientService, OrderService orderService, CategoryService categoryService, BaseService baseService, ProductService productService, FileService fileService) {
+    public AdminController(UserService userService, IngredientService ingredientService, OrderService orderService,
+                           CategoryService categoryService, BaseService baseService, ProductService productService,
+                           FileService fileService) {
         this.userService = userService;
         this.ingredientService = ingredientService;
         this.orderService = orderService;

@@ -223,88 +223,88 @@
                                 style="position:absolute; left: 0; bottom: 0; width: 100%;">
                             <span style="font-size: 30px;"><spring:message code="edit.button"/></span></button>
                     </form>
-                <div>
-                    <form id="fileUploadForm" name="fileUploadForm"
-                          action="${pageContext.request.contextPath}/admin/uploadFile"
-                          method="post" enctype="multipart/form-data">
-                        <input id="uploadingUrl" hidden name="url"
-                               value="${pageContext.request.contextPath}/admin/uploadFile">
-                        <input hidden id="productNameToFile" name="productName" value="">
-                        <label for="fileInput" class="formLable"><span style="font-size: 30px;">
+                    <div>
+                        <form id="fileUploadForm" name="fileUploadForm"
+                              action="${pageContext.request.contextPath}/admin/uploadFile"
+                              method="post" enctype="multipart/form-data">
+                            <input id="uploadingUrl" hidden name="url"
+                                   value="${pageContext.request.contextPath}/admin/uploadFile">
+                            <input hidden id="productNameToFile" name="productName" value="">
+                            <label for="fileInput" class="formLable"><span style="font-size: 30px;">
                                 <spring:message code="upload.file"/></span>
-                        </label>
-                        <br/>
-                        <div class="progress">
-                            <div id="progressBar"
-                                 class="progress-bar progress-bar-striped bg-success progress-bar-animated"
-                                 role="progressbar"
-                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-                                 style="width: 0%; color: white; font-size: 14px;">0%
+                            </label>
+                            <br/>
+                            <div class="progress">
+                                <div id="progressBar"
+                                     class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+                                     role="progressbar"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                     style="width: 0%; color: white; font-size: 14px;">0%
+                                </div>
                             </div>
-                        </div>
-                        <br/>
-                        <div class="input-group">
-                            <input id="fileInput" type="file" class="form-control" name="file" aria-label="ZAP">
-                            <button id="fileUploadButton" form="fileUploadForm"
-                                    class="btn btn-outline-success" type="submit" id="inputGroupFileAddon04">
-                                <spring:message code="file.upload.button"/>
-                            </button>
-                        </div>
-                    </form>
-                    <div id="alertMsg" class="error"></div>
-                    <script type="text/javascript">
-                        $(document).ready(function () {
-                            $("#inputProductName").keyup(function () {
-                                var name = $(this).val();
-                                $("#productNameToFile").val(name);
-                            }).keyup();
-                        });
-                    </script>
+                            <br/>
+                            <div class="input-group">
+                                <input id="fileInput" type="file" class="form-control" name="file" aria-label="ZAP">
+                                <button id="fileUploadButton" form="fileUploadForm"
+                                        class="btn btn-outline-success" type="submit" id="inputGroupFileAddon04">
+                                    <spring:message code="file.upload.button"/>
+                                </button>
+                            </div>
+                        </form>
+                        <div id="alertMsg" class="error"></div>
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#inputProductName").keyup(function () {
+                                    var name = $(this).val();
+                                    $("#productNameToFile").val(name);
+                                }).keyup();
+                            });
+                        </script>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
                 </div>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
             </div>
         </div>
-    </div>
 
-    <div class="col-sm-3">
-        <section class="sticky-top" style="padding-top: 90px; text-align: center">
-            <div class="card text-white bg-dark mb-4">
-                <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    <h4 class="display-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                             class="bi bi-person" viewBox="0 0 16 16">
-                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
-                        </svg>
-                        <spring:message code="admin"/>
-                    </h4>
-                    <div class="list-group">
-                        <a href="${pageContext.request.contextPath}/admin"
-                           class="list-group-item list-group-item-action">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-tools" viewBox="0 0 16 16">
-                                <path d="M1 0L0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.356 3.356a1 1 0 0 0 1.414 0l1.586-1.586a1 1 0 0 0 0-1.414l-3.356-3.356a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0zm9.646 10.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708zM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11z"></path>
+        <div class="col-sm-3">
+            <section class="sticky-top" style="padding-top: 90px; text-align: center">
+                <div class="card text-white bg-dark mb-4">
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                        <h4 class="display-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                 class="bi bi-person" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
                             </svg>
-                            <spring:message code="adminOffice.title"/></a>
-                        <a href="${pageContext.request.contextPath}/logout"
-                           class="list-group-item list-group-item-action list-group-item-danger">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                      d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"></path>
-                                <path fill-rule="evenodd"
-                                      d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"></path>
-                            </svg>
-                            <spring:message code="logout.ref"/>
-                        </a>
-                    </div>
-                </sec:authorize>
-            </div>
-        </section>
+                            <spring:message code="admin"/>
+                        </h4>
+                        <div class="list-group">
+                            <a href="${pageContext.request.contextPath}/admin"
+                               class="list-group-item list-group-item-action">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-tools" viewBox="0 0 16 16">
+                                    <path d="M1 0L0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.356 3.356a1 1 0 0 0 1.414 0l1.586-1.586a1 1 0 0 0 0-1.414l-3.356-3.356a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0zm9.646 10.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708zM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11z"></path>
+                                </svg>
+                                <spring:message code="adminOffice.title"/></a>
+                            <a href="${pageContext.request.contextPath}/logout"
+                               class="list-group-item list-group-item-action list-group-item-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"></path>
+                                    <path fill-rule="evenodd"
+                                          d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"></path>
+                                </svg>
+                                <spring:message code="logout.ref"/>
+                            </a>
+                        </div>
+                    </sec:authorize>
+                </div>
+            </section>
+        </div>
     </div>
-</div>
 </div>
 
 <div style="display:none;" class="nav_up" id="nav_up">

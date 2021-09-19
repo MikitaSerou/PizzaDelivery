@@ -28,7 +28,8 @@ public class CategoryController {
     private final IngredientService ingredientService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService, ProductService productService, BaseService baseService, BasketService basketService, IngredientService ingredientService) {
+    public CategoryController(CategoryService categoryService, ProductService productService, BaseService baseService,
+                              BasketService basketService, IngredientService ingredientService) {
         this.categoryService = categoryService;
         this.productService = productService;
         this.baseService = baseService;

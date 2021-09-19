@@ -5,10 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.study.PizzaDelivery.model.*;
+import org.study.PizzaDelivery.model.Basket;
+import org.study.PizzaDelivery.model.BasketItem;
+import org.study.PizzaDelivery.model.Product;
+import org.study.PizzaDelivery.model.User;
 import org.study.PizzaDelivery.repository.BasketRepository;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class BasketService {
