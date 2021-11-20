@@ -285,7 +285,7 @@
                     <version>3.2.2</version>
                     <configuration>
                         <warName>PizzaDelivery</warName>
-                        <outputDirectory>${catalina.home}/webapps</outputDirectory>
+                       <!-- <outputDirectory>${catalina.home}/webapps</outputDirectory>-->
                     </configuration>
                 </plugin>
                 <plugin>
