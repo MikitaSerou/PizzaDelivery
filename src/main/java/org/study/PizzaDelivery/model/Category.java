@@ -4,19 +4,21 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "CATEGORY")
 public class Category {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Product> products;
 
-    @Column(name = "category_price", nullable = false)
+    @Column(name = "CATEGORY_PRICE", nullable = false)
     private Double price;
 
 

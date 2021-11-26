@@ -4,10 +4,11 @@ package org.study.PizzaDelivery.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "order_item")
+@Table(name = "ORDER_ITEM")
 public class OrderItem {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -19,10 +20,10 @@ public class OrderItem {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @Column(name = "price")
+    @Column(name = "PRICE")
     private Double price;
 
-    @Column(name = "description")
+    @Column(name = "DESCRIPTION")
     private String description;
 
 

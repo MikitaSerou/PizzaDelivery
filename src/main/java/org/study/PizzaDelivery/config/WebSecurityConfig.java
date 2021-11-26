@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error")
                 .permitAll()
                 .and()
-                .logout().deleteCookies("JSESSIONID")
+                .logout().deleteCookies("JSESSIONID", "remember-me")
                 .clearAuthentication(true)
                 .permitAll()
                 .logoutSuccessUrl("/")

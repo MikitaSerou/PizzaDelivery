@@ -7,26 +7,28 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "INGREDIENT")
 public class Ingredient {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "PRICE", nullable = false)
     private Double price;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "ingredient_type", nullable = false)
+    @Column(name = "INGREDIENT_TYPE", nullable = false)
     private IngredientType ingredientType;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "product_ingredient",
-            joinColumns = @JoinColumn(name = "ingredient_id"),
+    @JoinTable(name = "PRODUCT_INGREDIENT",
+            joinColumns = @JoinColumn(name = "INGREDIENT_ID"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products;
 

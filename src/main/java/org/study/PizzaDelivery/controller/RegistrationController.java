@@ -63,7 +63,7 @@ public class RegistrationController {
             return "registration";
         }
 
-        emailService.sendRegistrationSuccessfulMail(registrationForm);
+     //   emailService.sendRegistrationSuccessfulMail(registrationForm);
 
         return "redirect:/";
     }

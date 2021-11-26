@@ -3,25 +3,26 @@ package org.study.PizzaDelivery.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "basket_item")
+@Table(name = "BASKET_ITEM")
 public class BasketItem {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "basket_id", nullable = false)
+    @JoinColumn(name = "BASKET_ID", nullable = false)
     private Basket basket;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)  //, cascade = {CascadeType.ALL}
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "PRODUCT_ID", nullable = false)
     private Product product;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "PRICE", nullable = false)
     private Double price;
 
-    @Column(name = "description")
+    @Column(name = "DESCRIPTION")
     private String description;
 
 

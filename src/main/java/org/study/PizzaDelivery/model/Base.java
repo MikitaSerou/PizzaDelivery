@@ -5,16 +5,18 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "BASE")
 public class Base {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "price_multiplier", nullable = false)
+    @Column(name = "PRICE_MULTIPLIER", nullable = false)
 
     private Double priceMultiplier;
 

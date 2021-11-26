@@ -7,15 +7,17 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "PRODUCT")
 public class Product {
 
     private static final Logger logger = LogManager.getLogger(Product.class);
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
@@ -26,16 +28,16 @@ public class Product {
     @JoinColumn(name = "base_id", nullable = false)
     private Base base;
 
-    @Column(name = "price")
+    @Column(name = "PRICE")
     private Double price;
 
-    @Column(name = "description")
+    @Column(name = "DESCRIPTION")
     private String description;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "product_ingredient",
+    @JoinTable(name = "PRODUCT_INGREDIENT",
             joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+            inverseJoinColumns = @JoinColumn(name = "INGREDIENT_ID"))
     private List<Ingredient> ingredients;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,

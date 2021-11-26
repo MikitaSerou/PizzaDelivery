@@ -10,10 +10,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "ORDERS")
 public class Order {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -21,26 +22,26 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "PHONE_NUMBER", nullable = false)
     private String phoneNumber;
 
-    @Column(name = "price")
+    @Column(name = "PRICE")
     private Double price;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "type_of_payment")
+    @Column(name = "TYPE_OF_PAYMENT")
     private TypeOfPayment typeOfPayment;
 
-    @Column(name = "time", nullable = false)
+    @Column(name = "TIME", nullable = false)
     private LocalDateTime time;
 
-    @Column(name = "comment")
+    @Column(name = "COMMENT")
     private String comment;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "STATUS", nullable = false)
     private Status status;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER,

@@ -6,21 +6,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
-@Table(name = "basket")
+@Table(name = "BASKET")
 public class Basket {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "IS_ACTIVE", nullable = false)
     private Boolean isActive;
 
-    @Column(name = "time", nullable = false)
+    @Column(name = "TIME", nullable = false)
     private LocalDateTime time;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "basket", fetch = FetchType.EAGER,

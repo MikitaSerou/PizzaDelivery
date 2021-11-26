@@ -104,7 +104,7 @@ public class UserController {
             }
 
             Order notPaidOrder = orderService.addOrder(user, orderPhoneNumber, comment, typeOfPayment);
-            emailService.sendOrderInfoMessage(user, orderService.findLastOrderOfUserByUserId(user.getId()));
+           // emailService.sendOrderInfoMessage(user, orderService.findLastOrderOfUserByUserId(user.getId()));
 
             if (typeOfPayment.equals(TypeOfPayment.ONLINE)) {
                 model.addAttribute("orderId", notPaidOrder.getId());

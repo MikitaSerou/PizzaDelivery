@@ -15,31 +15,32 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "USER")
 public class User implements UserDetails {
 
     private static final Logger logger = LogManager.getLogger(User.class);
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "USER_NAME", nullable = false)
     @NotEmpty(message = "{user.username.empty}")
     @Size(min = 3, max = 30, message = "{user.username.size}")
     private String username;
 
-    @Column(name = "user_password", nullable = false)
+    @Column(name = "USER_PASSWORD", nullable = false)
     @NotEmpty(message = "{user.password.empty}")
     @Size(min = 8, message = "{user.password.size}")
     private String password;
 
-    @Column(name = "e_mail", nullable = false)
+    @Column(name = "E_MAIL", nullable = false)
     @Email(message = "{user.email.invalid}")
     @NotEmpty(message = "{user.email.empty}")
     private String mail;
 
-    @Column(name = "phone_number")
+    @Column(name = "PHONE_NUMBER")
     @NotEmpty(message = "{user.phoneNumber.empty}")
     @Pattern(regexp = "^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$",
             message = "{user.phoneNumber.pattern}")

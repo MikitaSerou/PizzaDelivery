@@ -24,7 +24,11 @@
             <div class="card p-3">
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <h2 class="heading text-center"><spring:message code="online.payment.details"/></h2>
+                        <h2 class="heading text-center"><spring:message code="online.payment.details"/>
+                            <br/>
+                            <span style="color: red; font-size: 24px; position: center;"><spring:message
+                                    code="remark"/></span>
+                        </h2>
                     </div>
                 </div>
                 <form class="form-card" method="post" action="${pageContext.request.contextPath}/onlinePayment">

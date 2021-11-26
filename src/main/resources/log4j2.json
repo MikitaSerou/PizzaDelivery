@@ -7,13 +7,6 @@
         },
         "name": "Console",
         "target": "SYSTEM_OUT"
-      },
-      "File": {
-        "PatternLayout": {
-          "pattern": "%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n"
-        },
-        "name": "File",
-        "fileName": "/home/mikita/IdeaProjects/Git/PizzaDelivery/log/projectAppLog.log"
       }
     },
     "Loggers": {
@@ -21,9 +14,6 @@
         "AppenderRef": [
           {
             "ref": "Console"
-          },
-          {
-            "ref": "File"
           }
         ],
         "level": "info"

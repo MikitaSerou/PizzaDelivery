@@ -8,6 +8,6 @@ import org.study.PizzaDelivery.model.Base;
 @Repository
 public interface BaseRepository extends CrudRepository<Base, Short> {
 
-    @Query(value = "SELECT TOP 1 * FROM BASE ORDER BY PRICE_MULTIPLIER", nativeQuery = true)
+    @Query(value = "SELECT * FROM BASE ORDER BY PRICE_MULTIPLIER LIMIT 1", nativeQuery = true)
     Base findTopOrderByPriceAsc();
 }

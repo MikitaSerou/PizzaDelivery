@@ -161,7 +161,7 @@ public class ProductService {
     public Map<String, Product> findTop3Products() {
         logger.info("Call method: selectTop3Products()");
         Query query = entityManager.createNativeQuery("SELECT PRODUCT_id FROM (Select * From ORDER_ITEM " +
-                "WHERE PRODUCT_ID in (select id from PRODUCT  WHERE PRODUCT.CATEGORY_ID > '1')) by " +
+                "WHERE PRODUCT_ID in (select id from PRODUCT  WHERE PRODUCT.CATEGORY_ID > '1')) AS P " +
                 "GROUP BY PRODUCT_id order by count(PRODUCT_id) desc");
 
         List<BigInteger> topId = query.getResultList();
