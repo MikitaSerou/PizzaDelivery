@@ -72,7 +72,7 @@ public class MainController {
                 }
             }
         }
-
+        model.addAttribute("topProducts", productService.findTop3Products().values());
         return "index";
     }
 

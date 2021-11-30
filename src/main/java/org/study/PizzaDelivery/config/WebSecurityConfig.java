@@ -56,16 +56,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error")
                 .permitAll()
                 .and()
-                .logout().deleteCookies("JSESSIONID", "remember-me")
-                .clearAuthentication(true)
+                .logout().deleteCookies("JSESSIONID")
+                .clearAuthentication(true).invalidateHttpSession(true)
                 .permitAll()
-                .logoutSuccessUrl("/")
-                .and()
-                .rememberMe()
-                .rememberMeCookieName("remember-me")
-                .alwaysRemember(true)
-                .useSecureCookie(true)
-                .key("uniqueAndSecret");
+                .logoutSuccessUrl("/");
+        //      .and()
+//                .rememberMe()
+//                .rememberMeCookieName("remember-me")
+//                .alwaysRemember(false)
+//                .useSecureCookie(true)
+        //          .key("uniqueAndSecret");
     }
 
     @Autowired
